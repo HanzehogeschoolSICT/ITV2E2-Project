@@ -1,8 +1,11 @@
 package controller;
 
+//Project libs
+import view.Window;
+
+//System libs
 import javafx.application.Application;
 import javafx.stage.Stage;
-import view.Window;
 
 public class Main extends Application {
 	Window window;
