@@ -17,16 +17,22 @@ package test;/*
 
 import model.Connection;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 
 public class ConnectionTest {
 
     public static void main(String[] args) {
 
-        System.out.println(Connection.isAdressValid("145.33.225.170"));
-        System.out.println(Connection.isAdressValid("145.333.225.170"));
-        System.out.println(Connection.isAdressValid("145.33.225.170."));
-        System.out.println(Connection.isAdressValid("145.33.225.170.240"));
-        System.out.println(Connection.isAdressValid("255.255.255.255"));
+//        System.out.println(Connection.isAdressValid("145.33.225.170"));
+//        System.out.println(Connection.isAdressValid("145.333.225.170"));
+//        System.out.println(Connection.isAdressValid("145.33.225.170."));
+//        System.out.println(Connection.isAdressValid("145.33.225.170.240"));
+//        System.out.println(Connection.isAdressValid("255.255.255.255"));
+
+        Test test = new Test();
+        test.read();
 
     }
 

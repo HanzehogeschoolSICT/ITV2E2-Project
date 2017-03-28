@@ -3,12 +3,18 @@ package model;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public abstract class Connection {
+
+    private static final String LOGIN_MESSAGE = "Strategic Game Server Fixed [Version 1.1.0](C) Copyright 2015 Hanzehogeschool Groningen";
+
+    private boolean active;
+    private Thread serverThread;
+    private Observer outputObserver;
 
     private String playerName;
     private String opponentName;
@@ -18,13 +24,51 @@ public abstract class Connection {
     private String address;
     private Socket socket;
 
+    private BufferedReader inputReader;
+    private PrintWriter printWriter;
+
     public Connection(String address, Integer port) {
+        if (!isAdressValid(address)) throw new DataException("Malformed address: " + address);
+        if (port <= 0 || port > 65535) throw new DataException("Malformed port: " + port);
+
         this.address = address;
         this.port = port;
+        this.active = false;
     }
 
     public void establish() throws IOException {
         this.socket = new Socket(this.address, this.port);
+
+        InputStream inputStream = socket.getInputStream();
+        this.inputReader = new BufferedReader(new  InputStreamReader(inputStream));
+
+        OutputStream outputStream = socket.getOutputStream();
+        this.printWriter = new PrintWriter(new OutputStreamWriter(outputStream));
+
+        startServerThread();
+    }
+
+    private void startServerThread() {
+        this.serverThread = new Thread(() -> {
+            try {
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = inputReader.readLine()) != null) { //ToDo write a close method.
+                    System.out.println(line);
+                    if (stringBuilder != null) {
+                        stringBuilder.append(line);
+                        if (stringBuilder.toString().equals(LOGIN_MESSAGE)){
+                            this.active = true;
+                            stringBuilder = null;
+                            outputObserver.onConnect();
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        this.serverThread.start();
     }
 
     public static boolean isAdressValid(String address) {
@@ -66,7 +110,11 @@ public abstract class Connection {
      * @param playerName The name to register. (cannot be null)
      * @return True if the login was successful, else false.
      */
-    public abstract boolean login(@NotNull String playerName);
+    public boolean login(@NotNull String playerName) {
+        printWriter.write("login " + playerName);
+        printWriter.flush();
+        return true;
+    }
 
     /**
      * Sends a logout request to the server to logout the current player.
@@ -96,7 +144,11 @@ public abstract class Connection {
      * </pre>
      * @return The list of available games on the server if successful, else null.
      */
-    public abstract ArrayList<String> getGameList();
+    public ArrayList<String> getGameList(){
+        printWriter.write("get gamelist");
+        printWriter.flush();
+        return null;
+    }
 
     /**
      * Sends a request to the server in order to retrieve a list of logged-in players on the server.
@@ -210,25 +262,45 @@ public abstract class Connection {
      */
     public abstract String help(@Nullable String command);
 
-
-    public enum ServerMessage {
-        OK("OK"),
-        ERR("ERR"),
-        SVR_HELP("SVR HELP"),
-        SVR_GAME_MATCH("SVR GAME MATCH"),
-        SVR_GAME_YOURTURN("SVR GAME YOURTURN"),
-        SVR_GAME_MOVE("SVR GAME MOVE"),
-        SVR_GAME_CHALLENGE("SVR GAME CHALLENGE"),
-        SVR_GAME_WIN("SVR GAME WIN"),
-        SVR_GAME_LOSS("SVR GAME LOSS"),
-        SVR_GAME_DRAW("SVR GAME DRAW");
-
-        private String text;
-
-        ServerMessage(String text) {
-            this.text = text;
+    class DataException extends RuntimeException {
+        public DataException(String message) {
+            super(message);
         }
-
     }
+
+    public interface Observer {
+        void onConnect();
+    }
+
+    //<editor-fold desc="Getters and Setters">
+    public boolean isActive() {
+        return active;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public String getOpponentName() {
+        return opponentName;
+    }
+
+    public Integer getChallengeNumber() {
+        return challengeNumber;
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setOutputObserver(Observer outputObserver) {
+        this.outputObserver = outputObserver;
+    }
+
+    //</editor-fold>
 
 }

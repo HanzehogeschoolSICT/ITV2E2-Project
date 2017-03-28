@@ -1,5 +1,9 @@
 package controller;
 
-public class TicTacToe implements Game{
+public class TicTacToe extends Game{
+
+    public TicTacToe(String gametype) {
+        super(gametype);
+    }
 
 }
