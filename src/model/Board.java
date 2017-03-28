@@ -20,27 +20,6 @@ public class Board {
         this.spaces[row][column] = value;
     }
 
-    //<editor-fold desc="Factory">
-    public static class Factory {
-
-        public Factory() {
-        }
-
-        public Board newBoard(int row, int column) {
-            return new Board(row, column);
-        }
-
-        public static Board newTicTacToeBoard() {
-            return new Board(3, 3);
-        }
-
-        public static Board newOthelloBoard(){
-            return new Board(8, 8);
-        }
-
-    }
-    //</editor-fold>
-
     //<editor-fold desc="Getters and Setters">
     public int getRows() {
         return rows;
