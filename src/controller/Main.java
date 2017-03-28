@@ -29,6 +29,7 @@ public class Main extends Application {
      * @param portnumber Portnumber of gameserver
      * @param player If player is a AI or Player
      * @param playername The name of player
+     * @return boolean True if game is created false is something went wrong
      */
 	public boolean createGame(String game, String ipaddress, String portnumber, String playertype, String playername){
 		return true;
@@ -36,11 +37,7 @@ public class Main extends Application {
 
 	 /**
      * Gets the Game screen from the game.
-     * @param game the game of the game to be played
-     * @param ipadres Ipadres of game server
-     * @param portnumber Portnumber of gameserver
-     * @param player If player is a AI or Player
-     * @param playername The name of player
+     * @return Returns the screen of the game
      */
 	public GameScreen getGameScreen() {
 		return null;
