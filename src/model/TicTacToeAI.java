@@ -2,13 +2,20 @@ package model;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import controller.Game;
+
 public class TicTacToeAI implements GameAI{
 	private int[] nextMove;
 	private TicTacToeAI ai = new TicTacToeAI();
+	private Game gameController;
 	
 	private TicTacToeAI(){}
 	
-	public TicTacToeAI makeAI(){
+	/*Makes the TicTacToeAI as singleton
+	 * Give the Game controller as parameter
+	*/
+	public TicTacToeAI makeAI(Game gameController){
+		this.gameController = gameController;
 		return this.ai;
 	}
 	
@@ -27,6 +34,7 @@ public class TicTacToeAI implements GameAI{
 		}else{
 			this.minMax(inputBoard, player);
 		}
+		this.gameController.setMove(this.nextMove[0], this.nextMove[1]);
 	}
 	
 	public void randomMove(){
