@@ -12,6 +12,12 @@ public class TicTacToeAI implements GameAI{
 		return this.ai;
 	}
 	
+	/*Calculates the best possible move using MiniMax
+	 * 
+	 * Needs the board as input
+	 * result will be the nextMove variable
+	 * 
+	 */
 	@Override
 	public void move(int[][] inputBoard) {
 		int player = 1;
