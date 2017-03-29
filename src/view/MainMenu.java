@@ -130,7 +130,7 @@ public class MainMenu implements WindowScreen {
 		String game = this.selectGameType.getValue();
 		String playertype = this.radioAI.getSelectedToggle().getUserData().toString();
 		
-		if (ipaddress.length() > 6 && portnumber.length() > 2 && playername.length() > 5  && game != null && playertype != null){
+		if (ipaddress.length() > 6 && portnumber.length() > 1 && playername.length() > 5  && game != null && playertype != null){
 			window.createGame(game, ipaddress, portnumber, playertype, playername);
 		} else {
 			Alert alert = new Alert(AlertType.WARNING);

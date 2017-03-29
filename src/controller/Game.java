@@ -5,10 +5,10 @@ import model.Board;
 import view.GameScreen;
 
 public interface Game {
-	public int[] getBoardSize();
-	
+	public boolean getGameStart(); 
 	public Pane createGameScreen();
 	public Pane updateGameScreen();
-
-	public boolean challegePlayer(String playername);
+	public int getBoardRows();
+	public int getBoardColumns();
+	public void setMove(int y, int x);
 }

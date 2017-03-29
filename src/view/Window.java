@@ -60,4 +60,8 @@ public class Window {
 	public Game getGame(){
 		return this.game;
 	}
+	
+	public Main getMain(){
+		return this.main;
+	}
 }

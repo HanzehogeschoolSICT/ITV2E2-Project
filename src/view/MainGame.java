@@ -1,6 +1,7 @@
 package view;
 
 import controller.Game;
+import controller.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -101,8 +102,8 @@ public class MainGame implements WindowScreen {
 	
 	private void challegePlayer(){
 		String playername = this.challegePlayername.getText();
-		Game game = window.getGame();
-		boolean challege = game.challegePlayer(playername);
+		Main main = window.getMain();
+		boolean challege = main.challegePlayer(playername);
 		if (challege == true){
 			//NEW GAME ?
 		} else {

@@ -36,4 +36,8 @@ public class Main extends Application {
 		this.game = new TicTacToe();
 		return this.game;
 	}
+	
+	public boolean challegePlayer(String playername){
+		return false;
+	}
 }
