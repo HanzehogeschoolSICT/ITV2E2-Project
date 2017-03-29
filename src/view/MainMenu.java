@@ -148,14 +148,11 @@ public class MainMenu implements WindowScreen {
 	}
 	
 	class StartHandlerClass implements EventHandler<ActionEvent> {
-
 		@Override
-
 		public void handle(ActionEvent e) {
 			//START
 			System.out.println("Pressed start button");
 			createGame();
 		}
-
 	}
 }

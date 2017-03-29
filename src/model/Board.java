@@ -6,7 +6,7 @@ public class Board {
     private int columns;
     private Integer[][] spaces;
 
-    private Board(Integer rows, Integer columns) {
+    public Board(Integer rows, Integer columns) {
         this.rows = rows;
         this.columns = columns;
         this.spaces = new Integer[rows - 1][columns - 1];

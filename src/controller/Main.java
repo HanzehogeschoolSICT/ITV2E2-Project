@@ -9,7 +9,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	Window window;
+	private Window window;
+	private Game game;
 	
 	public static void main(String args[]){
 		System.out.println("Starting ...");
@@ -31,15 +32,8 @@ public class Main extends Application {
      * @param playername The name of player
      * @return boolean True if game is created false is something went wrong
      */
-	public boolean createGame(String game, String ipaddress, String portnumber, String playertype, String playername){
-		return true;
-	}
-
-	 /**
-     * Gets the Game screen from the game.
-     * @return Returns the screen of the game
-     */
-	public GameScreen getGameScreen() {
-		return null;
+	public Game createGame(String game, String ipaddress, String portnumber, String playertype, String playername){
+		this.game = new TicTacToe();
+		return this.game;
 	}
 }
