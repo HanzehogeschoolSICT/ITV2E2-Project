@@ -1,11 +1,14 @@
 package controller;
 
-public abstract class Game {
+import javafx.scene.layout.Pane;
+import model.Board;
+import view.GameScreen;
 
-    private String gametype;
+public interface Game {
+	public int[] getBoardSize();
+	
+	public Pane createGameScreen();
+	public Pane updateGameScreen();
 
-    public Game(String gametype) {
-        this.gametype = gametype;
-    }
-
+	public boolean challegePlayer(String playername);
 }

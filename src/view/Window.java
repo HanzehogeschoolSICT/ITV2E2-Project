@@ -1,5 +1,6 @@
 package view;
 
+import controller.Game;
 //Project libs
 import controller.Main;
 
@@ -14,6 +15,7 @@ public class Window {
 	private Main main;
 	private Stage primaryStage;
 	private Scene scene;
+	private Game game;
 	
 	public Window(Main main, Stage primaryStage){
 		this.main = main;
@@ -30,8 +32,9 @@ public class Window {
 	}
 	
 	public void createGame(String gametype, String ipaddress, String portnumber, String playertype, String playername){
-		boolean game = this.main.createGame(gametype, ipaddress, portnumber, playertype, playername);
-		if (game == true){
+		Game game = this.main.createGame(gametype, ipaddress, portnumber, playertype, playername);
+		if (game != null){
+			this.game = game;
 			getGameScreen();
 		} else {
 			Alert alert = new Alert(AlertType.WARNING);
@@ -52,5 +55,9 @@ public class Window {
 		this.currentWindow = new MainGame(this);
 		this.scene = new Scene(this.currentWindow.getPane());
 		primaryStage.setScene(this.scene);
+	}
+	
+	public Game getGame(){
+		return this.game;
 	}
 }
