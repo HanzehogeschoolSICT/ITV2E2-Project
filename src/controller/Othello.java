@@ -5,8 +5,12 @@ import javafx.scene.layout.Pane;
 public class Othello implements Game{
 	public Othello(){}
 	
-	public int[] getBoardSize(){
-		return null;
+	public int getBoardRows(){
+		return 0;
+	}
+	
+	public int getBoardColumns(){
+		return 0;
 	}
 	
 	public Pane createGameScreen(){
@@ -17,7 +21,11 @@ public class Othello implements Game{
 		return null;
 	}
 	
-	public boolean challegePlayer(String playername){
+	public boolean getGameStart(){
 		return false;
+	}
+	
+	public void setMove(int y, int x){
+		return;
 	}
 }

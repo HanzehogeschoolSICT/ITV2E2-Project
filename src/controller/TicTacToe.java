@@ -21,15 +21,20 @@ public class TicTacToe implements Game{
 	public Pane createGameScreen(){
 		return this.gamescreen.create();
 	}
+	
+	public int getBoardRows(){
+		return this.board.getRows();
+	}
 
-	public boolean challegePlayer(String playername){
+	public int getBoardColumns(){
+		return this.board.getColumns();
+	}
+	
+	public boolean getGameStart(){
 		return false;
 	}
 	
-	public int[] getBoardSize(){
-		int[] size = null;
-		size['x'] = this.board.getColumns();
-		size['y'] = this.board.getRows();
-		return size;
+	public void setMove(int y, int x){
+		return;
 	}
 }
