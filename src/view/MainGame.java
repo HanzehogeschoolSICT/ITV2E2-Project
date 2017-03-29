@@ -58,7 +58,7 @@ public class MainGame implements WindowScreen {
 			this.playerlist.setText("");
 		}
 		
-		Pane paneCenter = createCenterpane();
+		Pane paneCenter = updateCenterpane();
 		this.pane.setCenter(paneCenter);
 		
 		updateRightPane();
@@ -155,6 +155,16 @@ public class MainGame implements WindowScreen {
 		return pane;
 	}
 
+	private Pane updateCenterpane(){
+		VBox pane = new VBox(); 
+		
+		Game game = window.getGame();
+		Pane gamePane = game.updateGameScreen();
+		pane.getChildren().add(gamePane);
+		
+		return pane;
+	}
+	
 	private Pane createRightPane(){
 		VBox pane = new VBox();
 		pane.setPadding(new Insets(5, 5, 5, 5));
