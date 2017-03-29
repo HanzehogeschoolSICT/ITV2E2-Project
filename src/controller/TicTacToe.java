@@ -22,12 +22,8 @@ public class TicTacToe implements Game{
 		return this.gamescreen.create();
 	}
 	
-	public int getBoardRows(){
-		return this.board.getRows();
-	}
-
-	public int getBoardColumns(){
-		return this.board.getColumns();
+	public Board getBoard(){
+		return this.board;
 	}
 	
 	public boolean getGameStart(){
@@ -35,6 +31,14 @@ public class TicTacToe implements Game{
 	}
 	
 	public void setMove(int y, int x){
+		return;
+	}
+	
+	public void setDefeat(){
+		return;
+	}
+	
+	public void logout(){
 		return;
 	}
 }

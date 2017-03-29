@@ -1,10 +1,9 @@
 package controller;
 
-//Project libs
+//Project libraries
 import view.Window;
-import view.GameScreen;
 
-//System libs
+//System libraries
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -26,8 +25,8 @@ public class Main extends Application {
 	 /**
      * Setup the connection and creates the game
      * @param game the game of the game to be played
-     * @param ipadres Ipadres of game server
-     * @param portnumber Portnumber of gameserver
+     * @param ipadres IP-address of game server
+     * @param portnumber Port-number of game-server
      * @param player If player is a AI or Player
      * @param playername The name of player
      * @return boolean True if game is created false is something went wrong
