@@ -32,7 +32,7 @@ public class OthelloScreen extends AbstractGameScreen{
 	@Override
 	protected ImageView createPlayer(){
 		ImageView xView = new ImageView();
-		Image xImage = new Image("images/black.png");
+		Image xImage = new Image("src/view/images/black.png");
 		xView.setImage(xImage);
 		xView.setPreserveRatio(true);
 		xView.setFitHeight(150);
@@ -42,7 +42,7 @@ public class OthelloScreen extends AbstractGameScreen{
 	@Override
 	protected ImageView createOponent(){
 		ImageView oView = new ImageView();
-		Image oImage = new Image("images/white.png");
+		Image oImage = new Image("src/view/images/white.png");
 		oView.setImage(oImage);
 		oView.setPreserveRatio(true);
 		oView.setFitHeight(150);
