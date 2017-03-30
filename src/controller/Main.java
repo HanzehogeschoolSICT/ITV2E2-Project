@@ -1,15 +1,16 @@
 package controller;
 
-//Project libraries
-import view.Window;
-
 //System libraries
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.Connection;
+//Project libraries
+import view.Window;
 
 public class Main extends Application {
 	private Window window;
 	private Game game;
+	private Connection connectionModel;
 	
 	public static void main(String args[]){
 		System.out.println("Starting ...");
@@ -32,11 +33,22 @@ public class Main extends Application {
      * @return boolean True if game is created false is something went wrong
      */
 	public Game createGame(String game, String ipaddress, String portnumber, String playertype, String playername){
-		this.game = new TicTacToe();
+		boolean isHuman = playertype.equals("Player");
+		this.game = new TicTacToe(this);
+		this.game.setHuman(isHuman);
+		this.connectionModel = new Connection(ipaddress, Integer.parseInt(portnumber));
 		return this.game;
 	}
 	
-	public boolean challegePlayer(String playername){
+	public Connection getConnection(){
+		return this.connectionModel;
+	}
+	
+	public Window getWindow(){
+		return this.window;
+	}
+	
+	public boolean challengePlayer(String playername){
 		return false;
 	}
 }

@@ -114,16 +114,13 @@ public class MainGame implements WindowScreen {
 		VBox pane = new VBox();
 		pane.setBorder(new Border(new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID, null, null)));
 		pane.setPadding(new Insets(5, 5, 5, 5));
-		
 		Label labelHeader = new Label("Challege");
 		labelHeader.setFont(new Font("Calibri", 16));
-		pane.getChildren().add(labelHeader);
-		
+		pane.getChildren().add(labelHeader);	
 		Label labelPlayername = new Label("Playername");
 		pane.getChildren().add(labelPlayername);
 		this.challegePlayername = new TextField();
 		pane.getChildren().add(this.challegePlayername);
-		
 		Button buttonChallege = new Button("Challege");
 		buttonChallege.setOnAction(new ChallegeButtonHandlerClass());
 		pane.getChildren().add(buttonChallege);
@@ -133,7 +130,7 @@ public class MainGame implements WindowScreen {
 	private void challegePlayer(){
 		String playername = this.challegePlayername.getText();
 		Main main = window.getMain();
-		boolean challege = main.challegePlayer(playername);
+		boolean challege = main.challengePlayer(playername);
 		if (challege == true){
 			//NEW GAME ?
 		} else {

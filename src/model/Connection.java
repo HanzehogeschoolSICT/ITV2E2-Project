@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-public abstract class Connection {
+public class Connection {
 
     private String playerName;
     private String opponentName;
@@ -66,7 +66,9 @@ public abstract class Connection {
      * @param playerName The name to register. (cannot be null)
      * @return True if the login was successful, else false.
      */
-    public abstract boolean login(@NotNull String playerName);
+    public boolean login(@NotNull String playerName){
+    	return false;
+    }
 
     /**
      * Sends a logout request to the server to logout the current player.
@@ -81,7 +83,9 @@ public abstract class Connection {
      * </pre>
      * @return True if the logout was successful, else false.
      */
-    public abstract boolean logout();
+    public boolean logout(){
+    	return false;
+    }
 
     /**
      * Sends a request to the server in order to retrieve a list of available games on the server.
@@ -96,7 +100,9 @@ public abstract class Connection {
      * </pre>
      * @return The list of available games on the server if successful, else null.
      */
-    public abstract ArrayList<String> getGameList();
+    public ArrayList<String> getGameList(){
+    	return null;
+    }
 
     /**
      * Sends a request to the server in order to retrieve a list of logged-in players on the server.
@@ -111,7 +117,9 @@ public abstract class Connection {
      * </pre>
      * @return The list of logged-in players on the server if successful, else null.
      */
-    public abstract ArrayList<String> getPlayerList();
+    public ArrayList<String> getPlayerList(){
+    	return null;
+    }
 
     /**
      * Sends a request to the server in order to subscribe to a gametype on the server.
@@ -127,7 +135,9 @@ public abstract class Connection {
      * @param gameType The gametype to subscribe to.
      * @return True if the request was successful at subscribing, else false.
      */
-    public abstract boolean subscribe(@NotNull String gameType);
+    public boolean subscribe(@NotNull String gameType){
+    	return false;
+    }
 
     /**
      * Sends a request to the server to do a move.
@@ -143,7 +153,9 @@ public abstract class Connection {
      * @param column The column to do the move on.
      * @return True if the request was successful, else false if the move is invalid.
      */
-    public abstract boolean move(@NotNull Integer row, @NotNull Integer column);
+    public boolean move(@NotNull Integer row, @NotNull Integer column){
+    	return false;
+    }
 
     /**
      * Sends a request to the server in order to forfeit and tell the other player you give up.
@@ -157,7 +169,9 @@ public abstract class Connection {
      * </pre>
      * @return True if the request was successful, else false.
      */
-    public abstract boolean forfeit();
+    public boolean forfeit(){
+    	return false;
+    }
 
     /**
      * Send a request to the server in order to challenge another player to a game using the players name and what game to play.
@@ -173,7 +187,9 @@ public abstract class Connection {
      * @param gameType The type of game to play.
      * @return True if the request was successful, else false.
      */
-    public abstract boolean challenge(String opponentName, String gameType);
+    public boolean challenge(String opponentName, String gameType){
+    	return false;
+    }
 
     /**
      * Sends a request to the server in order to accept a pending challenge invite from another player.
@@ -188,7 +204,9 @@ public abstract class Connection {
      * @param challengeNumber The challenge number of the challenge to be accepted.
      * @return True if the request was successful, else false.
      */
-    public abstract boolean accept_challenge(Integer challengeNumber);
+    public boolean accept_challenge(Integer challengeNumber){
+    	return false;
+    }
 
     /**
      * Send a request to the server in order to view the help page of either a command or the full page.
@@ -208,7 +226,9 @@ public abstract class Connection {
      * @param command The command to view the help page of, if null, the full help page is shown.
      * @return A String with the help text that was send by the server.
      */
-    public abstract String help(@Nullable String command);
+    public String help(@Nullable String command){
+    	return null;
+    }
 
 
     public enum ServerMessage {
