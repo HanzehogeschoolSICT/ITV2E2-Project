@@ -15,12 +15,9 @@ package test;/*
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import model.Connection;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class ConnectionTest {
@@ -33,50 +30,9 @@ public class ConnectionTest {
 //        System.out.println(Connection.isAdressValid("145.33.225.170.240"));
 //        System.out.println(Connection.isAdressValid("255.255.255.255"));
 
-        Connection connection = new Connection("145.33.225.170", 7789) {
-            @Override
-            public boolean logout() {
-                return false;
-            }
-
-            @Override
-            public ArrayList<String> getPlayerList() {
-                return null;
-            }
-
-            @Override
-            public boolean subscribe(@NotNull String gameType) {
-                return false;
-            }
-
-            @Override
-            public boolean move(@NotNull Integer row, @NotNull Integer column) {
-                return false;
-            }
-
-            @Override
-            public boolean forfeit() {
-                return false;
-            }
-
-            @Override
-            public boolean challenge(String opponentName, String gameType) {
-                return false;
-            }
-
-            @Override
-            public boolean accept_challenge(Integer challengeNumber) {
-                return false;
-            }
-
-            @Override
-            public String help(@Nullable String command) {
-                return null;
-            }
-        };
         try {
-            connection.setOutputObserver(() -> connection.login("Harjan"));
-            connection.establish();
+            Connection connection = new Connection("145.33.225.170", 7789);
+            connection.establish("Harjan");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -2,21 +2,19 @@ package model;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-import org.apache.commons.io.IOUtils;
+import model.io.OutputServer;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.regex.Pattern;
 
-public abstract class Connection {
+public class Connection {
 
-    private static final String LOGIN_MESSAGE = "Strategic Game Server Fixed [Version 1.1.0](C) Copyright 2015 Hanzehogeschool Groningen";
+    private static final String OK = "OK";
+    private static final String ERR = "ERR";
 
     private boolean active;
-    private Queue<String> writeQueue;
     private Observer outputObserver;
 
     private String playerName;
@@ -27,9 +25,7 @@ public abstract class Connection {
     private String address;
     private Socket socket;
 
-    private BufferedReader inputReader;
-    private InputStream inputStream;
-    private PrintWriter printWriter;
+    private OutputServer server;
 
     public Connection(String address, Integer port) {
         if (!isAdressValid(address)) throw new DataException("Malformed address: " + address);
@@ -38,45 +34,12 @@ public abstract class Connection {
         this.address = address;
         this.port = port;
         this.active = false;
-        this.writeQueue = new ArrayDeque<>();
     }
 
-    public void establish() throws IOException {
-        this.socket = new Socket(this.address, this.port);
-
-        InputStream inputStream = socket.getInputStream();
-        this.inputStream = inputStream;
-        this.inputReader = new BufferedReader(new  InputStreamReader(inputStream));
-
-        OutputStream outputStream = socket.getOutputStream();
-        this.printWriter = new PrintWriter(new OutputStreamWriter(outputStream), true);
-
-        startServer();
-    }
-
-    private void startServer() {
-        try {
-            while (socket.isConnected()) {
-                int read;
-                while ((read = inputReader.read()) != 0) {
-                    System.out.println((char) read);
-                }
-                if(writeQueue.size() >= 1) printWriter.println(writeQueue.poll());
-//
-//                if (inputStream.available() != 0) {
-//
-//                } else {
-//                }
-            }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-    }
-
-    private String streamToString(InputStream inputStream) throws IOException {
-        StringWriter stringWriter = new StringWriter();
-        IOUtils.copy(inputStream, stringWriter);
-        return stringWriter.toString();
+    public void establish(String playerName) throws IOException {
+        this.playerName = playerName;
+        this.server = new OutputServer(this.address, this.port);
+        this.server.start(message -> login(playerName));
     }
 
     public static boolean isAdressValid(String address) {
@@ -119,7 +82,9 @@ public abstract class Connection {
      * @return True if the login was successful, else false.
      */
     public boolean login(@NotNull String playerName) {
-        writeQueue.add("login " + playerName);
+        this.server.submit("login " + playerName, outputQueue -> {
+            for (String string : outputQueue) System.out.println(string);
+        });
         return false;
     }
 
@@ -136,7 +101,9 @@ public abstract class Connection {
      * </pre>
      * @return True if the logout was successful, else false.
      */
-    public abstract boolean logout();
+    public boolean logout(){
+        return false;
+    }
 
     /**
      * Sends a request to the server in order to retrieve a list of available games on the server.
@@ -152,8 +119,6 @@ public abstract class Connection {
      * @return The list of available games on the server if successful, else null.
      */
     public ArrayList<String> getGameList(){
-        printWriter.write("get gamelist");
-        printWriter.flush();
         return null;
     }
 
@@ -170,7 +135,9 @@ public abstract class Connection {
      * </pre>
      * @return The list of logged-in players on the server if successful, else null.
      */
-    public abstract ArrayList<String> getPlayerList();
+    public ArrayList<String> getPlayerList(){
+        return null;
+    }
 
     /**
      * Sends a request to the server in order to subscribe to a gametype on the server.
@@ -186,7 +153,9 @@ public abstract class Connection {
      * @param gameType The gametype to subscribe to.
      * @return True if the request was successful at subscribing, else false.
      */
-    public abstract boolean subscribe(@NotNull String gameType);
+    public boolean subscribe(@NotNull String gameType){
+        return false;
+    }
 
     /**
      * Sends a request to the server to do a move.
@@ -202,7 +171,9 @@ public abstract class Connection {
      * @param column The column to do the move on.
      * @return True if the request was successful, else false if the move is invalid.
      */
-    public abstract boolean move(@NotNull Integer row, @NotNull Integer column);
+    public boolean move(@NotNull Integer row, @NotNull Integer column){
+        return false;
+    }
 
     /**
      * Sends a request to the server in order to forfeit and tell the other player you give up.
@@ -216,7 +187,9 @@ public abstract class Connection {
      * </pre>
      * @return True if the request was successful, else false.
      */
-    public abstract boolean forfeit();
+    public boolean forfeit(){
+        return false;
+    }
 
     /**
      * Send a request to the server in order to challenge another player to a game using the players name and what game to play.
@@ -232,7 +205,9 @@ public abstract class Connection {
      * @param gameType The type of game to play.
      * @return True if the request was successful, else false.
      */
-    public abstract boolean challenge(String opponentName, String gameType);
+    public boolean challenge(String opponentName, String gameType){
+        return false;
+    }
 
     /**
      * Sends a request to the server in order to accept a pending challenge invite from another player.
@@ -247,7 +222,9 @@ public abstract class Connection {
      * @param challengeNumber The challenge number of the challenge to be accepted.
      * @return True if the request was successful, else false.
      */
-    public abstract boolean accept_challenge(Integer challengeNumber);
+    public boolean accept_challenge(Integer challengeNumber){
+        return false;
+    }
 
     /**
      * Send a request to the server in order to view the help page of either a command or the full page.
@@ -267,7 +244,9 @@ public abstract class Connection {
      * @param command The command to view the help page of, if null, the full help page is shown.
      * @return A String with the help text that was send by the server.
      */
-    public abstract String help(@Nullable String command);
+    public String help(@Nullable String command){
+        return null;
+    }
 
     class DataException extends RuntimeException {
         public DataException(String message) {
@@ -277,6 +256,7 @@ public abstract class Connection {
 
     public interface Observer {
         void onConnect();
+        void onError(String message);
     }
 
     //<editor-fold desc="Getters and Setters">
