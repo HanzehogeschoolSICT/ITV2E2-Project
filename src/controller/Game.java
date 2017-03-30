@@ -11,4 +11,6 @@ public interface Game {
 	public void setMove(int y, int x);
 	public void setDefeat();
 	public void logout();
+	public void setHuman(boolean human);
+	public boolean getHuman();
 }

@@ -6,18 +6,13 @@ import controller.Game;
 
 public class TicTacToeAI implements GameAI{
 	private int[] nextMove;
-	private TicTacToeAI ai = new TicTacToeAI();
 	private Game gameController;
 	
-	private TicTacToeAI(){}
-	
-	/*Makes the TicTacToeAI as singleton
-	 * Give the Game controller as parameter
-	*/
-	public TicTacToeAI makeAI(Game gameController){
+	public TicTacToeAI(Game gameController){
 		this.gameController = gameController;
-		return this.ai;
 	}
+	
+
 	
 	/*Calculates the best possible move using MiniMax
 	 * 
