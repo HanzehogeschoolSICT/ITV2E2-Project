@@ -1,31 +1,50 @@
 package controller;
 
 import javafx.scene.layout.Pane;
+import model.Board;
 
 public class Othello implements Game{
-	public Othello(){}
-	
-	public int getBoardRows(){
-		return 0;
+
+	@Override
+	public boolean getGameStart() {
+		// TODO Auto-generated method stub
+		return false;
 	}
-	
-	public int getBoardColumns(){
-		return 0;
-	}
-	
-	public Pane createGameScreen(){
+
+	@Override
+	public Pane createGameScreen() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Pane updateGameScreen(){
+	@Override
+	public Pane updateGameScreen() {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public boolean getGameStart(){
-		return false;
+
+	@Override
+	public Board getBoard() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	public void setMove(int y, int x){
-		return;
+
+	@Override
+	public void setMove(int y, int x) {
+		// TODO Auto-generated method stub
+		
 	}
+
+	@Override
+	public void setDefeat() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void logout() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

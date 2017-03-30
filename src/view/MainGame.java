@@ -15,7 +15,6 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -27,6 +26,10 @@ public class MainGame implements WindowScreen {
 	
 	private TextArea playerlist;
 	private TextField challegePlayername;
+	private TextField inputOponent;
+	private TextField inputScore;
+	private TextField inputTurn;
+	private Button buttonDefeat;
 	
 	public MainGame(Window window) {
 		this.window = window;
@@ -41,10 +44,37 @@ public class MainGame implements WindowScreen {
 		
 		Pane paneCenter = createCenterpane();
 		this.pane.setCenter(paneCenter);
+		
+		Pane menuPane = createRightPane();
+		this.pane.setRight(menuPane);
 	}
 	
+	@SuppressWarnings("unused")
 	public void update(){
+		String[] playerlist = null;
+		if (playerlist != null){
+			this.playerlist.setText(playerlist.toString());
+		} else {
+			this.playerlist.setText("");
+		}
 		
+		Pane paneCenter = updateCenterpane();
+		this.pane.setCenter(paneCenter);
+		
+		updateRightPane();
+	}
+	
+	private void updateRightPane(){
+		Game game = this.window.getGame();
+		if (game.getGameStart() == true){
+			this.inputOponent.setText("OPONENT ?");
+			this.inputScore.setText("1000");
+			this.inputTurn.setText("YOURS ?");
+		} else {
+			this.inputOponent.setText("");
+			this.inputScore.setText("0");
+			this.inputTurn.setText("");
+		}
 	}
 	
 	public Pane getPane(){
@@ -73,7 +103,7 @@ public class MainGame implements WindowScreen {
 		pane.getChildren().add(labelHeader);
 		
 		this.playerlist = new TextArea();
-		this.playerlist.setEditable(false);
+		this.playerlist.setDisable(true);
 		this.playerlist.setMaxWidth(120);
 		pane.getChildren().add(this.playerlist);
 		
@@ -115,6 +145,61 @@ public class MainGame implements WindowScreen {
 		}
 	}
 	
+	private Pane createCenterpane(){
+		VBox pane = new VBox(); 
+		
+		Game game = window.getGame();
+		Pane gamePane = game.createGameScreen();
+		pane.getChildren().add(gamePane);
+		
+		return pane;
+	}
+
+	private Pane updateCenterpane(){
+		VBox pane = new VBox(); 
+		
+		Game game = window.getGame();
+		Pane gamePane = game.updateGameScreen();
+		pane.getChildren().add(gamePane);
+		
+		return pane;
+	}
+	
+	private Pane createRightPane(){
+		VBox pane = new VBox();
+		pane.setPadding(new Insets(5, 5, 5, 5));
+		
+		Label labelOponent = new Label("Oponent");
+		pane.getChildren().add(labelOponent);
+		this.inputOponent = new TextField("0");
+		this.inputOponent.setDisable(true);
+		pane.getChildren().add(this.inputOponent);
+		
+		Label labelScore = new Label("Score");
+		pane.getChildren().add(labelScore);
+		this.inputScore = new TextField("0");
+		this.inputScore.setDisable(true);
+		pane.getChildren().add(this.inputScore);
+		
+		Label labelTurn = new Label("Turn");
+		pane.getChildren().add(labelTurn);
+		this.inputTurn = new TextField("");
+		this.inputTurn.setDisable(true);
+		pane.getChildren().add(this.inputTurn);
+		
+		this.buttonDefeat = new Button("Defeat");
+		this.buttonDefeat.setDisable(true);
+		this.buttonDefeat.setOnAction(new DefeatButtonHandlerClass());
+		pane.getChildren().add(this.buttonDefeat);
+
+		Button buttonMenu = new Button("Menu");
+		buttonMenu.setOnAction(new MenuButtonHandlerClass());
+		pane.getChildren().add(buttonMenu);
+		
+		return pane;
+	}
+	
+	//Event Handlers
 	class ChallegeButtonHandlerClass implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
@@ -124,13 +209,25 @@ public class MainGame implements WindowScreen {
 		}
 	}
 	
-	private Pane createCenterpane(){
-		VBox pane = new VBox(); 
-		
-		Game game = window.getGame();
-		Pane gamePane = game.createGameScreen();
-		pane.getChildren().add(gamePane);
-		
-		return pane;
+	class DefeatButtonHandlerClass implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			//START
+			System.out.println("Pressed defeat button");
+			Game game = window.getGame();
+			game.setDefeat();
+		}
+	}
+	
+	class MenuButtonHandlerClass implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			//START
+			System.out.println("Pressed menu button");
+			Game game = window.getGame();
+			game.setDefeat();
+			game.logout();
+			window.getMainMenu();
+		}
 	}
 }

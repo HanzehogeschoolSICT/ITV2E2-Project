@@ -64,4 +64,9 @@ public class Window {
 	public Main getMain(){
 		return this.main;
 	}
+	
+	public void update(){
+		this.currentWindow.update();
+		return;
+	}
 }
