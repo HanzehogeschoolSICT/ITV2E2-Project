@@ -13,4 +13,6 @@ public interface Game {
 	public void logout();
 	public void setHuman(boolean human);
 	public boolean getHuman();
+	public int getGameStatus();
+	public boolean getTurn(); 
 }

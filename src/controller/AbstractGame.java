@@ -61,4 +61,12 @@ abstract class AbstractGame implements Game{
 	public boolean getHuman(){
 		return this.isHuman;
 	}
+	
+	public int getGameStatus(){
+		return 1;
+	}
+	
+	public boolean getTurn(){
+		return true;
+	}
 }

@@ -1,5 +1,7 @@
 package view;
 
+import java.io.FileInputStream;
+
 import controller.TicTacToe;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -32,7 +34,13 @@ public class TicTacToeScreen extends AbstractGameScreen{
 	@Override
 	protected ImageView createPlayer(){
 		ImageView xView = new ImageView();
-		Image xImage = new Image("src/view/images/x.png");
+		FileInputStream file = null;
+		try{
+			file = new FileInputStream("src/view/images/x.png");
+		} catch (Exception e){
+			System.out.println("Cant find image: src/view/images/x.png");
+		}
+		Image xImage = new Image(file);
 		xView.setImage(xImage);
 		xView.setPreserveRatio(true);
 		xView.setFitHeight(150);
@@ -42,7 +50,13 @@ public class TicTacToeScreen extends AbstractGameScreen{
 	@Override
 	protected ImageView createOponent(){
 		ImageView oView = new ImageView();
-		Image oImage = new Image("src/view/images/o.png");
+		FileInputStream file = null;
+		try{
+			file = new FileInputStream("src/view/images/o.png");
+		} catch (Exception e){
+			System.out.println("Cant find image: src/view/images/o.png");
+		}
+		Image oImage = new Image(file);
 		oView.setImage(oImage);
 		oView.setPreserveRatio(true);
 		oView.setFitHeight(150);

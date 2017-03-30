@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import model.Connection;
 
 public class Window {
 	private WindowScreen currentWindow; 
@@ -68,5 +69,9 @@ public class Window {
 	public void update(){
 		this.currentWindow.update();
 		return;
+	}
+
+	public Connection getConnection() {
+		return this.main.getConnection();
 	}
 }

@@ -93,7 +93,7 @@ public abstract class AbstractGameScreen implements GameScreen {
 				String[] coords = userdata.split(",");
 				System.out.println("Pressed button" + userdata);
 				if (game.getGameStart() == true){
-					if (game.getHuman() == true){
+					if (game.getHuman() == true && game.getTurn() == true){
 						game.setMove(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
 					}
 				} else {

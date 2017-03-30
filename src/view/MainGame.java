@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+
 import controller.Game;
 import controller.Main;
 import javafx.event.ActionEvent;
@@ -19,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import model.Connection;
 
 public class MainGame implements WindowScreen {
 	private Window window;
@@ -49,9 +52,9 @@ public class MainGame implements WindowScreen {
 		this.pane.setRight(menuPane);
 	}
 	
-	@SuppressWarnings("unused")
 	public void update(){
-		String[] playerlist = null;
+		Connection conn = this.window.getConnection();
+		ArrayList<String> playerlist = conn.getPlayerList();
 		if (playerlist != null){
 			this.playerlist.setText(playerlist.toString());
 		} else {
@@ -69,9 +72,13 @@ public class MainGame implements WindowScreen {
 	private void updateRightPane(){
 		Game game = this.window.getGame();
 		if (game.getGameStart() == true){
-			this.inputOponent.setText("OPONENT ?");
-			this.inputScore.setText("1000");
-			this.inputTurn.setText("YOURS ?");
+			this.inputOponent.setText("Oponent name");
+			this.inputScore.setText("0");
+			if (game.getTurn() == true){
+				this.inputTurn.setText("Yours");
+			} else {
+				this.inputTurn.setText("Oponents");
+			} 
 		} else {
 			this.inputOponent.setText("");
 			this.inputScore.setText("0");
