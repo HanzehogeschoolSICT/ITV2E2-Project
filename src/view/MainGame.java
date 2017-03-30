@@ -62,6 +62,8 @@ public class MainGame implements WindowScreen {
 		this.pane.setCenter(paneCenter);
 		
 		updateRightPane();
+		
+		updateDefeatButton();
 	}
 	
 	private void updateRightPane(){
@@ -197,6 +199,15 @@ public class MainGame implements WindowScreen {
 		pane.getChildren().add(buttonMenu);
 		
 		return pane;
+	}
+	
+	private void updateDefeatButton(){
+		Game game = this.window.getGame();
+		if (game.getGameStart() == true){
+			this.buttonDefeat.setDisable(false);
+		} else {
+			this.buttonDefeat.setDisable(true);
+		}
 	}
 	
 	//Event Handlers
