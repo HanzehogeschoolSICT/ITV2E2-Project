@@ -7,6 +7,7 @@ import controller.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -61,14 +63,54 @@ public class MainGame implements WindowScreen {
 			this.playerlist.setText("");
 		}
 		
-		Pane paneCenter = updateCenterpane();
+		Pane paneCenter = getCenterpane();
 		this.pane.setCenter(paneCenter);
 		
 		updateRightPane();
-		
 		updateDefeatButton();
 	}
 	
+	private Pane getCenterpane(){
+		Pane paneCenter = updateCenterpane();
+
+		Label text = getGameStatusLabel();
+		if (text != null){
+			StackPane pane = new StackPane();
+			pane.getChildren().add(paneCenter);
+			pane.setAlignment(Pos.CENTER);
+			
+			pane.getChildren().add(text);
+			
+			return pane;
+		} else {
+			return paneCenter;
+		}
+	}
+	
+	private Label getGameStatusLabel() {
+		Game game = this.window.getGame();
+		int gameStatus = game.getGameStatus();
+
+		Label labelText = new Label();
+		labelText.setFont(new Font("Calibri", 200));
+		labelText.setRotate(45);
+		
+		if (gameStatus == -1){
+			labelText.setText("Lost");
+			labelText.setTextFill(Color.RED);
+			return labelText;
+		} else if (gameStatus == 2){
+			labelText.setText("Won");
+			labelText.setTextFill(Color.GREEN);
+			return labelText;
+		} else if (gameStatus == 3){
+			labelText.setText("Tie");
+			labelText.setTextFill(Color.GRAY);
+			return labelText;
+		}
+		return null;
+	}
+
 	private void updateRightPane(){
 		Game game = this.window.getGame();
 		if (game.getGameStart() == true){
