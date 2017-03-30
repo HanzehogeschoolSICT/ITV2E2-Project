@@ -2,10 +2,13 @@ package model;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
+import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.regex.Pattern;
 
 public abstract class Connection {
@@ -13,7 +16,7 @@ public abstract class Connection {
     private static final String LOGIN_MESSAGE = "Strategic Game Server Fixed [Version 1.1.0](C) Copyright 2015 Hanzehogeschool Groningen";
 
     private boolean active;
-    private Thread serverThread;
+    private Queue<String> writeQueue;
     private Observer outputObserver;
 
     private String playerName;
@@ -25,6 +28,7 @@ public abstract class Connection {
     private Socket socket;
 
     private BufferedReader inputReader;
+    private InputStream inputStream;
     private PrintWriter printWriter;
 
     public Connection(String address, Integer port) {
@@ -34,41 +38,45 @@ public abstract class Connection {
         this.address = address;
         this.port = port;
         this.active = false;
+        this.writeQueue = new ArrayDeque<>();
     }
 
     public void establish() throws IOException {
         this.socket = new Socket(this.address, this.port);
 
         InputStream inputStream = socket.getInputStream();
+        this.inputStream = inputStream;
         this.inputReader = new BufferedReader(new  InputStreamReader(inputStream));
 
         OutputStream outputStream = socket.getOutputStream();
-        this.printWriter = new PrintWriter(new OutputStreamWriter(outputStream));
+        this.printWriter = new PrintWriter(new OutputStreamWriter(outputStream), true);
 
-        startServerThread();
+        startServer();
     }
 
-    private void startServerThread() {
-        this.serverThread = new Thread(() -> {
-            try {
-                StringBuilder stringBuilder = new StringBuilder();
-                String line;
-                while ((line = inputReader.readLine()) != null) { //ToDo write a close method.
-                    System.out.println(line);
-                    if (stringBuilder != null) {
-                        stringBuilder.append(line);
-                        if (stringBuilder.toString().equals(LOGIN_MESSAGE)){
-                            this.active = true;
-                            stringBuilder = null;
-                            outputObserver.onConnect();
-                        }
-                    }
+    private void startServer() {
+        try {
+            while (socket.isConnected()) {
+                int read;
+                while ((read = inputReader.read()) != 0) {
+                    System.out.println((char) read);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+                if(writeQueue.size() >= 1) printWriter.println(writeQueue.poll());
+//
+//                if (inputStream.available() != 0) {
+//
+//                } else {
+//                }
             }
-        });
-        this.serverThread.start();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    private String streamToString(InputStream inputStream) throws IOException {
+        StringWriter stringWriter = new StringWriter();
+        IOUtils.copy(inputStream, stringWriter);
+        return stringWriter.toString();
     }
 
     public static boolean isAdressValid(String address) {
@@ -111,9 +119,8 @@ public abstract class Connection {
      * @return True if the login was successful, else false.
      */
     public boolean login(@NotNull String playerName) {
-        printWriter.write("login " + playerName);
-        printWriter.flush();
-        return true;
+        writeQueue.add("login " + playerName);
+        return false;
     }
 
     /**
