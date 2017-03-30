@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Optional;
+
 import controller.Game;
 //Project libs
 import controller.Main;
@@ -8,6 +10,7 @@ import controller.Main;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import model.Connection;
 
@@ -73,5 +76,18 @@ public class Window {
 
 	public Connection getConnection() {
 		return this.main.getConnection();
+	}
+	
+	public void getChallenged(String oponentname, int challengenumber){
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Challenge request");
+		alert.setHeaderText("You got challenged");
+		alert.setContentText("You got challenged by player " + oponentname + ". You up for it ?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+		    Connection conn = this.getConnection();
+		    conn.accept_challenge(challengenumber);
+		}
 	}
 }
