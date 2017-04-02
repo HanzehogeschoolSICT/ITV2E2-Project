@@ -48,7 +48,5 @@ public class Main extends Application {
 		return this.window;
 	}
 	
-	public boolean challengePlayer(String playername){
-		return false;
-	}
+	
 }

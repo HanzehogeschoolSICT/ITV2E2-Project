@@ -100,11 +100,20 @@ abstract class AbstractGame implements Game{
 			Connection conn = this.main.getConnection();
 		    conn.accept_challenge(challengenumber);
 		}
+		return;
 	}
 	
 	public void stopChallenge(){
 		this.main.getWindow().stopChallenge();
-	
+		return;
 	}
 	
+	public boolean challengePlayer(String playername){
+		Connection connection = this.main.getConnection();
+		if(connection.challenge(playername, this.getGameType())){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
