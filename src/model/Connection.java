@@ -251,4 +251,16 @@ public class Connection {
 
     }
 
+
+	public String getServerIPAddress() {
+		return this.address + ":" + this.port;
+	}
+
+	public String getPlayername(){
+		return this.playerName;
+	}
+	
+	public String getOponentname(){
+		return this.opponentName;
+	}
 }
