@@ -256,11 +256,11 @@ public class MainGame extends AbstractWindowScreen {
 		return pane;
 	}
 	
-	private void challegePlayer(){
+	private void challengePlayer(){
 		String playername = this.challegePlayername.getText();
-		Main main = window.getMain();
-		boolean challege = main.challengePlayer(playername);
-		if (challege == true){
+		Game game = this.window.getGame();
+		boolean challenge = game.challengePlayer(playername);
+		if (challenge == true){
 			//NEW GAME ?
 		} else {
 			Alert alert = new Alert(AlertType.WARNING);
@@ -368,7 +368,7 @@ public class MainGame extends AbstractWindowScreen {
 		public void handle(ActionEvent e) {
 			//START
 			System.out.println("Pressed challenge button");
-			challegePlayer();
+			challengePlayer();
 		}
 	}
 	
