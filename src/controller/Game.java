@@ -16,4 +16,5 @@ public interface Game {
 	public int getGameStatus();
 	public boolean getTurn();
 	public String getGameType(); 
+	public boolean challengePlayer(String playername);
 }
