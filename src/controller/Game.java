@@ -14,5 +14,6 @@ public interface Game {
 	public void setHuman(boolean human);
 	public boolean getHuman();
 	public int getGameStatus();
-	public boolean getTurn(); 
+	public boolean getTurn();
+	public String getGameType(); 
 }

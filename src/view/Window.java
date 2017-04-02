@@ -1,18 +1,20 @@
 package view;
 
-import java.util.Optional;
-
-import controller.Game;
 //Project libs
+import controller.Game;
 import controller.Main;
+import model.Connection;
 
 //System libs
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import model.Connection;
+
+import java.io.FileInputStream;
+import java.util.Optional;
 
 public class Window {
 	private WindowScreen currentWindow; 
@@ -28,13 +30,27 @@ public class Window {
 	
 	public void init(){
 		primaryStage.setTitle("ITV2E2");
+		primaryStage.getIcons().add(getIcon());
 		//primaryStage.setScene(mainScene);
 		primaryStage.setResizable(false);
+		primaryStage.setHeight(650);
+		primaryStage.setWidth(1000);
 		
 		getMainMenu();
 		primaryStage.show();
 	}
 	
+	private Image getIcon() {
+		FileInputStream file = null;
+		try{
+			file = new FileInputStream("src/view/images/logo.png");
+		} catch (Exception e){
+			System.out.println("Cant find image: src/view/images/logo.png");
+		}
+		Image logoImage = new Image(file);
+		return logoImage;
+	}
+
 	public void createGame(String gametype, String ipaddress, String portnumber, String playertype, String playername){
 		Game game = this.main.createGame(gametype, ipaddress, portnumber, playertype, playername);
 		if (game != null){

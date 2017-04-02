@@ -4,12 +4,10 @@ import java.io.FileInputStream;
 
 import controller.Othello;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
 
 public class OthelloScreen extends AbstractGameScreen{
 	public OthelloScreen(Othello othello) {
@@ -20,10 +18,6 @@ public class OthelloScreen extends AbstractGameScreen{
 	public Pane create(){
 		this.pane = new BorderPane();
 		pane.setPadding(new Insets(5, 5, 5, 5));
-		
-		Label labelHeader = new Label("Othello");
-		labelHeader.setFont(new Font("Calibri", 24));
-		this.pane.setTop(labelHeader);
 		
 		Pane boardPane = createBoard();
 		this.pane.setCenter(boardPane);

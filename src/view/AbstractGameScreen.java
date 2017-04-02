@@ -3,9 +3,11 @@ package view;
 import controller.Game;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -13,24 +15,24 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.Board;
 
+@SuppressWarnings("unused")
 public abstract class AbstractGameScreen implements GameScreen {
 	protected Game game;
 	protected BorderPane pane;
 	
 	public Pane createBoard(){
 		Board board = this.game.getBoard(); 
-		VBox boardPane = new VBox();
+		GridPane boardPane = new GridPane();
+		boardPane.setHgap(5);
+		boardPane.setVgap(5);
+		boardPane.setAlignment(Pos.CENTER);
 		boardPane.setPadding(new Insets(5, 5, 5, 5));
 		
-		boardPane.setSpacing(5);
 		for (int y=0;y<board.getRows();y++){
-			HBox row = new HBox();
-			row.setSpacing(5);
 			for(int x=0;x<board.getColumns();x++){
 				Pane box = getBoardValue(x,y);
-				row.getChildren().add(box);
+				boardPane.add(box, y, x);
 			}
-			boardPane.getChildren().add(row);
 		}
 		return boardPane;
 	}
@@ -64,7 +66,8 @@ public abstract class AbstractGameScreen implements GameScreen {
 		Rectangle col = new Rectangle();
 		col.setHeight(150);
 		col.setWidth(150);
-		col.setFill(Color.YELLOW);
+		col.setFill(Color.DARKCYAN);
+		col.setStyle("-fx-cursor: hand;");
 		col.setUserData(y+","+x);
 		col.setOnMouseClicked(new SquareHandlerClass());
 		return col;
