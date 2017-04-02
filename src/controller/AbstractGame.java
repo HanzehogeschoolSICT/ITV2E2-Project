@@ -93,4 +93,18 @@ abstract class AbstractGame implements Game{
 		this.myTurn = turn;
 		return this.myTurn;
 	}
+	
+	public void getChallenged(String opponentname, int challengenumber){
+		boolean accept = this.main.getWindow().getChallenged(opponentname, challengenumber);
+		if(accept){
+			Connection conn = this.main.getConnection();
+		    conn.accept_challenge(challengenumber);
+		}
+	}
+	
+	public void stopChallenge(){
+		this.main.getWindow().stopChallenge();
+	
+	}
+	
 }

@@ -94,16 +94,21 @@ public class Window {
 		return this.main.getConnection();
 	}
 	
-	public void getChallenged(String oponentname, int challengenumber){
+	public boolean getChallenged(String opponentname, int challengenumber){
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Challenge request");
 		alert.setHeaderText("You got challenged");
-		alert.setContentText("You got challenged by player " + oponentname + ". You up for it ?");
+		alert.setContentText("You got challenged by player " + opponentname + ". You up for it ?");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
-		    Connection conn = this.getConnection();
-		    conn.accept_challenge(challengenumber);
+		    return true;
+		}else{
+			return false;
 		}
+	}
+	
+	public void stopChallenge(){
+		
 	}
 }
