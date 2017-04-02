@@ -36,7 +36,7 @@ public class Main extends Application {
 		boolean isHuman = playertype.equals("Player");
 		this.game = new TicTacToe(this);
 		this.game.setHuman(isHuman);
-		this.connectionModel = new Connection(ipaddress, Integer.parseInt(portnumber));
+		this.connectionModel = new Connection(ipaddress, Integer.parseInt(portnumber), playername);
 		return this.game;
 	}
 	

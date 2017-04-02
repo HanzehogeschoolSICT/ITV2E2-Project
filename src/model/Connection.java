@@ -18,9 +18,10 @@ public class Connection {
     private String address;
     private Socket socket;
 
-    public Connection(String address, Integer port) {
+    public Connection(String address, Integer port, String playername) {
         this.address = address;
         this.port = port;
+        this.playerName = playername;
     }
 
     public void establish() throws IOException {
