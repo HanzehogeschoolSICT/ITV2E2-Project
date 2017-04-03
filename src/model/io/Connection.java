@@ -1,45 +1,55 @@
-package model;
+package model.io;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-import model.io.OutputServer;
 
 import java.io.*;
+import java.lang.reflect.MalformedParametersException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Connection {
 
-    private static final String OK = "OK";
-    private static final String ERR = "ERR";
-
-    private boolean active;
-    private Observer outputObserver;
-
-    private String playerName;
-    private String opponentName;
-    private Integer challengeNumber;
-
     private Integer port;
     private String address;
     private Socket socket;
 
-    private OutputServer server;
+    private OutputServer outputServer;
+    private InputServer inputServer;
+
+    private Observer observer;
 
     public Connection(String address, Integer port) {
-        if (!isAdressValid(address)) throw new DataException("Malformed address: " + address);
-        if (port <= 0 || port > 65535) throw new DataException("Malformed port: " + port);
+        if (!isAdressValid(address)) throw new MalformedParametersException("Malformed address: " + address);
+        if (port <= 0 || port > 65535) throw new MalformedParametersException("Malformed port: " + port);
 
         this.address = address;
         this.port = port;
-        this.active = false;
     }
 
     public void establish(String playerName) throws IOException {
-        this.playerName = playerName;
-        this.server = new OutputServer(this.address, this.port);
-        this.server.start(message -> login(playerName));
+        this.outputServer = new OutputServer(this);
+        this.inputServer = new InputServer(this);
+        setObserver();
+        this.outputServer.start();
+        inputServer.start();
+        login(playerName);
+    }
+
+    private void setObserver() {
+        OutputHandler handler = new OutputHandler(observer);
+        this.outputServer.setObserver(new OutputServer.Observer() {
+            @Override
+            public void onNewLine(String line) {
+                handler.handle(line);
+            }
+
+            @Override
+            public void onEndOfLine() {
+                System.out.println("===============================");
+            }
+        });
     }
 
     public static boolean isAdressValid(String address) {
@@ -69,7 +79,7 @@ public class Connection {
     }
 
     /**
-     * Sends a login request to the server to login the player with the given playerName.
+     * Sends a login request to the outputServer to login the player with the given playerName.
      * <pre>
      *     {@code
      *      Inloggen:
@@ -79,17 +89,13 @@ public class Connection {
      *     }
      * </pre>
      * @param playerName The name to register. (cannot be null)
-     * @return True if the login was successful, else false.
      */
-    public boolean login(@NotNull String playerName) {
-        this.server.submit("login " + playerName, outputQueue -> {
-            for (String string : outputQueue) System.out.println(string);
-        });
-        return false;
+    public void login(@NotNull String playerName) {
+        this.inputServer.submit("login " + playerName);
     }
 
     /**
-     * Sends a logout request to the server to logout the current player.
+     * Sends a logout request to the outputServer to logout the current player.
      * Returns nothing when successful, else it returns a {@code Connection.ServerMessage.ERR} with the reason of failure.
      * <pre>
      *     {@code
@@ -99,14 +105,13 @@ public class Connection {
      *      ->Verbinding is verbroken.
      *     }
      * </pre>
-     * @return True if the logout was successful, else false.
      */
-    public boolean logout(){
-        return false;
+    public void logout(){
+        this.inputServer.submit("logout");
     }
 
     /**
-     * Sends a request to the server in order to retrieve a list of available games on the server.
+     * Sends a request to the outputServer in order to retrieve a list of available games on the outputServer.
      * <pre>
      *     {@code
      *      Lijst opvragen met ondersteunde spellen:
@@ -116,14 +121,13 @@ public class Connection {
      *      ->Lijst met spellen ontvangen.
      *     }
      * </pre>
-     * @return The list of available games on the server if successful, else null.
      */
-    public ArrayList<String> getGameList(){
-        return null;
+    public void getGameList(){
+        this.inputServer.submit("get gamelist");
     }
 
     /**
-     * Sends a request to the server in order to retrieve a list of logged-in players on the server.
+     * Sends a request to the outputServer in order to retrieve a list of logged-in players on the outputServer.
      * <pre>
      *     {@code
      *      Lijst opvragen met verbonden spelers:
@@ -133,14 +137,13 @@ public class Connection {
      *      ->Lijst met spelers ontvangen.
      *     }
      * </pre>
-     * @return The list of logged-in players on the server if successful, else null.
      */
-    public ArrayList<String> getPlayerList(){
-        return null;
+    public void getPlayerList(){
+
     }
 
     /**
-     * Sends a request to the server in order to subscribe to a gametype on the server.
+     * Sends a request to the outputServer in order to subscribe to a gametype on the outputServer.
      * <pre>
      *     {@code
      *      Lijst opvragen met verbonden spelers:
@@ -151,48 +154,45 @@ public class Connection {
      *     }
      * </pre>
      * @param gameType The gametype to subscribe to.
-     * @return True if the request was successful at subscribing, else false.
      */
-    public boolean subscribe(@NotNull String gameType){
-        return false;
+    public void subscribe(@NotNull String gameType){
+        this.inputServer.submit("subscribe " + gameType);
     }
 
     /**
-     * Sends a request to the server to do a move.
+     * Sends a request to the outputServer to do a move.
      * <pre>
      *     {@code
      *      Een zet doen na het toegewezen krijgen van een beurt:
      *      C: move <zet>
      *      S: OK
-     *      ->De zet is geaccepteerd door de server, gevolg voor spel zal volgen
+     *      ->De zet is geaccepteerd door de outputServer, gevolg voor spel zal volgen
      *     }
      * </pre>
      * @param row The row to do the move on.
      * @param column The column to do the move on.
-     * @return True if the request was successful, else false if the move is invalid.
      */
-    public boolean move(@NotNull Integer row, @NotNull Integer column){
-        return false;
+    public void move(@NotNull Integer row, @NotNull Integer column){
+
     }
 
     /**
-     * Sends a request to the server in order to forfeit and tell the other player you give up.
+     * Sends a request to the outputServer in order to forfeit and tell the other player you give up.
      * <pre>
      *     {@code
      *      Een match opgeven:
      *      C: forfeit
      *      S: OK
-     *      ->De speler heeft het spel opgegeven, de server zal het resultaat van de match doorgeven.
+     *      ->De speler heeft het spel opgegeven, de outputServer zal het resultaat van de match doorgeven.
      *     }
      * </pre>
-     * @return True if the request was successful, else false.
      */
-    public boolean forfeit(){
-        return false;
+    public void forfeit(){
+
     }
 
     /**
-     * Send a request to the server in order to challenge another player to a game using the players name and what game to play.
+     * Send a request to the outputServer in order to challenge another player to a game using the players name and what game to play.
      * <pre>
      *     {@code
      *      Een speler uitdagen voor een spel:
@@ -203,14 +203,13 @@ public class Connection {
      * </pre>
      * @param opponentName The name of the opponent to challenge.
      * @param gameType The type of game to play.
-     * @return True if the request was successful, else false.
      */
-    public boolean challenge(String opponentName, String gameType){
-        return false;
+    public void challenge(String opponentName, String gameType){
+        this.inputServer.submit("challenge \"" + opponentName + "\" \"" + gameType + "\"");
     }
 
     /**
-     * Sends a request to the server in order to accept a pending challenge invite from another player.
+     * Sends a request to the outputServer in order to accept a pending challenge invite from another player.
      * <pre>
      *     {@code
      *      Een uitdaging accepteren:
@@ -220,62 +219,46 @@ public class Connection {
      *     }
      * </pre>
      * @param challengeNumber The challenge number of the challenge to be accepted.
-     * @return True if the request was successful, else false.
      */
-    public boolean accept_challenge(Integer challengeNumber){
-        return false;
+    public void accept_challenge(Integer challengeNumber){
+        this.inputServer.submit("challenge accept " + challengeNumber);
     }
 
     /**
-     * Send a request to the server in order to view the help page of either a command or the full page.
+     * Send a request to the outputServer in order to view the help page of either a command or the full page.
      * <pre>
      *     {@code
      *      Help opvragen:
      *      C: help
      *      S: OK
-     *      ->De client heeft nu help informatie opgevraagd, de server zal antwoorden met help informatie.
+     *      ->De client heeft nu help informatie opgevraagd, de outputServer zal antwoorden met help informatie.
      *
      *      Help opvragen van een commando:
      *      C: help <commando>
      *      S: OK
-     *      ->De client heeft nu help informatie opgevraagd voor een commando, de server zal antwoorden met help informatie.
+     *      ->De client heeft nu help informatie opgevraagd voor een commando, de outputServer zal antwoorden met help informatie.
      *     }
      * </pre>
      * @param command The command to view the help page of, if null, the full help page is shown.
-     * @return A String with the help text that was send by the server.
      */
-    public String help(@Nullable String command){
-        return null;
+    public void help(@Nullable String command){
+
     }
 
-    class DataException extends RuntimeException {
-        public DataException(String message) {
-            super(message);
-        }
-    }
+
+
+
 
     public interface Observer {
-        void onConnect();
-        void onError(String message);
+        void onChallenge(String opponentName, int challengeNumber, String gameType);
+        void onChallengeCancelled(int challengeNumber, String comment);
+        void onYourTurn(String comment);
+        void onMove(String player, String details, int move);
+        void onGameEnd(int statusCode, String comment);
+        void onError(String comment);
     }
 
     //<editor-fold desc="Getters and Setters">
-    public boolean isActive() {
-        return active;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public String getOpponentName() {
-        return opponentName;
-    }
-
-    public Integer getChallengeNumber() {
-        return challengeNumber;
-    }
-
     public Integer getPort() {
         return port;
     }
@@ -284,8 +267,16 @@ public class Connection {
         return address;
     }
 
-    public void setOutputObserver(Observer outputObserver) {
-        this.outputObserver = outputObserver;
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public void setObserver(Observer observer) {
+        this.observer = observer;
     }
 
     //</editor-fold>

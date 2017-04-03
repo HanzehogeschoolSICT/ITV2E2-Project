@@ -17,47 +17,26 @@ package model.io;/*
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class OutputServer {
 
-    private static final String LOGIN_MESSAGE = "Strategic Game Server Fixed [Version 1.1.0](C) Copyright 2015 Hanzehogeschool Groningen";
-
-    private boolean connected;
-
-    private Integer port;
-    private String address;
-    private Socket socket;
-
-    private LinkedBlockingQueue<String> writeQueue;
-    private LinkedBlockingQueue<String> outputQueue;
-
-    private BufferedReader inputReader;
     private InputStream inputStream;
-    private PrintWriter printWriter;
+    private BufferedReader inputReader;
 
-    private LoopObserver observer;
-    private StartObserver startObserver;
+    private Connection connection;
 
-    public OutputServer(String address, Integer port) {
-        this.port = port;
-        this.address = address;
-        this.writeQueue = new LinkedBlockingQueue<>();
-        this.outputQueue = new LinkedBlockingQueue<>();
-        this.connected = false;
+    private Observer observer;
+
+    public OutputServer(Connection connection) {
+        this.connection = connection;
     }
 
-    public void start(StartObserver startObserver) throws IOException {
-        this.startObserver = startObserver;
-        this.socket = new Socket(this.address, this.port);
+    public void start() throws IOException {
+        this.connection.setSocket(new Socket(connection.getAddress(), connection.getPort()));
 
-        InputStream inputStream = socket.getInputStream();
+        InputStream inputStream = connection.getSocket().getInputStream();
         this.inputStream = inputStream;
         this.inputReader = new BufferedReader(new InputStreamReader(inputStream));
-
-        OutputStream outputStream = socket.getOutputStream();
-        this.printWriter = new PrintWriter(new OutputStreamWriter(outputStream), true);
 
         startLoop();
     }
@@ -65,55 +44,30 @@ public class OutputServer {
     private void startLoop() {
         new Thread(() -> {
             try {
-                runReadWriteLoop();
+                startReadLoop();
             } catch (IOException ioe) {
                 ioe.printStackTrace();
             }
         }).start();
     }
 
-    private void runReadWriteLoop() throws IOException {
-        while (true) {
-            if(writeQueue.size() >= 1) {
-                printWriter.println(writeQueue.poll());
-            } else if (inputStream.available() != 0) {
-                String line;
-                while ((line = inputReader.readLine()) != null) {
-                    System.out.println(line);
-                    outputQueue.add(line);
-                }
-                checkConnection();
-                Queue<String> result = new LinkedBlockingQueue<>(outputQueue);
-                if (observer != null) observer.onEndOfLine(result);
-                outputQueue = new LinkedBlockingQueue<>();
+    private void startReadLoop() throws IOException {
+        while (connection.getSocket().isConnected()) {
+            String line;
+            while ((line = inputReader.readLine()) != null) {
+                if (observer != null) observer.onNewLine(line);
+                if (!inputReader.ready() && observer != null) observer.onEndOfLine();
             }
         }
     }
 
-    private void checkConnection() {
-        if (!this.connected) {
-            StringBuilder builder = new StringBuilder();
-            for (String line : outputQueue) builder.append(line);
-            this.connected = builder.toString().equals(LOGIN_MESSAGE);
-            this.startObserver.onConnect(builder.toString());
-            this.outputQueue = new LinkedBlockingQueue<>();
-        }
+    public interface Observer {
+        void onNewLine(String line);
+        void onEndOfLine();
     }
 
-    public void submit(String command, LoopObserver observer) {
-        this.observer = observer;
-        printWriter.print(command);
-    }
-
-    public interface LoopObserver {
-        void onEndOfLine(Queue<String> outputQueue);
-    }
-
-    public interface StartObserver {
-        void onConnect(String message);
-    }
-
-    public void setObserver(LoopObserver observer) {
+    public void setObserver(Observer observer) {
         this.observer = observer;
     }
+
 }
