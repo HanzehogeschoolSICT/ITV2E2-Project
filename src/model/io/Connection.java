@@ -139,7 +139,7 @@ public class Connection {
      * </pre>
      */
     public void getPlayerList(){
-
+        this.inputServer.submit("get playerlist");
     }
 
     /**
@@ -172,8 +172,9 @@ public class Connection {
      * @param row The row to do the move on.
      * @param column The column to do the move on.
      */
-    public void move(@NotNull Integer row, @NotNull Integer column){
-
+    public void move(@NotNull Integer row, @NotNull Integer column, @NotNull Integer amountOfColumns){
+        Integer move = row * amountOfColumns + column;
+        this.inputServer.submit("move " + move);
     }
 
     /**
@@ -188,7 +189,7 @@ public class Connection {
      * </pre>
      */
     public void forfeit(){
-
+        this.inputServer.submit("exit");
     }
 
     /**
@@ -242,7 +243,7 @@ public class Connection {
      * @param command The command to view the help page of, if null, the full help page is shown.
      */
     public void help(@Nullable String command){
-
+        this.inputServer.submit("help " + (command != null ? command : "")); //Add the command if it isn't null.
     }
 
 
@@ -250,10 +251,13 @@ public class Connection {
 
 
     public interface Observer {
+        void onMove(String player, String details, int move);
+        void onYourTurn(String comment);
         void onChallenge(String opponentName, int challengeNumber, String gameType);
         void onChallengeCancelled(int challengeNumber, String comment);
-        void onYourTurn(String comment);
-        void onMove(String player, String details, int move);
+        void onHelp(String info);
+        void onGameList(ArrayList<String> games);
+        void onPlayerList(ArrayList<String> players);
         void onGameEnd(int statusCode, String comment);
         void onError(String comment);
     }

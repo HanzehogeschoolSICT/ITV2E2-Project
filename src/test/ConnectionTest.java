@@ -1,4 +1,6 @@
-package test;/*
+package test;
+
+/*
     Copyright (C) 28-3-17  Hanze Hogeschool ITV2D
 
     This program is free software: you can redistribute it and/or modify
@@ -18,6 +20,8 @@ package test;/*
 import model.io.Connection;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class ConnectionTest {
@@ -37,7 +41,7 @@ public class ConnectionTest {
             connection.setObserver(new Connection.Observer() {
                 @Override
                 public void onChallenge(String opponentName, int challengeNumber, String gameType) {
-                    connection.accept_challenge(challengeNumber);
+                    //ToDo SHow dialog to accept or cancel challenge.
                 }
 
                 @Override
@@ -48,12 +52,17 @@ public class ConnectionTest {
                 @Override
                 public void onYourTurn(String comment) {
                     //ToDo Wait for board to update.
+                    Scanner scanner = new Scanner(System.in);
+                    String[] input = scanner.nextLine().split(",");
+                    connection.move(
+                            Integer.parseInt(input[0]),
+                            Integer.parseInt(input[1]),
+                            Integer.parseInt(input[2]));
                 }
 
                 @Override
                 public void onMove(String player, String details, int move) {
                     //ToDo Update board with the new data.
-
                 }
 
                 @Override
@@ -65,11 +74,26 @@ public class ConnectionTest {
                 public void onError(String comment) {
                     //ToDo Inform the user an error has occurred.
                 }
+
+                @Override
+                public void onHelp(String info) {
+                    //ToDo Show a dialog with the received string.
+                }
+
+                @Override
+                public void onGameList(ArrayList<String> games) {
+                    //ToDo Update the list of games.
+                }
+
+                @Override
+                public void onPlayerList(ArrayList<String> players) {
+                    //ToDo Update the list of players.
+                }
             });
 
 
             connection.establish("test");
-            connection.subscribe("Tic-tac-toe");
+            connection.challenge("hans", "Tic-tac-toe");
         } catch (IOException e) {
             e.printStackTrace();
         }

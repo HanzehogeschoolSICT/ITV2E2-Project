@@ -83,11 +83,7 @@ public class OutputHandler {
                         }
                     } else if (contains(line, WIN, DRAW, LOSS)){
                         handleGameEnd(line);
-                    } else {
-
                     }
-                } else {
-                    //ToDo handle match messages.
                 }
             } else {
                 observer.onError(line);
@@ -178,7 +174,7 @@ public class OutputHandler {
         ArrayList<String> result = matchQoutes(line);
 
         this.observer.onYourTurn(
-                result.get(0) //The message extracted from the line.
+                result.size() >0 ? result.get(0) : "" //The message extracted from the line.
         );
     }
 
@@ -218,11 +214,16 @@ public class OutputHandler {
 
         this.observer.onMove(
                 result.get(0),
-                result.get(1),
-                Integer.parseInt(result.get(2))
+                result.size() > 0 ? result.get(2) : "",
+                Integer.parseInt(result.get(1))
         );
     }
 
+
+    /**
+     *
+     * @param line
+     */
     private void handleList(String line) {
 
     }
