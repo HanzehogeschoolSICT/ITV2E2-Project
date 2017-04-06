@@ -13,6 +13,14 @@ abstract class AbstractGame implements Game{
 	protected Main main;
 	protected boolean isHuman;
 	protected boolean myTurn;
+	/**
+	 * Status -1 	-> 	Lose
+	 * Status 0 	-> 	Not started
+	 * Status 1 	-> 	Started
+	 * Status 2 	-> 	Won
+	 * Status 3 	-> 	Draw
+	 */
+	protected int gameStatus = 0;
 	
 	public Pane updateGameScreen(){
 		return this.gamescreen.update();
@@ -81,7 +89,12 @@ abstract class AbstractGame implements Game{
 	}
 	
 	public int getGameStatus(){
-		return 1;
+		return this.gameStatus;
+	}
+
+	public void setGameStatus(int status){
+	    this.gameStatus = status;
+	    updateView();
 	}
 	
 	public boolean getTurn(){
@@ -92,7 +105,7 @@ abstract class AbstractGame implements Game{
 		this.myTurn = turn;
 		return this.myTurn;
 	}
-	
+
 	public void getChallenged(String opponentname, int challengenumber){
 		boolean accept = this.main.getWindow().getChallenged(opponentname, challengenumber);
 		if(accept){
