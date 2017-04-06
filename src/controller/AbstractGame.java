@@ -17,6 +17,7 @@ abstract class AbstractGame implements Game{
 	protected boolean isHuman;
 	protected boolean myTurn;
 	protected ArrayList<String> playerList;
+	protected String opponent;
 	/**
 	 * Status -1 	-> 	Lose
 	 * Status 0 	-> 	Not started
@@ -140,6 +141,7 @@ abstract class AbstractGame implements Game{
 	
 	public void resetBoard(){
 		this.board.createEmptyBoard();
+		this.setTurn(false);
 	}
 	
 	
@@ -150,5 +152,13 @@ abstract class AbstractGame implements Game{
 	
 	public ArrayList<String> getPlayerList() {
 		return this.playerList;
+	}
+	
+	public void setOpponent(String opponent){
+		this.opponent = opponent;
+	}
+	
+	public String getOpponent(){
+		return this.opponent;
 	}
 }

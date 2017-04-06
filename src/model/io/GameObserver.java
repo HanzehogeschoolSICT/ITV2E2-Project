@@ -80,5 +80,14 @@ public class GameObserver implements Observer{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void onGameMatch(String playerMove, String gameType, String Opponent){
+		if(this.game.getGameType().equals(gameType)){
+			this.game.setGameStatus(1);
+			this.game.resetBoard();
+			this.game.setOpponent(Opponent);
+		}
+	}
 
 }

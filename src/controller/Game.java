@@ -29,4 +29,7 @@ public interface Game {
 	public ArrayList<String> getPlayerList();
 	public void stopChallenge();
 	public void setGameStatus(int status);
+	public void resetBoard();
+	public String getOpponent();
+	public void setOpponent(String opponent);
 }
