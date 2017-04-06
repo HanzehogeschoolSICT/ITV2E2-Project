@@ -13,12 +13,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
-public class MainMenu implements WindowScreen {
+public class MainMenu extends AbstractWindowScreen {
 	private Window window;
 	private BorderPane pane;
 	
@@ -36,12 +37,19 @@ public class MainMenu implements WindowScreen {
 	
 	public void create(){
 		this.pane = new BorderPane();
-		Pane pane2 = new VBox();
-		pane2.setPadding(new Insets(15, 15, 15, 15)); 
+		this.pane.setBackground(this.getBackground());
+		this.pane.setTop(this.getHeader());
+		this.pane.setCenter(this.createPane());		
+	}
+	
+	private Pane createPane(){
+		Pane pane = new VBox();
+		pane.setPadding(new Insets(100, 400, 150, 400)); 
 		
-		Label labelHeader = new Label("ITV2E-2");
-		labelHeader.setFont(new Font("Calibri", 24));
-		pane2.getChildren().add(labelHeader);
+		Pane pane2 = new VBox();
+		pane2.setPadding(new Insets(5, 5, 5, 5)); 
+		pane2.setStyle("-fx-border-color: gray;-fx-border-width: 1;-fx-border-style: solid;");
+		pane.getChildren().add(pane2);
 		
 		Pane paneInputs = createInputs();
 		pane2.getChildren().add(paneInputs);
@@ -55,7 +63,12 @@ public class MainMenu implements WindowScreen {
 		Button startButton = createStartButton(); 
 		pane2.getChildren().add(startButton);
 		
-		this.pane.setCenter(pane2);		
+		return pane;
+	}
+	
+	public Pane getHeaderButtons(){
+		Pane pane = new Pane();
+		return pane;
 	}
 	
 	public void update(){
@@ -69,17 +82,20 @@ public class MainMenu implements WindowScreen {
 	private Pane createInputs(){
 		VBox boxInputs = new VBox();
 		
-		Label labelIpadres = new Label("IP-Address");
+		Label labelIpadres = new Label("Server IP-Address ");
+		labelIpadres.setFont(Font.font(null, FontWeight.BOLD, 12));
 		boxInputs.getChildren().add(labelIpadres);
 		this.inputIPaddress = new TextField();
 		boxInputs.getChildren().add(this.inputIPaddress);
 		
-		Label labelPort = new Label("Port number");
+		Label labelPort = new Label("Server port number ");
+		labelPort.setFont(Font.font(null, FontWeight.BOLD, 12));
 		boxInputs.getChildren().add(labelPort);
 		this.inputPortnumber = new TextField();
 		boxInputs.getChildren().add(this.inputPortnumber);
 		
-		Label labelPlayerName = new Label("Playername");
+		Label labelPlayerName = new Label("Playername ");
+		labelPlayerName.setFont(Font.font(null, FontWeight.BOLD, 12));
 		boxInputs.getChildren().add(labelPlayerName);
 		this.inputPlayername = new TextField();
 		boxInputs.getChildren().add(this.inputPlayername);
@@ -89,10 +105,11 @@ public class MainMenu implements WindowScreen {
 	
 	private Pane createGameTypeSelect(){
 		VBox boxGameType = new VBox();
-		Label GameType = new Label("Game");
+		Label GameType = new Label("Gametype ");
+		GameType.setFont(Font.font(null, FontWeight.BOLD, 12));
 		boxGameType.getChildren().add(GameType);
 		
-		this.selectGameType = new ChoiceBox<String>(FXCollections.observableArrayList("Tic-Tac-Toe", "Othello"));
+		this.selectGameType = new ChoiceBox<String>(FXCollections.observableArrayList("Tic tac toe", "Othello"));
 		this.selectGameType.getSelectionModel().selectFirst();
 		boxGameType.getChildren().add(this.selectGameType);
 		
@@ -101,23 +118,26 @@ public class MainMenu implements WindowScreen {
 	
 	private Pane createAIRadios(){
 		VBox boxRadios = new VBox();
+		boxRadios.setPadding(new Insets(0, 0, 5, 0));
 		
 		Label Ai = new Label("Player or AI");
+		Ai.setFont(Font.font(null, FontWeight.BOLD, 12));
 		boxRadios.getChildren().add(Ai);
 		
-		HBox boxAI = new HBox();
+		GridPane boxAI = new GridPane();
+		boxAI.setHgap(10);
 		this.radioAI = new ToggleGroup();
 
 		RadioButton radioPlayer = new RadioButton("Player");
 		radioPlayer.setUserData("Player");
 		radioPlayer.setToggleGroup(this.radioAI);
 		radioPlayer.setSelected(true);
-		boxAI.getChildren().add(radioPlayer);
+		boxAI.add(radioPlayer, 0, 0);
 
 		RadioButton radioAI = new RadioButton("AI");
 		radioAI.setUserData("AI");
 		radioAI.setToggleGroup(this.radioAI);
-		boxAI.getChildren().add(radioAI);
+		boxAI.add(radioAI, 1, 0);
 		
 		boxRadios.getChildren().add(boxAI);
 		return boxRadios;
@@ -130,7 +150,7 @@ public class MainMenu implements WindowScreen {
 		String game = this.selectGameType.getValue();
 		String playertype = this.radioAI.getSelectedToggle().getUserData().toString();
 		
-		if (ipaddress.length() > 6 && portnumber.length() > 2 && playername.length() > 5  && game != null && playertype != null){
+		if (ipaddress.length() > 6 && portnumber.length() > 1 && playername.length() > 2  && game != null && playertype != null){
 			window.createGame(game, ipaddress, portnumber, playertype, playername);
 		} else {
 			Alert alert = new Alert(AlertType.WARNING);
@@ -142,20 +162,17 @@ public class MainMenu implements WindowScreen {
 	}
 	
 	public Button createStartButton(){
-		Button startButton = new Button("Start");
+		Button startButton = new Button("Login");
 		startButton.setOnAction(new StartHandlerClass());
 		return startButton;
 	}
 	
 	class StartHandlerClass implements EventHandler<ActionEvent> {
-
 		@Override
-
 		public void handle(ActionEvent e) {
 			//START
 			System.out.println("Pressed start button");
 			createGame();
 		}
-
 	}
 }

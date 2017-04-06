@@ -1,15 +1,16 @@
 package controller;
 
-//Project libs
-import view.Window;
-import view.GameScreen;
-
-//System libs
+//System libraries
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.Connection;
+//Project libraries
+import view.Window;
 
 public class Main extends Application {
-	Window window;
+	private Window window;
+	private Game game;
+	private Connection connectionModel;
 	
 	public static void main(String args[]){
 		System.out.println("Starting ...");
@@ -25,21 +26,27 @@ public class Main extends Application {
 	 /**
      * Setup the connection and creates the game
      * @param game the game of the game to be played
-     * @param ipaddress Ipadres of game server
-     * @param portnumber Portnumber of gameserver
-     * @param playertype If player is a AI or Player
+     * @param ipadres IP-address of game server
+     * @param portnumber Port-number of game-server
+     * @param player If player is a AI or Player
      * @param playername The name of player
      * @return boolean True if game is created false is something went wrong
      */
-	public boolean createGame(String game, String ipaddress, String portnumber, String playertype, String playername){
-		return true;
+	public Game createGame(String game, String ipaddress, String portnumber, String playertype, String playername){
+		boolean isHuman = playertype.equals("Player");
+		this.game = new TicTacToe(this);
+		this.game.setHuman(isHuman);
+		this.connectionModel = new Connection(ipaddress, Integer.parseInt(portnumber), playername);
+		return this.game;
 	}
-
-	 /**
-     * Gets the Game screen from the game.
-     * @return Returns the screen of the game
-     */
-	public GameScreen getGameScreen() {
-		return null;
+	
+	public Connection getConnection(){
+		return this.connectionModel;
 	}
+	
+	public Window getWindow(){
+		return this.window;
+	}
+	
+	
 }

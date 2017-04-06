@@ -1,11 +1,20 @@
 package controller;
 
-public abstract class Game {
+import javafx.scene.layout.Pane;
+import model.Board;
 
-    private String gametype;
-
-    public Game(String gametype) {
-        this.gametype = gametype;
-    }
-
+public interface Game {
+	public boolean getGameStart(); 
+	public Pane createGameScreen();
+	public Pane updateGameScreen();
+	public Board getBoard();
+	public void setMove(int y, int x);
+	public void setDefeat();
+	public void logout();
+	public void setHuman(boolean human);
+	public boolean getHuman();
+	public int getGameStatus();
+	public boolean getTurn();
+	public String getGameType(); 
+	public boolean challengePlayer(String playername);
 }

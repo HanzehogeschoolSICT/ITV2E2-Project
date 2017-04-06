@@ -1,8 +1,15 @@
 package controller;
 
-public class Othello extends Game{
+import model.Board;
+import view.OthelloScreen;
 
-    public Othello(String gametype) {
-        super(gametype);
+public class Othello extends AbstractGame{
+
+
+    public Othello(Main main) {
+    	this.main = main;
+		this.gamescreen = new OthelloScreen(this);
+		this.board = new Board(8,8);
+		this.gameType = "Reversi";
     }
 }

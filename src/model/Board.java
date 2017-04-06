@@ -4,33 +4,40 @@ public class Board {
 
     private int rows;
     private int columns;
-    private Integer[][] spaces;
+    private int[][] spaces;
 
-    private Board(Integer rows, Integer columns) {
+    public Board(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
-        this.spaces = new Integer[rows - 1][columns - 1];
+        this.spaces = new int[rows][columns];
     }
 
-    public Integer get(int row, int column) {
+    public int get(int row, int column) {
         return this.spaces[row][column];
     }
 
     public void set(int value, int row, int column) {
         this.spaces[row][column] = value;
     }
+    
+    public boolean isValid(int y, int x){
+    	if(y > rows || y < 0 || x > columns || x < 0 || this.get(y,x) != 0){
+    		return false;
+    	}
+    	return true;
+    }
 
     //<editor-fold desc="Getters and Setters">
     public int getRows() {
-        return rows;
+        return this.rows;
     }
 
     public int getColumns() {
-        return columns;
+        return this.columns;
     }
 
-    public Integer[][] getSpaces() {
-        return spaces;
+    public int[][] getSpaces() {
+        return this.spaces;
     }
     //</editor-fold>
 
