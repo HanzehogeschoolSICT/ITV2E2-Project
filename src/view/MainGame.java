@@ -112,7 +112,7 @@ public class MainGame extends AbstractWindowScreen {
 		Game game = this.window.getGame();
 		if (game.getGameStart() == true){
 			this.inputOponent.setText("Oponent name");
-			this.inputScore.setText("0");
+			this.inputScore.setText(game.getOponentname());
 			if (game.getTurn() == true){
 				this.inputTurn.setText("Yours");
 			} else {
