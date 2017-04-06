@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import javafx.scene.layout.Pane;
 import model.Board;
 import model.io.Connection;
@@ -13,6 +15,7 @@ abstract class AbstractGame implements Game{
 	protected Main main;
 	protected boolean isHuman;
 	protected boolean myTurn;
+	protected ArrayList<String> playerList;
 	/**
 	 * Status -1 	-> 	Lose
 	 * Status 0 	-> 	Not started
@@ -128,5 +131,15 @@ abstract class AbstractGame implements Game{
 	
 	public void resetBoard(){
 		this.board.createEmptyBoard();
+	}
+	
+	
+	public void setPlayerList(ArrayList<String> players) {
+		this.playerList = players;	
+	}
+
+	
+	public ArrayList<String> getPlayerList() {
+		return this.playerList;
 	}
 }

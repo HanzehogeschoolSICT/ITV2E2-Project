@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import model.Board;
 import view.OthelloScreen;
 
@@ -12,4 +14,5 @@ public class Othello extends AbstractGame{
 		this.board = new Board(8,8);
 		this.gameType = "Reversi";
     }
+
 }
