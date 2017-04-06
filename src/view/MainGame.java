@@ -151,11 +151,12 @@ public class MainGame extends AbstractWindowScreen {
 	
 	private void updateLeftPane(){
 		Game game = window.getGame();
-		this.playerlist.setText(game.getPlayerList().toString());
+		//this.playerlist.setText(game.getPlayerList().toString());
 		this.playerlistCount = this.playerlistCount + 1;
 		if (this.playerlistCount > 4){
 			Connection conn = this.window.getConnection();
 			conn.getPlayerList();
+			this.playerlistCount = 0;
 		}
 	}
 	
