@@ -24,7 +24,7 @@ public interface Game {
 	public boolean challengePlayer(String playername);
 	public void getChallenged(String opponentname, int challengenumber);
 	
-	public void serverMove(int y, int x);
+	public void serverMove(int y, int x, boolean yourTurn);
 	public void setPlayerList(ArrayList<String> players);
 	public ArrayList<String> getPlayerList();
 	public void stopChallenge();

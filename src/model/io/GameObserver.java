@@ -21,7 +21,13 @@ public class GameObserver implements Observer{
 		Board board = this.game.getBoard();
 		int x = move % board.getColumns();
 		int y = move / board.getColumns();
-		this.game.serverMove(y, x);
+		boolean yourTurn;
+		if(player.equals(this.game.getOpponent())){
+			yourTurn = false;
+		}else{
+			yourTurn = true;
+		}
+		this.game.serverMove(y, x, yourTurn);
 		System.out.println(details);
 		
 	}

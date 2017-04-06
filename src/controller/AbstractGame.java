@@ -58,11 +58,11 @@ abstract class AbstractGame implements Game{
 		return;
 	}
 	
-	public void serverMove(int y, int x){
-		if(!this.myTurn){
-			this.board.set(2, y, x);
-		}else{
+	public void serverMove(int y, int x, boolean yourTurn){
+		if(yourTurn){
 			this.board.set(1, y, x);
+		}else{
+			this.board.set(2, y, x);
 		}
 		this.updateView();
 		return;
