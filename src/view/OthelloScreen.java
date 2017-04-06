@@ -15,6 +15,11 @@ public class OthelloScreen extends AbstractGameScreen{
 	}
 
 	@Override
+	public int getSquareSize(){
+		return 50;
+	}
+	
+	@Override
 	public Pane create(){
 		this.pane = new BorderPane();
 		pane.setPadding(new Insets(5, 5, 5, 5));

@@ -83,11 +83,13 @@ abstract class AbstractGame implements Game{
 	public void setDefeat(){
 		Connection conn = this.main.getConnection();
 		conn.forfeit();
-		return;
+		this.setGameStatus(-1);
+		this.updateView();
 	}
 	
 	public void logout(){
-		return;
+		Connection conn = this.main.getConnection();
+		conn.logout();
 	}
 	
 	public String getGameType(){
@@ -107,6 +109,7 @@ abstract class AbstractGame implements Game{
 	}
 
 	public void setGameStatus(int status){
+		System.out.println("setGameStatus: " + ((Integer) status).toString());
 	    this.gameStatus = status;
 	    updateView();
 	}

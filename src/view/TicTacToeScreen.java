@@ -15,6 +15,11 @@ public class TicTacToeScreen extends AbstractGameScreen{
 	}
 
 	@Override
+	public int getSquareSize(){
+		return 150;
+	}
+	
+	@Override
 	public Pane create(){
 		this.pane = new BorderPane();
 		pane.setPadding(new Insets(5, 5, 5, 5));

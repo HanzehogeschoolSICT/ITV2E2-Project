@@ -61,11 +61,12 @@ public abstract class AbstractGameScreen implements GameScreen {
 	
 	protected abstract ImageView createPlayer();
 	protected abstract ImageView createOponent();
+	protected abstract int getSquareSize();
 	
 	private Rectangle createEmpty(int x, int y){
 		Rectangle col = new Rectangle();
-		col.setHeight(150);
-		col.setWidth(150);
+		col.setHeight(this.getSquareSize());
+		col.setWidth(this.getSquareSize());
 		col.setFill(Color.DARKCYAN);
 		col.setStyle("-fx-cursor: hand;");
 		col.setUserData(y+","+x);

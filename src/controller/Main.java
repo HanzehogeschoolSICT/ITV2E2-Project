@@ -44,7 +44,8 @@ public class Main extends Application {
      */
 	public Game createGame(String game, String ipaddress, String portnumber, String playertype, String playername){
 		boolean isHuman = playertype.equals("Player");
-		this.game = new TicTacToe(this);
+		this.setGame(game);
+		
 		this.game.setHuman(isHuman);
 		this.connectionModel = new Connection(ipaddress, Integer.parseInt(portnumber));
 		this.gameObserver = new GameObserver(this, this.game);
@@ -59,6 +60,14 @@ public class Main extends Application {
 		}
 
 		return this.game;
+	}
+	
+	private void setGame(String type){
+		if (type.equals("Tic-tac-toe")){
+			this.game = new TicTacToe(this);
+		} else if (type.equals("Reversi")){
+			this.game = new Othello(this);
+		}
 	}
 	
 	public Connection getConnection(){

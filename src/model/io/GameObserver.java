@@ -74,10 +74,13 @@ public class GameObserver implements Observer{
 		switch(statusCode){
 		case 1:
 			this.game.setGameStatus(2);
+			break;
 		case 0:
 			this.game.setGameStatus(3);
+			break;
 		case -1:
 			this.game.setGameStatus(-1);
+			break;
 		}
 		
 	}

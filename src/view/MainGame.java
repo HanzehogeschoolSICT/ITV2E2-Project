@@ -94,7 +94,7 @@ public class MainGame extends AbstractWindowScreen {
 		
 		if (gameStatus == -1){
 			labelText.setText("Lost");
-			labelText.setTextFill(Color.RED);
+			labelText.setTextFill(Color.YELLOW);
 			return labelText;
 		} else if (gameStatus == 2){
 			labelText.setText("Won");
@@ -161,7 +161,7 @@ public class MainGame extends AbstractWindowScreen {
 	}
 
 	private Pane createLeftPaneServerLabel(){
-		HBox pane = new HBox();
+		VBox pane = new VBox();
 		Connection conn = this.window.getConnection();
 		
 		Label labelServer = new Label("IP Address ");
@@ -175,7 +175,7 @@ public class MainGame extends AbstractWindowScreen {
 	}
 	
 	private Pane createLeftPanePlayerTypeLabel(){
-		HBox pane = new HBox();
+		VBox pane = new VBox();
 		Game game = window.getGame();
 		
 		String playertype = "";
@@ -196,7 +196,7 @@ public class MainGame extends AbstractWindowScreen {
 	}
 	
 	private Pane createLeftPanePlayernameLabel(){
-		HBox pane = new HBox();
+		VBox pane = new VBox();
 		Connection conn = this.window.getConnection();
 		
 		Label labelPlayername = new Label("Playername ");
@@ -286,7 +286,7 @@ public class MainGame extends AbstractWindowScreen {
 		pane.setPadding(new Insets(5, 5, 5, 50));
 		pane.setAlignment(Pos.TOP_RIGHT);
 		
-		Label labelHeader = new Label("Game info");
+		Label labelHeader = new Label("Match info");
 		labelHeader.setFont(new Font("Calibri", 16));
 		pane.getChildren().add(labelHeader);
 		
@@ -320,43 +320,43 @@ public class MainGame extends AbstractWindowScreen {
 	}
 	
 	private Pane createRightPaneOponentName(){
-		HBox pane = new HBox();
+		VBox pane = new VBox();
 		pane.setAlignment(Pos.TOP_RIGHT);
-		
-		this.inputOponent = new Label("");
-		pane.getChildren().add(this.inputOponent);
 		
 		Label labelOponent = new Label(" Oponentname");
 		labelOponent.setFont(Font.font(null, FontWeight.BOLD, 12));
 		pane.getChildren().add(labelOponent);
 		
+		this.inputOponent = new Label("");
+		pane.getChildren().add(this.inputOponent);
+		
 		return pane;
 	}
 	
 	private Pane createRightPaneScore(){
-		HBox pane = new HBox();
+		VBox pane = new VBox();
 		pane.setAlignment(Pos.TOP_RIGHT);
-		
-		this.inputScore = new Label("");
-		pane.getChildren().add(this.inputScore);
 		
 		Label labelScore = new Label(" Score");
 		labelScore.setFont(Font.font(null, FontWeight.BOLD, 12));
 		pane.getChildren().add(labelScore);
+	
+		this.inputScore = new Label("");
+		pane.getChildren().add(this.inputScore);
 		
 		return pane;
 	}
 	
 	private Pane createRightPaneTurn(){
-		HBox pane = new HBox();
+		VBox pane = new VBox();
 		pane.setAlignment(Pos.TOP_RIGHT);
-		
-		this.inputTurn = new Label("");
-		pane.getChildren().add(this.inputTurn);
 		
 		Label labelTurn = new Label(" Turn");
 		labelTurn.setFont(Font.font(null, FontWeight.BOLD, 12));
 		pane.getChildren().add(labelTurn);
+		
+		this.inputTurn = new Label("");
+		pane.getChildren().add(this.inputTurn);
 		
 		return pane;
 	}
