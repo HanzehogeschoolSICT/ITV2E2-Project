@@ -52,12 +52,11 @@ public class ConnectionTest {
                 @Override
                 public void onYourTurn(String comment) {
                     //ToDo Wait for board to update.
-                    Scanner scanner = new Scanner(System.in);
-                    String[] input = scanner.nextLine().split(",");
-                    connection.move(
-                            Integer.parseInt(input[0]),
-                            Integer.parseInt(input[1]),
-                            Integer.parseInt(input[2]));
+                }
+
+                @Override
+                public void onGameMatch(String playerMove, String gameType, String Opponent) {
+                    //ToDo Update board with new data.
                 }
 
                 @Override

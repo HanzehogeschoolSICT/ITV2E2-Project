@@ -179,8 +179,7 @@ public class Connection {
      *      ->De zet is geaccepteerd door de outputServer, gevolg voor spel zal volgen
      *     }
      * </pre>
-     * @param row The row to do the move on.
-     * @param column The column to do the move on.
+     * @param move The move to do.
      */
     public void move(@NotNull Integer move){
         this.inputServer.submit("move " + move);
@@ -262,6 +261,7 @@ public class Connection {
     public interface Observer {
         void onMove(String player, String details, int move);
         void onYourTurn(String comment);
+        void onGameMatch(String playerMove, String gameType, String Opponent);
         void onChallenge(String opponentName, int challengeNumber, String gameType);
         void onChallengeCancelled(int challengeNumber, String comment);
         void onHelp(String info);
