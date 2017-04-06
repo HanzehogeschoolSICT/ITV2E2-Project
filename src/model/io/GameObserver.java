@@ -70,6 +70,7 @@ public class GameObserver implements Observer{
 	@Override
 	public void onGameEnd(int statusCode, String comment) {
 		System.out.println(comment);
+		System.out.println(statusCode);
 		switch(statusCode){
 		case 1:
 			this.game.setGameStatus(2);

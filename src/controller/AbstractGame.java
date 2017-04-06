@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import model.Board;
+import model.GameAI;
 import model.io.Connection;
 import view.GameScreen;
 import view.Window;
@@ -15,6 +16,7 @@ abstract class AbstractGame implements Game{
 	protected String gameType;
 	protected Main main;
 	protected boolean isHuman;
+	protected GameAI gameAI;
 	protected boolean myTurn;
 	protected ArrayList<String> playerList;
 	protected String opponent;
@@ -116,6 +118,9 @@ abstract class AbstractGame implements Game{
 	public void setTurn(boolean turn){		
     	this.myTurn = turn;
     	this.updateView();
+    	if (this.isHuman == false){
+    		this.gameAI.move();
+    	}
 	}
 
 	public void getChallenged(String opponentname, int challengenumber){

@@ -32,7 +32,7 @@ public class Window {
 		primaryStage.setTitle("ITV2E2");
 		primaryStage.getIcons().add(getIcon());
 		//primaryStage.setScene(mainScene);
-		primaryStage.setResizable(false);
+		//primaryStage.setResizable(false);
 		//primaryStage.setHeight(650);
 		//primaryStage.setWidth(1000);
 		

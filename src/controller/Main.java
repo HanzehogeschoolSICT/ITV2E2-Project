@@ -27,6 +27,12 @@ public class Main extends Application {
 		this.window.init();
 	}
 	
+	@Override
+	public void stop(){
+	    System.out.println("Exiting game");
+	    this.connectionModel.stop();
+	}
+	
 	 /**
      * Setup the connection and creates the game
      * @param game the game of the game to be played

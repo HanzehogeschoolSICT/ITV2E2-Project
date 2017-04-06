@@ -107,23 +107,6 @@ public class MainGame extends AbstractWindowScreen {
 		}
 		return null;
 	}
-
-	private void updateRightPane(){
-		Game game = this.window.getGame();
-		if (game.getGameStart() == true){
-			this.inputOponent.setText("Oponent name");
-			this.inputScore.setText(game.getOpponent());
-			if (game.getTurn() == true){
-				this.inputTurn.setText("Yours");
-			} else {
-				this.inputTurn.setText("Oponents");
-			} 
-		} else {
-			this.inputOponent.setText("");
-			this.inputScore.setText("");
-			this.inputTurn.setText("");
-		}
-	}
 	
 	public Pane getPane(){
 		return this.pane;
@@ -300,7 +283,7 @@ public class MainGame extends AbstractWindowScreen {
 	
 	private Pane createRightPane(){
 		VBox pane = new VBox();
-		pane.setPadding(new Insets(5, 5, 5, 5));
+		pane.setPadding(new Insets(5, 5, 5, 50));
 		pane.setAlignment(Pos.TOP_RIGHT);
 		
 		Label labelHeader = new Label("Game info");
@@ -317,6 +300,23 @@ public class MainGame extends AbstractWindowScreen {
 		pane.getChildren().add(this.buttonDefeat);
 		
 		return pane;
+	}
+	
+	private void updateRightPane(){
+		Game game = this.window.getGame();
+		if (game.getGameStart() == true){
+			this.inputOponent.setText(game.getOpponent());
+			this.inputScore.setText("0");
+			if (game.getTurn() == true){
+				this.inputTurn.setText("Yours");
+			} else {
+				this.inputTurn.setText("Oponents");
+			} 
+		} else {
+			this.inputOponent.setText("");
+			this.inputScore.setText("");
+			this.inputTurn.setText("");
+		}
 	}
 	
 	private Pane createRightPaneOponentName(){

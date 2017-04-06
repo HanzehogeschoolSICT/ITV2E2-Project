@@ -30,9 +30,9 @@ public class TicTacToeScreen extends AbstractGameScreen{
 		ImageView xView = new ImageView();
 		FileInputStream file = null;
 		try{
-			file = new FileInputStream("src/view/images/x.png");
+			file = new FileInputStream("src/view/images/x-red.png");
 		} catch (Exception e){
-			System.out.println("Cant find image: src/view/images/x.png");
+			System.out.println("Cant find image: src/view/images/x-red.png");
 		}
 		Image xImage = new Image(file);
 		xView.setImage(xImage);

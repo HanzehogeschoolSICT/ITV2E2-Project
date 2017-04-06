@@ -12,8 +12,6 @@ public class TicTacToeAI implements GameAI{
 		this.gameController = gameController;
 	}
 	
-
-	
 	/*Calculates the best possible move using MiniMax
 	 * 
 	 * Needs the board as input
@@ -21,7 +19,10 @@ public class TicTacToeAI implements GameAI{
 	 * 
 	 */
 	@Override
-	public void move(int[][] inputBoard) {
+	public void move() {
+		Board board = this.gameController.getBoard();
+		int[][] inputBoard = board.getSpaces();
+		
 		int player = 1;
 		this.nextMove = new int[2];
 		if(this.emptyBoard(inputBoard)){

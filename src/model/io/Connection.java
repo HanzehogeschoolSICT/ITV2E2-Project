@@ -292,6 +292,11 @@ public class Connection {
         this.observer = observer;
     }
 
+    public void stop(){
+    	this.logout();
+    	//Kill threads
+    }
+    
     //</editor-fold>
 
 }

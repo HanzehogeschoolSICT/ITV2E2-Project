@@ -3,7 +3,7 @@ package model;
 public class OthelloAI implements GameAI{
 
 	@Override
-	public void move(int[][] inputBoard) {
+	public void move() {
 		// TODO Auto-generated method stub
 		
 	}
