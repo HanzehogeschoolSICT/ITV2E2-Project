@@ -201,7 +201,8 @@ public class OutputHandler {
         this.observer.onGameEnd(
                 line.contains(WIN) ? 1 : //If the line contains WIN, the player has won the game.
                 line.contains(LOSS) ? -1 : 0, //If the line does not contain win, but contains LOSS, the player has lost.
-                result.get(2)); //If neither of these are the case, the game is a draw, the comment is also given as context.
+                result.size() > 2 ? result.get(2) : ""
+        ); //If neither of these are the case, the game is a draw, the comment is also given as context.
     }
 
 
@@ -217,7 +218,7 @@ public class OutputHandler {
 
         this.observer.onMove(
                 result.get(0),
-                result.size() > 0 ? result.get(2) : "",
+                result.size() > 2 ? result.get(2) : "",
                 Integer.parseInt(result.get(1))
         );
     }
@@ -243,8 +244,8 @@ public class OutputHandler {
         ArrayList<String> result = matchQoutes(line);
 
         this.observer.onGameMatch(
-                result.get(1),
                 result.get(0),
+                result.get(1),
                 result.get(2)
         );
     }

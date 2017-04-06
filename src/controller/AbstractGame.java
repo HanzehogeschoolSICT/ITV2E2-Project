@@ -105,8 +105,6 @@ abstract class AbstractGame implements Game{
 	}
 
 	public void setGameStatus(int status){
-		System.out.print("SGS: ");
-		System.out.println(status);
 	    this.gameStatus = status;
 	    updateView();
 	}
