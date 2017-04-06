@@ -1,7 +1,9 @@
 package controller;
 
+
 import model.Board;
 import view.TicTacToeScreen;
+
 
 public class TicTacToe extends AbstractGame{
 	
