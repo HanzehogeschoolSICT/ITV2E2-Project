@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import model.Board;
 import model.io.Connection;
@@ -104,18 +105,23 @@ abstract class AbstractGame implements Game{
 		return this.myTurn;
 	}
 	
-	public boolean setTurn(boolean turn){
+	public void setTurn(boolean turn){
 		this.myTurn = turn;
-		return this.myTurn;
+		this.updateView();
 	}
 
 	public void getChallenged(String opponentname, int challengenumber){
-		boolean accept = this.main.getWindow().getChallenged(opponentname, challengenumber);
-		if(accept){
-			Connection conn = this.main.getConnection();
-		    conn.accept_challenge(challengenumber);
-		}
-		return;
+		Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            	boolean accept = main.getWindow().getChallenged(opponentname, challengenumber);
+        		if(accept){
+        			Connection conn = main.getConnection();
+        		    conn.accept_challenge(challengenumber);
+        		    
+        		}
+            }
+        });
 	}
 	
 	public void stopChallenge(){

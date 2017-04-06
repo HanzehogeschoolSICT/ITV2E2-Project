@@ -16,11 +16,14 @@ public interface Game {
 	public void setHuman(boolean human);
 	public boolean getHuman();
 	public int getGameStatus();
+	
 	public boolean getTurn();
+	public void setTurn(boolean turn);
+	
 	public String getGameType(); 
 	public boolean challengePlayer(String playername);
 	public void getChallenged(String opponentname, int challengenumber);
-	public boolean setTurn(boolean turn);
+	
 	public void serverMove(int y, int x);
 	public void setPlayerList(ArrayList<String> players);
 	public ArrayList<String> getPlayerList();

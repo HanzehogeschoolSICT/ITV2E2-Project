@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+
 //System libraries
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -39,8 +41,17 @@ public class Main extends Application {
 		this.game = new TicTacToe(this);
 		this.game.setHuman(isHuman);
 		this.connectionModel = new Connection(ipaddress, Integer.parseInt(portnumber));
-		this.connectionModel.login(playername);
 		this.gameObserver = new GameObserver(this, this.game);
+		this.connectionModel.setObserver(this.gameObserver);
+		
+		try {
+			this.connectionModel.establish(playername);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("ERROR establishing game");
+			return null;
+		}
+
 		return this.game;
 	}
 	

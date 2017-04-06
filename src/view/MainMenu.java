@@ -109,7 +109,7 @@ public class MainMenu extends AbstractWindowScreen {
 		GameType.setFont(Font.font(null, FontWeight.BOLD, 12));
 		boxGameType.getChildren().add(GameType);
 		
-		this.selectGameType = new ChoiceBox<String>(FXCollections.observableArrayList("Tic tac toe", "Othello"));
+		this.selectGameType = new ChoiceBox<String>(FXCollections.observableArrayList("Tic-tac-toe", "Reversi"));
 		this.selectGameType.getSelectionModel().selectFirst();
 		boxGameType.getChildren().add(this.selectGameType);
 		

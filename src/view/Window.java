@@ -33,8 +33,8 @@ public class Window {
 		primaryStage.getIcons().add(getIcon());
 		//primaryStage.setScene(mainScene);
 		primaryStage.setResizable(false);
-		primaryStage.setHeight(650);
-		primaryStage.setWidth(1000);
+		//primaryStage.setHeight(650);
+		//primaryStage.setWidth(1000);
 		
 		getMainMenu();
 		primaryStage.show();
