@@ -73,6 +73,9 @@ public class OutputHandler {
                     } else if (line.contains(SVR_GAME_YOURTURN)) {
                         handleYourturn(line);
 
+                    } else if (line.contains(SVR_GAME_MATCH)) {
+                        handleMatch(line);
+
                     } else if (line.contains(SVR_GAME_CHALLENGE)) {
 
                         if (line.contains(SVR_GAME_CHALLENGE_CANCELLED)) {
@@ -185,7 +188,7 @@ public class OutputHandler {
      * <ul>
      *     <li><code>-1: LOSS</code></li>
      *     <li><code>0: DRAW</code></li>
-     *     <li><code>1: WINN</code></li>
+     *     <li><code>1: WINN</code></li>public void onGameMatch(String playerMove, String gameType, String Opponent){
      * </ul>
      *
      * The extracted information is passed on to the {@link model.io.Connection.Observer#onGameEnd(int, String)}  Connection.Observer.onGameEnd}
@@ -226,6 +229,24 @@ public class OutputHandler {
      */
     private void handleList(String line) {
 
+    }
+
+
+    /**
+     * Handles the Match message received from the server.
+     * The message extracted from the line is passed on to the
+     * {@link model.io.Connection.Observer#onGameMatch(String, String, String)}  Connection.Observer.onGameMatch} method
+     * for the UI to respond to.
+     * @param line The line to extract the data from.
+     */
+    private void handleMatch(String line) {
+        ArrayList<String> result = matchQoutes(line);
+
+        this.observer.onGameMatch(
+                result.get(1),
+                result.get(0),
+                result.get(2)
+        );
     }
 
 }
