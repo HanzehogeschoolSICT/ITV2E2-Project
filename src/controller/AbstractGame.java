@@ -2,7 +2,7 @@ package controller;
 
 import javafx.scene.layout.Pane;
 import model.Board;
-import model.Connection;
+import model.io.Connection;
 import view.GameScreen;
 import view.Window;
 
@@ -34,22 +34,23 @@ abstract class AbstractGame implements Game{
 		if(this.myTurn){
 			if(this.board.isValid(y, x)){
 				Connection conn = this.main.getConnection();
-				if(conn.move(y, x)){
-					this.board.set(1, y, x);
-					this.updateView();
-					this.setTurn(false);
-				};
+				Integer move = (y * this.board.getColumns()) + x;
+				conn.move(move);
+				
 			}
 		}
 		return;
 	}
 	
-	public void opponentMove(int y, int x){
+	public void serverMove(int y, int x){
 		if(!this.myTurn){
 			this.board.set(2, y, x);
-			this.updateView();
 			this.setTurn(true);
+		}else{
+			this.board.set(1, y, x);
+			this.setTurn(false);
 		}
+		this.updateView();
 		return;
 	}
 	
@@ -110,10 +111,7 @@ abstract class AbstractGame implements Game{
 	
 	public boolean challengePlayer(String playername){
 		Connection connection = this.main.getConnection();
-		if(connection.challenge(playername, this.getGameType())){
-			return true;
-		}else{
-			return false;
-		}
+		connection.challenge(playername, this.getGameType());
+		return true;
 	}
 }

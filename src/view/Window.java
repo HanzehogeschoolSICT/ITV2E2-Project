@@ -3,7 +3,7 @@ package view;
 //Project libs
 import controller.Game;
 import controller.Main;
-import model.Connection;
+import model.io.Connection;
 
 //System libs
 import javafx.scene.Scene;

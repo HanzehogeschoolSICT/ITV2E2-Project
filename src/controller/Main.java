@@ -3,7 +3,7 @@ package controller;
 //System libraries
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.Connection;
+import model.io.Connection;
 //Project libraries
 import view.Window;
 
@@ -36,7 +36,8 @@ public class Main extends Application {
 		boolean isHuman = playertype.equals("Player");
 		this.game = new TicTacToe(this);
 		this.game.setHuman(isHuman);
-		this.connectionModel = new Connection(ipaddress, Integer.parseInt(portnumber), playername);
+		this.connectionModel = new Connection(ipaddress, Integer.parseInt(portnumber));
+		this.connectionModel.login(playername);
 		return this.game;
 	}
 	

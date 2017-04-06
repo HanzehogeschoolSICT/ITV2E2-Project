@@ -172,8 +172,7 @@ public class Connection {
      * @param row The row to do the move on.
      * @param column The column to do the move on.
      */
-    public void move(@NotNull Integer row, @NotNull Integer column, @NotNull Integer amountOfColumns){
-        Integer move = row * amountOfColumns + column;
+    public void move(@NotNull Integer move){
         this.inputServer.submit("move " + move);
     }
 

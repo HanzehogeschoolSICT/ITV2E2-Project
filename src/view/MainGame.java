@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import model.Connection;
+import model.io.Connection;
 
 public class MainGame extends AbstractWindowScreen {
 	private Window window;
