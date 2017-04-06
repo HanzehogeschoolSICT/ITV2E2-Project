@@ -9,7 +9,7 @@ public class Board {
     public Board(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
-        this.spaces = new int[rows][columns];
+        this.createEmptyBoard();
     }
 
     public int get(int row, int column) {
@@ -40,5 +40,9 @@ public class Board {
         return this.spaces;
     }
     //</editor-fold>
+    
+    public void createEmptyBoard(){
+    	this.spaces = new int[rows][columns];
+    }
 
 }

@@ -60,18 +60,22 @@ public class MainGame extends AbstractWindowScreen {
 	
 	public void update(){
 		Connection conn = this.window.getConnection();
-		ArrayList<String> playerlist = conn.getPlayerList();
-		if (playerlist != null){
-			this.playerlist.setText(playerlist.toString());
-		} else {
-			this.playerlist.setText("");
-		}
+		conn.getPlayerList();
+		
 		
 		Pane paneCenter = getCenterpane();
 		this.pane.setCenter(paneCenter);
 		
 		updateRightPane();
 		updateDefeatButton();
+	}
+	
+	public void updatePlayerList(ArrayList<String> playerlis){
+		if (playerlist != null){
+			this.playerlist.setText(playerlist.toString());
+		} else {
+			this.playerlist.setText("");
+		}
 	}
 	
 	private Pane getCenterpane(){
@@ -181,7 +185,7 @@ public class MainGame extends AbstractWindowScreen {
 		labelServer.setFont(Font.font(null, FontWeight.BOLD, 12));
 		pane.getChildren().add(labelServer);
 		
-		Label labelIpaddress = new Label(conn.getServerIPAddress());
+		Label labelIpaddress = new Label(conn.getServerIpAddress());
 		pane.getChildren().add(labelIpaddress);
 		
 		return pane;
@@ -216,7 +220,7 @@ public class MainGame extends AbstractWindowScreen {
 		labelPlayername.setFont(Font.font(null, FontWeight.BOLD, 12));
 		pane.getChildren().add(labelPlayername);
 		
-		Label name = new Label(conn.getPlayername());
+		Label name = new Label(conn.getPlayerName());
 		pane.getChildren().add(name);
 		
 		return pane;

@@ -114,4 +114,8 @@ abstract class AbstractGame implements Game{
 		connection.challenge(playername, this.getGameType());
 		return true;
 	}
+	
+	public void resetBoard(){
+		this.board.createEmptyBoard();
+	}
 }

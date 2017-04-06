@@ -14,6 +14,7 @@ public class Connection {
     private Integer port;
     private String address;
     private Socket socket;
+    private String playerName;
 
     private OutputServer outputServer;
     private InputServer inputServer;
@@ -51,7 +52,15 @@ public class Connection {
             }
         });
     }
-
+    
+    public String getServerIpAddress(){
+    	return this.address;
+    }
+    
+    public String getPlayerName(){
+    	return this.playerName;
+    }
+    
     public static boolean isAdressValid(String address) {
         Pattern pattern = Pattern.compile("" +
                 "^" + //Starts with...
@@ -91,6 +100,7 @@ public class Connection {
      * @param playerName The name to register. (cannot be null)
      */
     public void login(@NotNull String playerName) {
+    	this.playerName = playerName;
         this.inputServer.submit("login " + playerName);
     }
 
