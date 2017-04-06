@@ -1,9 +1,6 @@
 package view;
 
-import java.util.ArrayList;
-
 import controller.Game;
-import controller.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -29,6 +26,7 @@ public class MainGame extends AbstractWindowScreen {
 	private BorderPane pane;
 	
 	private TextArea playerlist;
+	private int playerlistCount;
 	private TextField challegePlayername;
 	private Label inputOponent;
 	private Label inputScore;
@@ -59,23 +57,13 @@ public class MainGame extends AbstractWindowScreen {
 	}
 	
 	public void update(){
-		Connection conn = this.window.getConnection();
-		conn.getPlayerList();
-		
+		updateLeftPane();
 		
 		Pane paneCenter = getCenterpane();
 		this.pane.setCenter(paneCenter);
 		
 		updateRightPane();
 		updateDefeatButton();
-	}
-	
-	public void updatePlayerList(ArrayList<String> playerlis){
-		if (playerlist != null){
-			this.playerlist.setText(playerlist.toString());
-		} else {
-			this.playerlist.setText("");
-		}
 	}
 	
 	private Pane getCenterpane(){
@@ -160,6 +148,16 @@ public class MainGame extends AbstractWindowScreen {
 		return pane;
 	}
 	
+	private void updateLeftPane(){
+		Game game = window.getGame();
+		this.playerlist.setText(game.getPlayerlist().toString());
+		this.playerlistCount = this.playerlistCount + 1;
+		if (this.playerlistCount > 4){
+			Connection conn = this.window.getConnection();
+			conn.getPlayerList();
+		}
+	}
+	
 	private Pane createLeftPaneGameInfo() {
 		VBox pane = new VBox();
 		pane.setPadding(new Insets(5, 5, 10, 5));
@@ -230,6 +228,10 @@ public class MainGame extends AbstractWindowScreen {
 		VBox pane = new VBox();
 		//pane.setBorder(new Border(new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID, null, null)));
 		pane.setPadding(new Insets(5, 5, 10, 5));
+		
+		Connection conn = window.getConnection();
+		conn.getPlayerList();
+		this.playerlistCount = 0;
 		
 		Label labelHeader = new Label("Players");
 		labelHeader.setFont(new Font("Calibri", 16));
