@@ -89,7 +89,7 @@ public class Window {
 		this.currentWindow.update();
 		return;
 	}
-
+	
 	public Connection getConnection() {
 		return this.main.getConnection();
 	}
@@ -109,6 +109,10 @@ public class Window {
 	}
 	
 	public void stopChallenge(){
-		
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Challenge revoked");
+		alert.setHeaderText("Challenge got revoked");
+		alert.setContentText("A challenge you were involved in, either because you requested it or because you were requested, got revoked. This could be because the other player is already in a match or because he disconnected.");
+		alert.showAndWait();
 	}
 }
