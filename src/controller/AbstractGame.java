@@ -39,7 +39,10 @@ abstract class AbstractGame implements Game{
 	}
 	
 	public boolean getGameStart(){
-		return true;
+		 if(gameStatus == 1){
+		 	return true;
+		 }
+		 return false;
 	}
 	
 	public void setMove(int y, int x){
