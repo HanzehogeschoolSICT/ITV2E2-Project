@@ -70,7 +70,7 @@ public class MainGame extends AbstractWindowScreen {
 		updateDefeatButton();
 	}
 	
-	public void updatePlayerList(ArrayList<String> playerlis){
+	public void updatePlayerList(ArrayList<String> playerlist){
 		if (playerlist != null){
 			this.playerlist.setText(playerlist.toString());
 		} else {

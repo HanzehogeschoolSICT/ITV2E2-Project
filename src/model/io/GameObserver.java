@@ -2,32 +2,46 @@ package model.io;
 
 import java.util.ArrayList;
 
+import controller.Game;
+import controller.Main;
+import model.Board;
 import model.io.Connection.Observer;
 
 public class GameObserver implements Observer{
+	private Main main;
+	private Game game;
 
+	public GameObserver(Main main, Game game){
+		this.main = main;
+		this.game = game;
+	}
+		
 	@Override
 	public void onMove(String player, String details, int move) {
-		// TODO Auto-generated method stub
+		Board board = this.game.getBoard();
+		int x = move % board.getColumns();
+		int y = move / board.getColumns();
+		this.game.serverMove(y, x);
+		System.out.println(details);
 		
 	}
 
 	@Override
 	public void onYourTurn(String comment) {
-		// TODO Auto-generated method stub
-		
+		System.out.println(comment);
+		this.game.setTurn(true);
 	}
 
 	@Override
 	public void onChallenge(String opponentName, int challengeNumber, String gameType) {
-		// TODO Auto-generated method stub
-		
+		if(gameType.equals(this.game.getGameType())){
+			this.game.getChallenged(opponentName, challengeNumber);
+		}
 	}
 
 	@Override
 	public void onChallengeCancelled(int challengeNumber, String comment) {
-		// TODO Auto-generated method stub
-		
+		this.game.stopChallenge();
 	}
 
 	@Override
@@ -44,13 +58,12 @@ public class GameObserver implements Observer{
 
 	@Override
 	public void onPlayerList(ArrayList<String> players) {
-		// TODO Auto-generated method stub
-		
+		this.game.setPlayerList(players);
 	}
 
 	@Override
 	public void onGameEnd(int statusCode, String comment) {
-		// TODO Auto-generated method stub
+		this.game.setGameStatus(1);
 		
 	}
 

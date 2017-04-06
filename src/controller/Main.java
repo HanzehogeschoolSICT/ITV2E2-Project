@@ -4,6 +4,7 @@ package controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.io.Connection;
+import model.io.GameObserver;
 //Project libraries
 import view.Window;
 
@@ -11,6 +12,7 @@ public class Main extends Application {
 	private Window window;
 	private Game game;
 	private Connection connectionModel;
+	private GameObserver gameObserver;
 	
 	public static void main(String args[]){
 		System.out.println("Starting ...");
@@ -38,6 +40,7 @@ public class Main extends Application {
 		this.game.setHuman(isHuman);
 		this.connectionModel = new Connection(ipaddress, Integer.parseInt(portnumber));
 		this.connectionModel.login(playername);
+		this.gameObserver = new GameObserver(this, this.game);
 		return this.game;
 	}
 	

@@ -36,7 +36,7 @@ abstract class AbstractGame implements Game{
 				Connection conn = this.main.getConnection();
 				Integer move = (y * this.board.getColumns()) + x;
 				conn.move(move);
-				
+				this.setTurn(false);			
 			}
 		}
 		return;
@@ -45,10 +45,8 @@ abstract class AbstractGame implements Game{
 	public void serverMove(int y, int x){
 		if(!this.myTurn){
 			this.board.set(2, y, x);
-			this.setTurn(true);
 		}else{
 			this.board.set(1, y, x);
-			this.setTurn(false);
 		}
 		this.updateView();
 		return;

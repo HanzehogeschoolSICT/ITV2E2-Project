@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import javafx.scene.layout.Pane;
 import model.Board;
 
@@ -17,4 +19,11 @@ public interface Game {
 	public boolean getTurn();
 	public String getGameType(); 
 	public boolean challengePlayer(String playername);
+	public void getChallenged(String opponentname, int challengenumber);
+	public boolean setTurn(boolean turn);
+	public void serverMove(int y, int x);
+	public void setPlayerList(ArrayList<String> players);
+	public ArrayList<String> getPlayerList();
+	public void stopChallenge();
+	public void setGameStatus(int status);
 }
