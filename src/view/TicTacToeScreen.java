@@ -42,7 +42,7 @@ public class TicTacToeScreen extends AbstractGameScreen{
 		Image xImage = new Image(file);
 		xView.setImage(xImage);
 		xView.setPreserveRatio(true);
-		xView.setFitHeight(150);
+		xView.setFitHeight(this.getSquareSize());
 		return xView;
 	}
 	
@@ -58,7 +58,7 @@ public class TicTacToeScreen extends AbstractGameScreen{
 		Image oImage = new Image(file);
 		oView.setImage(oImage);
 		oView.setPreserveRatio(true);
-		oView.setFitHeight(150);
+		oView.setFitHeight(this.getSquareSize());
 		return oView;
 	}
 }

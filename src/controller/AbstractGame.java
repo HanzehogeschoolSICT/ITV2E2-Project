@@ -152,10 +152,13 @@ abstract class AbstractGame implements Game{
 	}
 	
 	public void resetBoard(){
-		this.board.createEmptyBoard();
+		this.createEmptyBoard();
 		this.setTurn(false);
 	}
 	
+	public void createEmptyBoard(){
+		this.board.createEmptyBoard();
+	}
 	
 	public void setPlayerList(ArrayList<String> players) {
 		this.playerList = players;	
