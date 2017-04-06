@@ -112,7 +112,7 @@ public class MainGame extends AbstractWindowScreen {
 		Game game = this.window.getGame();
 		if (game.getGameStart() == true){
 			this.inputOponent.setText("Oponent name");
-			this.inputScore.setText(game.getOponentname());
+			this.inputScore.setText(game.getOpponent());
 			if (game.getTurn() == true){
 				this.inputTurn.setText("Yours");
 			} else {
@@ -151,11 +151,12 @@ public class MainGame extends AbstractWindowScreen {
 	
 	private void updateLeftPane(){
 		Game game = window.getGame();
-		this.playerlist.setText(game.getPlayerList().toString());
+		//this.playerlist.setText(game.getPlayerList().toString());
 		this.playerlistCount = this.playerlistCount + 1;
 		if (this.playerlistCount > 4){
 			Connection conn = this.window.getConnection();
 			conn.getPlayerList();
+			this.playerlistCount = 0;
 		}
 	}
 	

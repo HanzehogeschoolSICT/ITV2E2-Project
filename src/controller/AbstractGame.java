@@ -40,7 +40,7 @@ abstract class AbstractGame implements Game{
 	}
 	
 	public boolean getGameStart(){
-		 if(gameStatus == 1){
+		 if(this.gameStatus == 1){
 		 	return true;
 		 }
 		 return false;
@@ -69,9 +69,13 @@ abstract class AbstractGame implements Game{
 	}
 	
 	public void updateView(){
-		Window window = this.main.getWindow();
-		window.update();
-		return;
+		Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            	Window window = main.getWindow();
+            	window.update();
+            }
+		});
 	}
 	
 	public void setDefeat(){
@@ -109,9 +113,9 @@ abstract class AbstractGame implements Game{
 		return this.myTurn;
 	}
 	
-	public void setTurn(boolean turn){
-		this.myTurn = turn;
-		this.updateView();
+	public void setTurn(boolean turn){		
+    	this.myTurn = turn;
+    	this.updateView();
 	}
 
 	public void getChallenged(String opponentname, int challengenumber){

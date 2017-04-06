@@ -93,6 +93,8 @@ public class GameObserver implements Observer{
 			this.game.setGameStatus(1);
 			this.game.resetBoard();
 			this.game.setOpponent(Opponent);
+		} else {
+			System.out.println("Game type not equal: " + gameType);
 		}
 	}
 
