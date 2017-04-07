@@ -12,8 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Optional;
 
 public class Window {
@@ -41,11 +40,11 @@ public class Window {
 	}
 	
 	private Image getIcon() {
-		FileInputStream file = null;
+		InputStream file = null;
 		try{
-			file = new FileInputStream("src/view/images/logo.png");
+			file = this.getClass().getResourceAsStream("/view/images/logo.png");
 		} catch (Exception e){
-			System.out.println("Cant find image: src/view/images/logo.png");
+			System.out.println("Cant find image: /view/images/logo.png");
 		}
 		Image logoImage = new Image(file);
 		return logoImage;

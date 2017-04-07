@@ -1,7 +1,6 @@
 package view;
 
-import java.io.FileInputStream;
-
+import java.io.InputStream;
 import controller.TicTacToe;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
@@ -32,11 +31,11 @@ public class TicTacToeScreen extends AbstractGameScreen{
 	
 	@Override
 	public Image getPlayerImage(){
-		FileInputStream file = null;
+		InputStream file = null;
 		try{
-			file = new FileInputStream("view/images/x-red.png");
+			file = this.getClass().getResourceAsStream("/view/images/x-red.png");
 		} catch (Exception e){
-			System.out.println("Cant find image: src/view/images/x-red.png");
+			System.out.println("Cant find image: /view/images/x-red.png");
 		}
 		Image xImage = new Image(file);
 		return xImage;
@@ -54,11 +53,11 @@ public class TicTacToeScreen extends AbstractGameScreen{
 	
 	@Override
 	public Image getOponentImage(){
-		FileInputStream file = null;
+		InputStream file = null;
 		try{
-			file = new FileInputStream("view/images/o.png");
+			file = this.getClass().getResourceAsStream("/view/images/o.png");
 		} catch (Exception e){
-			System.out.println("Cant find image: src/view/images/o.png");
+			System.out.println("Cant find image: /images/o.png");
 		}
 		Image oImage = new Image(file);
 		return oImage;

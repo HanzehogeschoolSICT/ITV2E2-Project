@@ -1,7 +1,6 @@
 package view;
 
-import java.io.FileInputStream;
-
+import java.io.InputStream;
 import controller.Othello;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
@@ -32,9 +31,9 @@ public class OthelloScreen extends AbstractGameScreen{
 	
 	@Override
 	public Image getPlayerImage(){
-		FileInputStream file = null;
+		InputStream file = null;
 		try{
-			file = new FileInputStream("view/images/black.png");
+			file = this.getClass().getResourceAsStream("/view/images/black.png");
 		} catch (Exception e){
 			System.out.println("Cant find image: /view/images/black.png");
 		}
@@ -54,9 +53,9 @@ public class OthelloScreen extends AbstractGameScreen{
 	
 	@Override
 	public Image getOponentImage(){
-		FileInputStream file = null;
+		InputStream file = null;
 		try{
-			file = new FileInputStream("view/images/white.png");
+			file = this.getClass().getResourceAsStream("/view/images/white.png");
 		} catch (Exception e){
 			System.out.println("Cant find image: /view/images/white.png");
 		}

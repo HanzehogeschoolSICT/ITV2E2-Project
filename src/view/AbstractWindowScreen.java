@@ -1,7 +1,6 @@
 package view;
 
-import java.io.FileInputStream;
-
+import java.io.InputStream;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -48,11 +47,11 @@ public abstract class AbstractWindowScreen implements WindowScreen{
 	
 	protected ImageView createLogo(){
 		ImageView logoView = new ImageView();
-		FileInputStream file = null;
+		InputStream file = null;
 		try{
-			file = new FileInputStream("src/view/images/logo.png");
+			file = this.getClass().getResourceAsStream("/view/images/logo.png");
 		} catch (Exception e){
-			System.out.println("Cant find image: src/view/images/logo.png");
+			System.out.println("Cant find image: /view/images/logo.png");
 		}
 		Image logoImage = new Image(file);
 		logoView.setImage(logoImage);
@@ -63,11 +62,11 @@ public abstract class AbstractWindowScreen implements WindowScreen{
 	
 	protected Background getBackground(){
 		//Image: http://docs.oracle.com/javafx/2/get_started/background.jpg.html
-		FileInputStream file = null;
+		InputStream file = null;
 		try{
-			file = new FileInputStream("src/view/images/background.jpg");
+			file = this.getClass().getResourceAsStream("/view/images/background.jpg");
 		} catch (Exception e){
-			System.out.println("Cant find image: src/view/images/background.jpg");
+			System.out.println("Cant find image: /view/images/background.jpg");
 		}
 		Image logoImage = new Image(file);
 		
