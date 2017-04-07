@@ -197,7 +197,7 @@ public class Connection {
      * </pre>
      */
     public void forfeit(){
-        this.inputServer.submit("exit");
+        this.inputServer.submit("forfeit");
     }
 
     /**
@@ -261,7 +261,9 @@ public class Connection {
     public interface Observer {
         void onMove(String player, String details, int move);
         void onYourTurn(String comment);
+
         void onGameMatch(String playerMove, String gameType, String Opponent);
+
         void onChallenge(String opponentName, int challengeNumber, String gameType);
         void onChallengeCancelled(int challengeNumber, String comment);
         void onHelp(String info);
