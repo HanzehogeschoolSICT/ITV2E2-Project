@@ -230,15 +230,6 @@ public class OutputHandler {
 
 
     /**
-     *
-     * @param line
-     */
-    private void handleList(String line) {
-
-    }
-
-
-    /**
      * Handles the Match message received from the server.
      * The message extracted from the line is passed on to the
      * {@link model.io.Connection.Observer#onGameMatch(String, String, String)}  Connection.Observer.onGameMatch} method
