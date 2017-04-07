@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 import controller.Game;
@@ -55,7 +57,7 @@ public class TicTacToeAI implements GameAI{
 	}
 
 	@Override
-	public int checkWin(int[][] inputBoard) {
+	public Integer checkWin(int[][] inputBoard) {
 		int winDiagnal = this.checkWinDiagnal(inputBoard);
 		int winRows = this.checkWinRows(inputBoard);
 		int winColumns = this.checkWinColumns(inputBoard);
@@ -142,24 +144,31 @@ public class TicTacToeAI implements GameAI{
 	}
 
 	@Override
-	public int minMax(int[][] inputBoard, int player) {
-		int posWin = this.getPosWin(player);
+	public Integer minMax(int[][] inputBoard, int player) {
+		ArrayList<Integer> possibleOutcomes = new ArrayList<Integer>();
 		for(int y = 0; y< inputBoard.length; y++){
 			for(int x = 0; x< inputBoard[y].length; x++){
 				if(inputBoard[y][x] == 0){
 					int[][] tempBoard = inputBoard;
 					tempBoard[y][x] = player;
-					int checkWin = this.checkWin(tempBoard);
+					Integer checkWin = this.checkWin(tempBoard);
+					
+					
 					if(checkWin != 2){
-						posWin = this.setPosWin(checkWin, posWin, player, x, y);
+						possibleOutcomes.add(checkWin);
 					}else{
-						checkWin = minMax(inputBoard, this.nextPlayer(player));
-						posWin = this.setPosWin(checkWin, posWin, player, x, y);
+						Integer minMax = minMax(inputBoard, this.nextPlayer(player));
+						possibleOutcomes.add(minMax);
 					}
 				}
 			}
 		}
-		return posWin;
+		
+		if(player == 1){
+			return Collections.max(possibleOutcomes);
+		}else{
+			return Collections.min(possibleOutcomes);
+		}
 	}
 
 }

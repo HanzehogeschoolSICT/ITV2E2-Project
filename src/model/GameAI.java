@@ -6,7 +6,7 @@ public interface GameAI {
 	
 	public void move();
 	
-	public int checkWin(int[][] inputBoard);
+	public Integer checkWin(int[][] inputBoard);
 	
-	public int minMax(int[][] inputBoard, int player);
+	public Integer minMax(int[][] inputBoard, int player);
 }
