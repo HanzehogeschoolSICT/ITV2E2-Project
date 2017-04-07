@@ -4,18 +4,17 @@ import java.util.ArrayList;
 
 import controller.Game;
 import controller.Main;
-import controller.Game.GameStatus;
 import model.Board;
 import model.io.Connection.Observer;
 
 import static controller.Game.GameStatus.*;
 
 public class GameObserver implements Observer{
-	private Main main;
+	//private Main main;
 	private Game game;
 
 	public GameObserver(Main main, Game game){
-		this.main = main;
+		//this.main = main;
 		this.game = game;
 	}
 		
@@ -51,12 +50,6 @@ public class GameObserver implements Observer{
 	@Override
 	public void onChallengeCancelled(int challengeNumber, String comment) {
 		this.game.stopChallenge();
-	}
-
-	@Override
-	public void onHelp(String info) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

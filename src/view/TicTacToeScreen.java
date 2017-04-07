@@ -34,7 +34,7 @@ public class TicTacToeScreen extends AbstractGameScreen{
 	public Image getPlayerImage(){
 		FileInputStream file = null;
 		try{
-			file = new FileInputStream("src/view/images/x-red.png");
+			file = new FileInputStream("view/images/x-red.png");
 		} catch (Exception e){
 			System.out.println("Cant find image: src/view/images/x-red.png");
 		}
@@ -56,7 +56,7 @@ public class TicTacToeScreen extends AbstractGameScreen{
 	public Image getOponentImage(){
 		FileInputStream file = null;
 		try{
-			file = new FileInputStream("src/view/images/o.png");
+			file = new FileInputStream("view/images/o.png");
 		} catch (Exception e){
 			System.out.println("Cant find image: src/view/images/o.png");
 		}

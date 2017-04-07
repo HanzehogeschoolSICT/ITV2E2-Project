@@ -2,7 +2,7 @@ package controller;
 
 import model.Board;
 import view.OthelloScreen;
-import model.OthelloAI;
+//import model.OthelloAI;
 
 public class Othello extends AbstractGame{
 

@@ -1,15 +1,16 @@
 package view;
 
 import controller.Game;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
@@ -28,7 +29,7 @@ public class MainGame extends AbstractWindowScreen {
 	
 	private TextArea playerlist;
 	private int playerlistCount;
-	private TextField challegePlayername;
+	private ChoiceBox<String> challegePlayername;
 	private Label inputOponent;
 	private Label inputScore;
 	private Label inputTurn;
@@ -147,6 +148,7 @@ public class MainGame extends AbstractWindowScreen {
 			conn.getPlayerList();
 			this.playerlistCount = 0;
 		}
+		this.challegePlayername.setItems(FXCollections.observableArrayList(game.getPlayerList()));
 	}
 	
 	private Pane createLeftPaneGameInfo() {
@@ -228,11 +230,21 @@ public class MainGame extends AbstractWindowScreen {
 		labelHeader.setFont(new Font("Calibri", 16));
 		pane.getChildren().add(labelHeader);
 		
+		pane.getChildren().add(createPlayerListTextArea());
+		
+		Button refreshPlayerlist = new Button("Refresh");
+		refreshPlayerlist.setOnAction(new RefreshPlayerlistButtonHandlerClass());
+		pane.getChildren().add(refreshPlayerlist);
+		
+		return pane;
+	}
+	
+	private Pane createPlayerListTextArea(){
+		VBox pane = new VBox();
 		this.playerlist = new TextArea();
-		this.playerlist.setDisable(true);
+		this.playerlist.setEditable(false);
 		this.playerlist.setMaxWidth(120);
 		pane.getChildren().add(this.playerlist);
-		
 		return pane;
 	}
 	
@@ -245,16 +257,24 @@ public class MainGame extends AbstractWindowScreen {
 		Label labelPlayername = new Label("Playername");
 		labelPlayername.setFont(Font.font(null, FontWeight.BOLD, 12));
 		pane.getChildren().add(labelPlayername);
-		this.challegePlayername = new TextField();
-		pane.getChildren().add(this.challegePlayername);
+		pane.getChildren().add(createChallengeChoicebox());
 		Button buttonChallege = new Button("Challenge");
 		buttonChallege.setOnAction(new ChallegeButtonHandlerClass());
 		pane.getChildren().add(buttonChallege);
 		return pane;
 	}
 	
+	private Pane createChallengeChoicebox(){
+		VBox pane = new VBox();
+		this.challegePlayername = new ChoiceBox<String>();
+		this.challegePlayername.getSelectionModel().selectFirst();
+		pane.getChildren().add(this.challegePlayername);
+		
+		return pane;
+	}
+	
 	private void challengePlayer(){
-		String playername = this.challegePlayername.getText();
+		String playername = this.challegePlayername.getValue();
 		Game game = this.window.getGame();
 		boolean challenge = game.challengePlayer(playername);
 		if (challenge == true){
@@ -435,6 +455,16 @@ public class MainGame extends AbstractWindowScreen {
 			game.setDefeat();
 			game.logout();
 			window.getMainMenu();
+		}
+	}
+	
+	class RefreshPlayerlistButtonHandlerClass implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			//START
+			System.out.println("Pressed refresh player button");
+			Connection conn = window.getConnection();
+			conn.getPlayerList();
 		}
 	}
 }

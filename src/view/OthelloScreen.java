@@ -34,9 +34,9 @@ public class OthelloScreen extends AbstractGameScreen{
 	public Image getPlayerImage(){
 		FileInputStream file = null;
 		try{
-			file = new FileInputStream("src/view/images/black.png");
+			file = new FileInputStream("view/images/black.png");
 		} catch (Exception e){
-			System.out.println("Cant find image: src/view/images/black.png");
+			System.out.println("Cant find image: /view/images/black.png");
 		}
 		Image xImage = new Image(file);
 		return xImage;
@@ -56,9 +56,9 @@ public class OthelloScreen extends AbstractGameScreen{
 	public Image getOponentImage(){
 		FileInputStream file = null;
 		try{
-			file = new FileInputStream("src/view/images/white.png");
+			file = new FileInputStream("view/images/white.png");
 		} catch (Exception e){
-			System.out.println("Cant find image: src/view/images/white.png");
+			System.out.println("Cant find image: /view/images/white.png");
 		}
 		Image oImage = new Image(file);
 		return oImage;

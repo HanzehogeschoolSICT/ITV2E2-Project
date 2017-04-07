@@ -44,7 +44,7 @@ public class MainMenu extends AbstractWindowScreen {
 	
 	private Pane createPane(){
 		Pane pane = new VBox();
-		pane.setPadding(new Insets(100, 400, 150, 400)); 
+		pane.setPadding(new Insets(100, 300, 150, 300)); 
 		
 		Pane pane2 = new VBox();
 		pane2.setPadding(new Insets(5, 5, 5, 5)); 

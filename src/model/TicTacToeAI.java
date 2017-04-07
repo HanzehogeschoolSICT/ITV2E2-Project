@@ -1,8 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 import controller.Game;
@@ -152,6 +149,7 @@ public class TicTacToeAI implements GameAI{
 		}
 	}
 	
+	/*
 	private int getPosWin(int player){
 		int posWin;
 		if(player == 1){
@@ -172,7 +170,8 @@ public class TicTacToeAI implements GameAI{
 		}
 		return posWin;
 	}
-
+*/
+	
 	@Override
 	public Integer minMax(int[][] inputBoard, int player) {
 		MinMaxResult possibleOutcomes = new MinMaxResult();

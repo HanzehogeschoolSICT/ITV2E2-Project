@@ -268,10 +268,6 @@ public class Connection {
         this.inputServer.submit("help " + (command != null ? command : "")); //Add the command if it isn't null.
     }
 
-
-
-
-
     public interface Observer {
         void onMove(String player, String details, int move);
         void onYourTurn(String comment);
