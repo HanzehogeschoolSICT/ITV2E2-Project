@@ -49,10 +49,12 @@ abstract class AbstractGame implements Game{
 	}
 	
 	public void setMove(int y, int x){
+		System.out.print("setMove: " + (((Integer) y).toString()) + ", " + (((Integer) x).toString()));
 		if(this.myTurn){
 			if(this.board.isValid(y, x)){
 				Connection conn = this.main.getConnection();
 				Integer move = (y * this.board.getColumns()) + x;
+				System.out.println(move);
 				conn.move(move);
 				this.setTurn(false);			
 			}
