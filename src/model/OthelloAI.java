@@ -9,13 +9,13 @@ public class OthelloAI implements GameAI{
 	}
 
 	@Override
-	public int checkWin(int[][] inputBoard) {
+	public Integer checkWin(int[][] inputBoard) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int minMax(int[][] inputBoard, int player) {
+	public Integer minMax(int[][] inputBoard, int player) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

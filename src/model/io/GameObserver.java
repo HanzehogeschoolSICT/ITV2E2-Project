@@ -4,8 +4,11 @@ import java.util.ArrayList;
 
 import controller.Game;
 import controller.Main;
+import controller.Game.GameStatus;
 import model.Board;
 import model.io.Connection.Observer;
+
+import static controller.Game.GameStatus.*;
 
 public class GameObserver implements Observer{
 	private Main main;
@@ -73,13 +76,13 @@ public class GameObserver implements Observer{
 		System.out.println(statusCode);
 		switch(statusCode){
 		case 1:
-			this.game.setGameStatus(2);
+			this.game.setGameStatus(WIN);
 			break;
 		case 0:
-			this.game.setGameStatus(3);
+			this.game.setGameStatus(DRAW);
 			break;
 		case -1:
-			this.game.setGameStatus(-1);
+			this.game.setGameStatus(LOSE);
 			break;
 		}
 		
@@ -95,7 +98,7 @@ public class GameObserver implements Observer{
 	public void onGameMatch(String playerMove, String gameType, String Opponent){
 		if(this.game.getGameType().equals(gameType)){
 			this.game.setPlayerFirstMove(playerMove);
-			this.game.setGameStatus(1);
+			this.game.setGameStatus(STARTED);
 			this.game.resetBoard();
 			this.game.setOpponent(Opponent);
 		} else {

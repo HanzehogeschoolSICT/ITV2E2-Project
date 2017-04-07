@@ -17,7 +17,6 @@ public interface Game {
 	public void logout();
 	public void setHuman(boolean human);
 	public boolean getHuman();
-	public int getGameStatus();
 	
 	public boolean getTurn();
 	public void setTurn(boolean turn);
@@ -30,10 +29,15 @@ public interface Game {
 	public void setPlayerList(ArrayList<String> players);
 	public ArrayList<String> getPlayerList();
 	public void stopChallenge();
-	public void setGameStatus(int status);
 	public void resetBoard();
 	public String getOpponent();
 	public void setOpponent(String opponent);
 	public void setPlayerFirstMove(String playername);
 	public boolean getPlayerFirstMove();
+	public GameStatus getGameStatus();
+	public void setGameStatus(GameStatus status);
+	public enum GameStatus {
+		NOT_STARTED, STARTED,
+		WIN, LOSE, DRAW
+	}
 }
