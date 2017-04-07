@@ -23,7 +23,7 @@ public class TicTacToeAI implements GameAI{
 	@Override
 	public void move() {
 		Board board = this.gameController.getBoard();
-		int[][] inputBoard = board.getSpaces();
+		int[][] inputBoard = board.getSpaces().clone();
 		
 		int player = 1;
 		this.nextMove = new int[2];
