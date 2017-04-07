@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -23,7 +24,7 @@ public class TicTacToeAI implements GameAI{
 	@Override
 	public void move() {
 		Board board = this.gameController.getBoard();
-		int[][] inputBoard = board.getSpaces().clone();
+		int[][] inputBoard = copyBoard(board.getSpaces());
 		
 		int player = 1;
 		this.nextMove = new int[2];
@@ -33,6 +34,17 @@ public class TicTacToeAI implements GameAI{
 			this.minMax(inputBoard, player);
 		}
 		this.gameController.setMove(this.nextMove[0], this.nextMove[1]);
+	}
+	
+	public int[][] copyBoard(int[][] inputBoard){
+		int[][] outputBoard = new int[inputBoard.length][];
+		for (int y = 0; y<inputBoard.length;y++){
+			outputBoard[y] = new int[inputBoard[y].length];
+			for (int x = 0; x < inputBoard[y].length; x++){
+				outputBoard[y][x] = inputBoard[y][x];
+			}
+		}
+		return outputBoard;
 	}
 	
 	public void randomMove(){
@@ -149,7 +161,7 @@ public class TicTacToeAI implements GameAI{
 		for(int y = 0; y< inputBoard.length; y++){
 			for(int x = 0; x< inputBoard[y].length; x++){
 				if(inputBoard[y][x] == 0){
-					int[][] tempBoard = inputBoard;
+					int[][] tempBoard = copyBoard(inputBoard);
 					tempBoard[y][x] = player;
 					int checkWin = this.checkWin(tempBoard);
 					
