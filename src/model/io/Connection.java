@@ -29,6 +29,12 @@ public class Connection {
         this.port = port;
     }
 
+    /**
+     * Establishes a new connection to the game server with the given username.
+     * When the connection is not successful an IOException is thrown.
+     * @param playerName The username of the player that want to connect.
+     * @throws IOException Thrown when a connection to the server cannot be established.
+     */
     public void establish(String playerName) throws IOException {
         this.outputServer = new OutputServer(this);
         this.inputServer = new InputServer(this);
@@ -38,6 +44,17 @@ public class Connection {
         login(playerName);
     }
 
+    /**
+     * Stops the connection to the server by closing the socket.
+     * This is turn stops the while loops and closes the threads.
+     * @throws IOException Thrown when the socket cannot be closed.
+     */
+    public void stop() throws IOException {
+        this.logout();
+        this.socket.close();
+    }
+
+
     private void setObserver() {
         OutputHandler handler = new OutputHandler(observer);
         this.outputServer.setObserver(new OutputServer.Observer() {
@@ -46,19 +63,15 @@ public class Connection {
                 handler.handle(line);
             }
 
+    /**
+     * Returns the IP of the connected game server.
+     * @return The IP of the connected game server.
+     */
             @Override
             public void onEndOfLine() {
                 System.out.println("===============================");
             }
         });
-    }
-    
-    public String getServerIpAddress(){
-    	return this.address;
-    }
-    
-    public String getPlayerName(){
-    	return this.playerName;
     }
     
     public static boolean isAdressValid(String address) {
@@ -197,7 +210,7 @@ public class Connection {
      * </pre>
      */
     public void forfeit(){
-        this.inputServer.submit("exit");
+        this.inputServer.submit("forfeit");
     }
 
     /**
@@ -250,6 +263,7 @@ public class Connection {
      * </pre>
      * @param command The command to view the help page of, if null, the full help page is shown.
      */
+    @Deprecated
     public void help(@Nullable String command){
         this.inputServer.submit("help " + (command != null ? command : "")); //Add the command if it isn't null.
     }
@@ -262,12 +276,14 @@ public class Connection {
         void onMove(String player, String details, int move);
         void onYourTurn(String comment);
         void onGameMatch(String playerMove, String gameType, String Opponent);
+        void onGameEnd(int statusCode, String comment);
+
         void onChallenge(String opponentName, int challengeNumber, String gameType);
         void onChallengeCancelled(int challengeNumber, String comment);
-        void onHelp(String info);
+
         void onGameList(ArrayList<String> games);
         void onPlayerList(ArrayList<String> players);
-        void onGameEnd(int statusCode, String comment);
+
         void onError(String comment);
     }
 
@@ -292,9 +308,12 @@ public class Connection {
         this.observer = observer;
     }
 
-    public void stop(){
-    	this.logout();
-    	//Kill threads
+    public String getServerIpAddress(){
+        return this.address;
+    }
+
+    public String getPlayerName(){
+        return this.playerName;
     }
     
     //</editor-fold>

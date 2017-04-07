@@ -31,6 +31,10 @@ public class OutputServer {
         this.connection = connection;
     }
 
+    /**
+     * Start the output server on the given connections socket.
+     * @throws IOException Thrown when the connection to the socket cannot be established.
+     */
     public void start() throws IOException {
         this.connection.setSocket(new Socket(connection.getAddress(), connection.getPort()));
 
