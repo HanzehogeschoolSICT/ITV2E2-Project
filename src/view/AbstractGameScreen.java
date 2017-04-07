@@ -30,14 +30,14 @@ public abstract class AbstractGameScreen implements GameScreen {
 		
 		for (int y=0;y<board.getRows();y++){
 			for(int x=0;x<board.getColumns();x++){
-				Pane box = getBoardValue(x,y);
-				boardPane.add(box, y, x);
+				Pane box = getBoardValue(y,x);
+				boardPane.add(box, x, y);
 			}
 		}
 		return boardPane;
 	}
 	
-	private Pane getBoardValue(int x, int y){
+	private Pane getBoardValue(int y, int x){
 		HBox pane = new HBox();
 		Board board = this.game.getBoard();
 		int value = 0;
@@ -47,7 +47,7 @@ public abstract class AbstractGameScreen implements GameScreen {
 			System.out.println(y + "," + x + " resulted in null pointer exception");
 		}
 		if (value == 0){
-			Rectangle col = createEmpty(x,y);
+			Rectangle col = createEmpty(y, x);
 			pane.getChildren().add(col);
 		} else if (value == 1){
 			ImageView xView = createPlayer();
@@ -63,7 +63,7 @@ public abstract class AbstractGameScreen implements GameScreen {
 	protected abstract ImageView createOponent();
 	protected abstract int getSquareSize();
 	
-	private Rectangle createEmpty(int x, int y){
+	private Rectangle createEmpty(int y, int x){
 		Rectangle col = new Rectangle();
 		col.setHeight(this.getSquareSize());
 		col.setWidth(this.getSquareSize());

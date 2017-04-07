@@ -49,10 +49,12 @@ abstract class AbstractGame implements Game{
 	}
 	
 	public void setMove(int y, int x){
+		System.out.println("setMove: " + (((Integer) y).toString()) + ", " + (((Integer) x).toString()));
 		if(this.myTurn){
 			if(this.board.isValid(y, x)){
 				Connection conn = this.main.getConnection();
 				Integer move = (y * this.board.getColumns()) + x;
+				System.out.println(move);
 				conn.move(move);
 				this.setTurn(false);			
 			}
@@ -121,7 +123,7 @@ abstract class AbstractGame implements Game{
 	public void setTurn(boolean turn){		
     	this.myTurn = turn;
     	this.updateView();
-    	if (this.isHuman == false){
+    	if (this.isHuman == false && this.myTurn == true){
     		this.gameAI.move();
     	}
 	}

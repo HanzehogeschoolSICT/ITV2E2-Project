@@ -23,7 +23,7 @@ public class TicTacToeAI implements GameAI{
 	@Override
 	public void move() {
 		Board board = this.gameController.getBoard();
-		int[][] inputBoard = board.getSpaces();
+		int[][] inputBoard = board.getSpaces().clone();
 		
 		int player = 1;
 		this.nextMove = new int[2];
@@ -37,7 +37,7 @@ public class TicTacToeAI implements GameAI{
 	
 	public void randomMove(){
 		int randomIndex = ThreadLocalRandom.current().nextInt(0, 8 + 1);
-		if(randomIndex == 6){
+		if(randomIndex == 5){
 			this.randomMove();
 		}else{
 			this.nextMove[0] = Math.round(randomIndex / 3);
@@ -145,30 +145,33 @@ public class TicTacToeAI implements GameAI{
 
 	@Override
 	public Integer minMax(int[][] inputBoard, int player) {
-		ArrayList<Integer> possibleOutcomes = new ArrayList<Integer>();
+		MinMaxResult possibleOutcomes = new MinMaxResult();
 		for(int y = 0; y< inputBoard.length; y++){
 			for(int x = 0; x< inputBoard[y].length; x++){
 				if(inputBoard[y][x] == 0){
 					int[][] tempBoard = inputBoard;
 					tempBoard[y][x] = player;
-					Integer checkWin = this.checkWin(tempBoard);
-					
+					int checkWin = this.checkWin(tempBoard);
 					
 					if(checkWin != 2){
-						possibleOutcomes.add(checkWin);
+						possibleOutcomes.addResult(x, y, checkWin);
 					}else{
-						Integer minMax = minMax(inputBoard, this.nextPlayer(player));
-						possibleOutcomes.add(minMax);
+						int minMax = minMax(inputBoard, this.nextPlayer(player));
+						possibleOutcomes.addResult(x, y, minMax);
 					}
 				}
 			}
 		}
 		
+		int[] details;
 		if(player == 1){
-			return Collections.max(possibleOutcomes);
+			details = possibleOutcomes.getMax();
 		}else{
-			return Collections.min(possibleOutcomes);
+			details = possibleOutcomes.getMin();
 		}
+		this.nextMove[0] = details[1];
+		this.nextMove[1] = details[0];
+		return details[2];
 	}
 
 }
