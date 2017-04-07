@@ -28,6 +28,11 @@ abstract class AbstractGame implements Game{
 	 * Status 3 	-> 	Draw
 	 */
 	protected int gameStatus = 0;
+	private String playerFirstMove;
+	
+	public GameScreen getGameScreen(){
+		return this.gamescreen;
+	}
 	
 	public Pane updateGameScreen(){
 		return this.gamescreen.update();
@@ -177,5 +182,18 @@ abstract class AbstractGame implements Game{
 	
 	public String getOpponent(){
 		return this.opponent;
+	}
+	
+	public void setPlayerFirstMove(String playername){
+		System.out.println("First player: " + playername);
+		this.playerFirstMove = playername;
+	}
+	
+	public boolean getPlayerFirstMove(){
+		if(this.playerFirstMove.equals(this.opponent)){
+			return false;
+		} else {
+			return true;
+		}
 	}
 }

@@ -10,12 +10,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.Board;
 
-@SuppressWarnings("unused")
 public abstract class AbstractGameScreen implements GameScreen {
 	protected Game game;
 	protected BorderPane pane;
@@ -50,13 +48,33 @@ public abstract class AbstractGameScreen implements GameScreen {
 			Rectangle col = createEmpty(y, x);
 			pane.getChildren().add(col);
 		} else if (value == 1){
-			ImageView xView = createPlayer();
+			ImageView xView = getPlayer();
 			pane.getChildren().add(xView);
 		} else if (value == 2){
-			ImageView oView = createOponent();
+			ImageView oView = getOponent();
 			pane.getChildren().add(oView);
 		}
 		return pane;
+	}
+	
+	private ImageView getPlayer(){
+		ImageView xView = null;
+		if (this.game.getPlayerFirstMove() == true){
+			xView = createPlayer();
+		} else {
+			xView = createOponent();
+		}
+		return xView;
+	}
+	
+	private ImageView getOponent(){
+		ImageView oView = null;
+		if (this.game.getPlayerFirstMove() == true){
+			oView = createOponent();
+		} else {
+			oView = createPlayer();
+		}
+		return oView;
 	}
 	
 	protected abstract ImageView createPlayer();

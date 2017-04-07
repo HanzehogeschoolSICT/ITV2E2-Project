@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -32,6 +34,7 @@ public class MainGame extends AbstractWindowScreen {
 	private Label inputScore;
 	private Label inputTurn;
 	private Button buttonDefeat;
+	private ImageView playerIcon;
 	
 	public MainGame(Window window) {
 		this.window = window;
@@ -293,6 +296,7 @@ public class MainGame extends AbstractWindowScreen {
 		pane.getChildren().add(createRightPaneOponentName());
 		pane.getChildren().add(createRightPaneScore());
 		pane.getChildren().add(createRightPaneTurn());
+		pane.getChildren().add(createRightPaneIcon());
 		
 		this.buttonDefeat = new Button("Defeat");
 		this.buttonDefeat.setDisable(true);
@@ -312,11 +316,40 @@ public class MainGame extends AbstractWindowScreen {
 			} else {
 				this.inputTurn.setText("Oponents");
 			} 
+			updateRightPaneIcon();
 		} else {
 			this.inputOponent.setText("");
 			this.inputScore.setText("");
 			this.inputTurn.setText("");
 		}
+	}
+	
+	private Pane createRightPaneIcon(){
+		VBox pane = new VBox();
+		pane.setAlignment(Pos.TOP_RIGHT);
+		
+		Label labelPlayerIcon = new Label("Your icon");
+		labelPlayerIcon.setFont(Font.font(null, FontWeight.BOLD, 12));
+		pane.getChildren().add(labelPlayerIcon);
+		
+		this.playerIcon = new ImageView();
+		this.playerIcon.setFitHeight(25);
+		this.playerIcon.setPreserveRatio(true);
+		pane.getChildren().add(this.playerIcon);
+		
+		return pane;
+	}
+	
+	private void updateRightPaneIcon(){
+		Game game = this.window.getGame();
+		GameScreen screen = game.getGameScreen();
+		Image image = null;
+		if (game.getPlayerFirstMove() == true){
+			image = screen.getPlayerImage();
+		} else {
+			image = screen.getOponentImage();
+		}
+		this.playerIcon.setImage(image);
 	}
 	
 	private Pane createRightPaneOponentName(){

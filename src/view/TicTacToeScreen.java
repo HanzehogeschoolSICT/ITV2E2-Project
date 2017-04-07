@@ -31,8 +31,7 @@ public class TicTacToeScreen extends AbstractGameScreen{
 	}
 	
 	@Override
-	protected ImageView createPlayer(){
-		ImageView xView = new ImageView();
+	public Image getPlayerImage(){
 		FileInputStream file = null;
 		try{
 			file = new FileInputStream("src/view/images/x-red.png");
@@ -40,6 +39,13 @@ public class TicTacToeScreen extends AbstractGameScreen{
 			System.out.println("Cant find image: src/view/images/x-red.png");
 		}
 		Image xImage = new Image(file);
+		return xImage;
+	}
+	
+	@Override
+	protected ImageView createPlayer(){
+		ImageView xView = new ImageView();
+		Image xImage = getPlayerImage();
 		xView.setImage(xImage);
 		xView.setPreserveRatio(true);
 		xView.setFitHeight(this.getSquareSize());
@@ -47,8 +53,7 @@ public class TicTacToeScreen extends AbstractGameScreen{
 	}
 	
 	@Override
-	protected ImageView createOponent(){
-		ImageView oView = new ImageView();
+	public Image getOponentImage(){
 		FileInputStream file = null;
 		try{
 			file = new FileInputStream("src/view/images/o.png");
@@ -56,6 +61,13 @@ public class TicTacToeScreen extends AbstractGameScreen{
 			System.out.println("Cant find image: src/view/images/o.png");
 		}
 		Image oImage = new Image(file);
+		return oImage;
+	}
+	
+	@Override
+	protected ImageView createOponent(){
+		ImageView oView = new ImageView();
+		Image oImage = getOponentImage();
 		oView.setImage(oImage);
 		oView.setPreserveRatio(true);
 		oView.setFitHeight(this.getSquareSize());

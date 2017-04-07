@@ -30,7 +30,12 @@ public class Main extends Application {
 	@Override
 	public void stop(){
 	    System.out.println("Exiting game");
-	    this.connectionModel.stop();
+	    try {
+			this.connectionModel.stop();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	 /**

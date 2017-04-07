@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import javafx.scene.layout.Pane;
 import model.Board;
+import view.GameScreen;
 
 public interface Game {
 	public boolean getGameStart(); 
 	public Pane createGameScreen();
 	public Pane updateGameScreen();
+	public GameScreen getGameScreen();
 	public Board getBoard();
 	public void setMove(int y, int x);
 	public void setDefeat();
@@ -32,4 +34,6 @@ public interface Game {
 	public void resetBoard();
 	public String getOpponent();
 	public void setOpponent(String opponent);
+	public void setPlayerFirstMove(String playername);
+	public boolean getPlayerFirstMove();
 }
