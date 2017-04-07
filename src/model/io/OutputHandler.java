@@ -63,7 +63,12 @@ public class OutputHandler {
             if (!line.contains(ERR)){
 
                 if (contains(line, SVR_GAMELIST, SVR_PLAYERLIST)){
-                    //ToDo handle gamelist and playerlist.
+
+                    if (line.contains(SVR_GAMELIST)) {
+                        handleGameList(line);
+                    } else if (line.contains(SVR_PLAYERLIST)) {
+                        handlePlayerList(line);
+                    }
 
                 } else if (line.contains(SVR_GAME)) {
 
@@ -248,6 +253,34 @@ public class OutputHandler {
                 result.get(1),
                 result.get(2)
         );
+    }
+
+
+    /**
+     * Handles the Game list message received from the server.
+     * The message extracted from the line is passed on to the
+     * {@link model.io.Connection.Observer#onGameList(ArrayList)}  Connection.Observer.onGameList} method
+     * for the UI to respond to.
+     * @param line The line to extract the data from.
+     */
+    private void handleGameList(String line) {
+        ArrayList<String> result = matchQoutes(line);
+
+        this.observer.onGameList(result);
+    }
+
+
+    /**
+     * Handles the Player list message received from the server.
+     * The message extracted from the line is passed on to the
+     * {@link model.io.Connection.Observer#onPlayerList(ArrayList)}  Connection.Observer.onPlayerList} method
+     * for the UI to respond to.
+     * @param line The line to extract the data from.
+     */
+    private void handlePlayerList(String line) {
+        ArrayList<String> result = matchQoutes(line);
+
+        this.observer.onPlayerList(result);
     }
 
 }
