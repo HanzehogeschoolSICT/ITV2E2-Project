@@ -20,15 +20,12 @@ abstract class AbstractGame implements Game{
 	protected boolean myTurn;
 	protected ArrayList<String> playerList;
 	protected String opponent;
-	/**
-	 * Status -1 	-> 	Lose
-	 * Status 0 	-> 	Not started
-	 * Status 1 	-> 	Started
-	 * Status 2 	-> 	Won
-	 * Status 3 	-> 	Draw
-	 */
-	protected int gameStatus = 0;
-	
+	protected GameStatus status;
+
+	public AbstractGame() {
+		this.status = GameStatus.NOT_STARTED;
+	}
+
 	public Pane updateGameScreen(){
 		return this.gamescreen.update();
 	}
@@ -41,20 +38,11 @@ abstract class AbstractGame implements Game{
 		return this.board;
 	}
 	
-	public boolean getGameStart(){
-		 if(this.gameStatus == 1){
-		 	return true;
-		 }
-		 return false;
-	}
-	
 	public void setMove(int y, int x){
-		System.out.println("setMove: " + (((Integer) y).toString()) + ", " + (((Integer) x).toString()));
 		if(this.myTurn){
 			if(this.board.isValid(y, x)){
 				Connection conn = this.main.getConnection();
 				Integer move = (y * this.board.getColumns()) + x;
-				System.out.println(move);
 				conn.move(move);
 				this.setTurn(false);			
 			}
@@ -85,7 +73,7 @@ abstract class AbstractGame implements Game{
 	public void setDefeat(){
 		Connection conn = this.main.getConnection();
 		conn.forfeit();
-		this.setGameStatus(-1);
+		this.setGameStatus(GameStatus.LOSE);
 		this.updateView();
 	}
 	
@@ -106,16 +94,21 @@ abstract class AbstractGame implements Game{
 		return this.isHuman;
 	}
 	
-	public int getGameStatus(){
-		return this.gameStatus;
+	public GameStatus getGameStatus(){
+		return this.status;
 	}
 
-	public void setGameStatus(int status){
-		System.out.println("setGameStatus: " + ((Integer) status).toString());
-	    this.gameStatus = status;
+	public void setGameStatus(GameStatus status){
+	    this.status = status;
 	    updateView();
 	}
-	
+	public boolean getGameStart(){
+		if(this.status == GameStatus.STARTED){
+			return true;
+		}
+		return false;
+	}
+
 	public boolean getTurn(){
 		return this.myTurn;
 	}
@@ -123,7 +116,7 @@ abstract class AbstractGame implements Game{
 	public void setTurn(boolean turn){		
     	this.myTurn = turn;
     	this.updateView();
-    	if (this.isHuman == false && this.myTurn == true){
+    	if (this.isHuman == false){
     		this.gameAI.move();
     	}
 	}

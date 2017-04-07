@@ -86,21 +86,21 @@ public class MainGame extends AbstractWindowScreen {
 	
 	private Label getGameStatusLabel() {
 		Game game = this.window.getGame();
-		int gameStatus = game.getGameStatus();
+		Game.GameStatus gameStatus = game.getGameStatus();
 
 		Label labelText = new Label();
 		labelText.setFont(new Font("Calibri", 200));
 		labelText.setRotate(45);
 		
-		if (gameStatus == -1){
+		if (gameStatus == Game.GameStatus.LOSE){
 			labelText.setText("Lost");
 			labelText.setTextFill(Color.YELLOW);
 			return labelText;
-		} else if (gameStatus == 2){
+		} else if (gameStatus == Game.GameStatus.WIN){
 			labelText.setText("Won");
 			labelText.setTextFill(Color.GREEN);
 			return labelText;
-		} else if (gameStatus == 3){
+		} else if (gameStatus == Game.GameStatus.DRAW){
 			labelText.setText("Tie");
 			labelText.setTextFill(Color.GRAY);
 			return labelText;
