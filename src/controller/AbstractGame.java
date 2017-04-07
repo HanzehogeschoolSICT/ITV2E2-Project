@@ -121,7 +121,7 @@ abstract class AbstractGame implements Game{
 	public void setTurn(boolean turn){		
     	this.myTurn = turn;
     	this.updateView();
-    	if (this.isHuman == false){
+    	if (this.isHuman == false && this.myTurn == true){
     		this.gameAI.move();
     	}
 	}
@@ -161,9 +161,9 @@ abstract class AbstractGame implements Game{
 	}
 	
 	public void setPlayerList(ArrayList<String> players) {
-		this.playerList = players;	
+		this.playerList = players;
+		updateView();
 	}
-
 	
 	public ArrayList<String> getPlayerList() {
 		return this.playerList;

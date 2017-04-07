@@ -58,6 +58,7 @@ public class TicTacToeAI implements GameAI{
 						this.nextMove[1] = x;
 						return true;
 					}
+					tempBoard = null;
 				}
 			}
 		}

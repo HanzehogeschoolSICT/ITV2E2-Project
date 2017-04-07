@@ -14,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -137,7 +136,11 @@ public class MainGame extends AbstractWindowScreen {
 	
 	private void updateLeftPane(){
 		Game game = window.getGame();
-		//this.playerlist.setText(game.getPlayerList().toString());
+		String players = "";
+		for(String player : game.getPlayerList()){
+			players = players + player + "\n";
+		}
+		this.playerlist.setText(players);
 		this.playerlistCount = this.playerlistCount + 1;
 		if (this.playerlistCount > 4){
 			Connection conn = this.window.getConnection();

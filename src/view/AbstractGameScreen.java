@@ -59,21 +59,27 @@ public abstract class AbstractGameScreen implements GameScreen {
 	
 	private ImageView getPlayer(){
 		ImageView xView = null;
+		xView = createPlayer();
+		/*
 		if (this.game.getPlayerFirstMove() == true){
 			xView = createPlayer();
 		} else {
 			xView = createOponent();
 		}
+		*/
 		return xView;
 	}
 	
 	private ImageView getOponent(){
 		ImageView oView = null;
+		oView = createOponent();
+		/*
 		if (this.game.getPlayerFirstMove() == true){
 			oView = createOponent();
 		} else {
 			oView = createPlayer();
 		}
+		*/
 		return oView;
 	}
 	
