@@ -45,13 +45,13 @@ public abstract class AbstractGameScreen implements GameScreen {
 			System.out.println(y + "," + x + " resulted in null pointer exception");
 		}
 		if (value == 0){
-			Rectangle col = createEmpty(y, x);
+			Rectangle col = this.createEmpty(y, x);
 			pane.getChildren().add(col);
 		} else if (value == 1){
-			ImageView xView = getPlayer();
+			ImageView xView = this.getPlayer();
 			pane.getChildren().add(xView);
 		} else if (value == 2){
-			ImageView oView = getOponent();
+			ImageView oView = this.getOponent();
 			pane.getChildren().add(oView);
 		}
 		return pane;
@@ -59,7 +59,6 @@ public abstract class AbstractGameScreen implements GameScreen {
 	
 	private ImageView getPlayer(){
 		ImageView xView = null;
-		xView = createPlayer();
 		if (this.game.getPlayerFirstMove() == true){
 			xView = createPlayer();
 		} else {
@@ -70,7 +69,6 @@ public abstract class AbstractGameScreen implements GameScreen {
 	
 	private ImageView getOponent(){
 		ImageView oView = null;
-		oView = createOponent();
 		if (this.game.getPlayerFirstMove() == true){
 			oView = createOponent();
 		} else {
