@@ -65,12 +65,16 @@ public class Othello extends AbstractGame{
 		for (int i = (p + 1); ((i) % 8 != 0); i++) {
 			if (!isValidMove(inputBoard, x, y, Direction.RIGHT, player)) {
 				break;
+			} else {
+				swap(inputBoard, x, y, player);
 			}
 		}
 
 		for (int i = (p - 1); ((i + 1) % 8 != 0); i--) {
 			if (!isValidMove(inputBoard, x, y, Direction.LEFT, player)) {
 				break;
+			} else {
+				swap(inputBoard, x, y, player);
 			}
 		}
 	}
@@ -99,12 +103,16 @@ public class Othello extends AbstractGame{
 		for (int i = (p + 8); i < 63; i = i + 8) {
 			if (!isValidMove(inputBoard, x, y, Direction.UP, player)) {
 				break;
+			} else {
+				swap(inputBoard, x, y, player);
 			}
 		}
 
 		for (int i = (p - 8); i > 0; i = i - 8) {
 			if (!isValidMove(inputBoard, x, y, Direction.DOWN, player)) {
 				break;
+			} else {
+				swap(inputBoard, x, y, player);
 			}
 		}
 	}
