@@ -3,7 +3,10 @@ package controller;
 import model.Board;
 import view.OthelloScreen;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 //import model.OthelloAI;
 
 public class Othello extends AbstractGame{
@@ -143,6 +146,53 @@ public class Othello extends AbstractGame{
 		}
 	}
 
+	public boolean isValidMove(Board inputBoard, int x, int y, int player) {
+		boolean result = false;
+
+		for (Direction direction : Direction.directions) {
+			if (isValidMove(inputBoard, direction, x, y, player)) {
+				result = true;
+				break;
+			}
+		}
+
+		return result;
+	}
+
+	public boolean isValidMove(Board inputBoard, Direction direction, int x, int y, int player) {
+		int contX = x + direction.getWidth_offset();
+		int contY = y + direction.getHeight_offset();
+		int valuePos = inputBoard.get(contX, contY);
+		int count = 0;
+		boolean result = false;
+
+		try {
+			while (!result) {
+
+				if (count == 0) {
+					if (valuePos != 0 && valuePos != player) {
+						result = false;
+						break;
+					}
+				} else {
+					if (!(count > 0 && valuePos != 0 && valuePos != player)) {
+						result = true;
+						break;
+					}
+				}
+
+				contX += direction.getWidth_offset();
+				contY += direction.getHeight_offset();
+				valuePos = inputBoard.get(contX, contY);
+				count++;
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			result = false;
+		}
+
+		return result;
+	}
+
 	private void swapTiles(ArrayList<Integer[]> swapTilesAt, int swapToPlayer, Board board) {
 		for (Integer[] array : swapTilesAt) {
 			int value = swapToPlayer == 1 ? 2 : 1;
@@ -193,7 +243,10 @@ public class Othello extends AbstractGame{
 		return amountOfStones(0, inputBoard);
 	}
 
-	public enum Direction {
+
+
+
+	public enum Direction implements Iterable<Direction> {
 		LEFT(0, -1, 0),
 		RIGHT(1, 1, 0),
 		UP(2, 0, -1),
@@ -203,6 +256,16 @@ public class Othello extends AbstractGame{
 		RIGHT_UP(6, 1, -1),
 		RIGHT_DOWN(7, 1, 1);
 
+		public static final ArrayList<Direction> directions = new ArrayList<>(Arrays.asList(
+				LEFT,
+				RIGHT,
+				UP,
+				DOWN,
+				LEFT_UP,
+				LEFT_DOWN,
+				RIGHT_UP,
+				RIGHT_DOWN));
+
 		private int identifier;
 		private int width_offset;
 		private int height_offset;
@@ -211,6 +274,11 @@ public class Othello extends AbstractGame{
 			this.identifier = identifier;
 			this.width_offset = width_offset;
 			this.height_offset = height_offset;
+		}
+
+		@Override
+		public Iterator<Direction> iterator() {
+			return directions.iterator();
 		}
 
 		public int getIdentifier() {
@@ -224,6 +292,7 @@ public class Othello extends AbstractGame{
 		public int getHeight_offset() {
 			return height_offset;
 		}
+
 	}
 
 }
