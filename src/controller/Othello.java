@@ -2,6 +2,8 @@ package controller;
 
 import model.Board;
 import view.OthelloScreen;
+
+import java.util.ArrayList;
 //import model.OthelloAI;
 
 public class Othello extends AbstractGame{
@@ -17,7 +19,7 @@ public class Othello extends AbstractGame{
     @Override
     public void createEmptyBoard(){
     	this.board.createEmptyBoard();
-    	if (this.getPlayerFirstMove() == true){
+    	if (this.getPlayerFirstMove()){
     		this.board.set(2, 3, 3);
     		this.board.set(2, 4, 4);
     		this.board.set(1, 3, 4);
@@ -37,89 +39,109 @@ public class Othello extends AbstractGame{
 	}
 
 	private void turnDiagonal(Board inputBoard, int x, int y, int player) {
-		turnDiagonalLeft(inputBoard, x, y, player);
-		turnDiagonalRight(inputBoard, x, y, player);
+		turnDiagonalUp(inputBoard, x, y, player);
+		turnDiagonalDown(inputBoard, x, y, player);
 	}
 
-	private void turnDiagonalLeft(Board inputBoard, int x, int y, int player) {
-		int p = y * inputBoard.getColumns() + x;
-		for (int i = (p - 9); ((i > 0) && ((i + 1) % 8 != 0)); i = i - 9) {
-			if (!isValidMove(inputBoard, x, y, Direction.LEFT_UP, player)) {
+	private void turnDiagonalDown(Board inputboard, int x, int y, int player) {
+		ArrayList<Integer[]> bottomLeft = new ArrayList<>();
+		ArrayList<Integer[]> bottomRight = new ArrayList<>();
+		int pos = y * inputboard.getColumns() + x;
+
+
+		for (int i = (pos + 7); ((i < 64) && (i % 8 != 0)); i = i + 7) {
+			if (!isValidMove(inputboard, bottomLeft, x, y, player)) {
 				break;
-			} else {
-				swap(inputBoard, x, y, player);
 			}
 		}
 
-		for (int i = (p + 7); i < 64; i = i + 7) {
-			if (!isValidMove(inputBoard, x, y, Direction.LEFT_DOWN, player)) {
+		for (int i = (pos + 9); ((i < 64) && ((i - 1) % 8 != 0)); i = i + 9) {
+			if (!isValidMove(inputboard, bottomRight, x, y, player)) {
 				break;
-			} else {
-				swap(inputBoard, x, y, player);
+			}
+		}
+	}
+
+	private void turnDiagonalUp(Board inputBoard, int x, int y, int player) {
+		ArrayList<Integer[]> topLeft = new ArrayList<>();
+		ArrayList<Integer[]> topRight = new ArrayList<>();
+		int pos = y * inputBoard.getColumns() + x;
+
+
+		for (int i = (pos - 9); ((i > 0) && ((i + 1) % 8 != 0)); i = i - 9) {
+			if (!isValidMove(inputBoard, topLeft, x, y, player)) {
+				break;
+			}
+		}
+
+		for (int i = (pos - 7); ((i > 0) && (i % 8 != 0)); i = i - 7) {
+			if (!isValidMove(inputBoard, topRight, x, y, player)) {
+				break;
 			}
 		}
 	}
 
 	private void turnHorizontal(Board inputBoard, int x, int y, int player) {
-		int p = y * inputBoard.getColumns() + x;
-		for (int i = (p + 1); ((i) % 8 != 0); i++) {
-			if (!isValidMove(inputBoard, x, y, Direction.RIGHT, player)) {
+		ArrayList<Integer[]> horizontalLeft = new ArrayList<>();
+		ArrayList<Integer[]> horizontalRight = new ArrayList<>();
+		int pos = y * inputBoard.getColumns() + x;
+
+
+		for (int i = (pos + 1); ((i) % 8 != 0); i++) {
+			if (!isValidMove(inputBoard, horizontalRight, x, y, player)) {
 				break;
-			} else {
-				swap(inputBoard, x, y, player);
 			}
 		}
 
-		for (int i = (p - 1); ((i + 1) % 8 != 0); i--) {
-			if (!isValidMove(inputBoard, x, y, Direction.LEFT, player)) {
+		for (int i = (pos - 1); ((i + 1) % 8 != 0); i--) {
+			if (!isValidMove(inputBoard, horizontalLeft, x, y, player)) {
 				break;
-			} else {
-				swap(inputBoard, x, y, player);
-			}
-		}
-	}
-
-	private void turnDiagonalRight(Board inputBoard, int x, int y, int player) {
-		int p = y * inputBoard.getColumns() + x;
-		for (int i = (p - 7); ((i > 0) && (i % 8 != 0)); i = i - 7) {
-			if (!isValidMove(inputBoard, x, y, Direction.RIGHT_UP, player)) {
-				break;
-			} else {
-				swap(inputBoard, x, y, player);
-			}
-		}
-
-		for (int i = (p + 9); i < 64; i = i + 9) {
-			if (!isValidMove(inputBoard, x, y, Direction.RIGHT_DOWN, player)) {
-				break;
-			} else {
-				swap(inputBoard, x, y, player);
 			}
 		}
 	}
 
 	private void turnVertical(Board inputBoard, int x, int y, int player) {
-		int p = y * inputBoard.getColumns() + x;
-		for (int i = (p + 8); i < 63; i = i + 8) {
-			if (!isValidMove(inputBoard, x, y, Direction.UP, player)) {
+		ArrayList<Integer[]> verticalUp = new ArrayList<>();
+		ArrayList<Integer[]> verticalDown = new ArrayList<>();
+		int pos = y * inputBoard.getColumns() + x;
+
+		for (int i = (pos + 8); i < 63; i = i + 8) {
+			if (!isValidMove(inputBoard, verticalUp, x, y, player)) {
 				break;
-			} else {
-				swap(inputBoard, x, y, player);
 			}
 		}
 
-		for (int i = (p - 8); i > 0; i = i - 8) {
-			if (!isValidMove(inputBoard, x, y, Direction.DOWN, player)) {
+		for (int i = (pos - 8); i > 0; i = i - 8) {
+			if (!isValidMove(inputBoard, verticalDown, x, y, player)) {
 				break;
-			} else {
-				swap(inputBoard, x, y, player);
 			}
 		}
 	}
 
-	private void swap(Board inputBoard, int x, int y, int player) {
-    	int current = inputBoard.get(y, x);
-    	inputBoard.set((current == player ? 2 : 1), y, x);
+	private boolean isValidMove(Board inputBoard, ArrayList<Integer[]> toSwap, int x, int y, int player) {
+		int valueAtPos = inputBoard.get(x, y);
+
+		if (valueAtPos == player) {
+			if (toSwap.size() > 0) {
+				swapTiles(toSwap, player, inputBoard);
+				toSwap.clear();
+				return false;
+			} else {
+				return false;
+			}
+		} else if (valueAtPos != 0) {
+			toSwap.add(new Integer[]{x, y});
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private void swapTiles(ArrayList<Integer[]> swapTilesAt, int swapToPlayer, Board board) {
+		for (Integer[] array : swapTilesAt) {
+			int value = swapToPlayer == 1 ? 2 : 1;
+			board.set(value, array[0], array[1]);
+		}
 	}
 
 
