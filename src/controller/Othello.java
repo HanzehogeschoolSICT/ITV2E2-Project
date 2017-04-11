@@ -48,7 +48,6 @@ public class Othello extends AbstractGame{
 		ArrayList<Integer[]> bottomRight = new ArrayList<>();
 		int pos = y * inputboard.getColumns() + x;
 
-
 		for (int i = (pos + 7); ((i < 64) && (i % 8 != 0)); i = i + 7) {
 			if (!isValidMove(inputboard, bottomLeft, x, y, player)) {
 				break;
@@ -67,7 +66,6 @@ public class Othello extends AbstractGame{
 		ArrayList<Integer[]> topRight = new ArrayList<>();
 		int pos = y * inputBoard.getColumns() + x;
 
-
 		for (int i = (pos - 9); ((i > 0) && ((i + 1) % 8 != 0)); i = i - 9) {
 			if (!isValidMove(inputBoard, topLeft, x, y, player)) {
 				break;
@@ -85,7 +83,6 @@ public class Othello extends AbstractGame{
 		ArrayList<Integer[]> horizontalLeft = new ArrayList<>();
 		ArrayList<Integer[]> horizontalRight = new ArrayList<>();
 		int pos = y * inputBoard.getColumns() + x;
-
 
 		for (int i = (pos + 1); ((i) % 8 != 0); i++) {
 			if (!isValidMove(inputBoard, horizontalRight, x, y, player)) {
@@ -118,19 +115,28 @@ public class Othello extends AbstractGame{
 		}
 	}
 
-	private boolean isValidMove(Board inputBoard, ArrayList<Integer[]> toSwap, int x, int y, int player) {
+	/**
+	 * Checks if the given move with x and y is valid and in range of the board.
+	 * @param inputBoard The board to check the move on.
+	 * @param swabAbles The indexes to swap.
+	 * @param x The x value of the origin point to check from.
+	 * @param y The y value of the origin point to check from.
+	 * @param player The player that is doing the move.
+	 * @return True if the move is valid = within the board, not empty and not the current player, else false.
+	 */
+	private boolean isValidMove(Board inputBoard, ArrayList<Integer[]> swabAbles, int x, int y, int player) {
 		int valueAtPos = inputBoard.get(x, y);
 
 		if (valueAtPos == player) {
-			if (toSwap.size() > 0) {
-				swapTiles(toSwap, player, inputBoard);
-				toSwap.clear();
+			if (swabAbles.size() > 0) {
+				swapTiles(swabAbles, player, inputBoard);
+				swabAbles.clear();
 				return false;
 			} else {
 				return false;
 			}
 		} else if (valueAtPos != 0) {
-			toSwap.add(new Integer[]{x, y});
+			swabAbles.add(new Integer[]{x, y});
 			return true;
 		} else {
 			return false;
@@ -141,28 +147,6 @@ public class Othello extends AbstractGame{
 		for (Integer[] array : swapTilesAt) {
 			int value = swapToPlayer == 1 ? 2 : 1;
 			board.set(value, array[0], array[1]);
-		}
-	}
-
-
-	/**
-	 * Checks if the given move with x and y is valid and in range of the board.
-	 * @param inputBoard The board to check the move on.
-	 * @param x The x value of the origin point to check from.
-	 * @param y The y value of the origin point to check from.
-	 * @param direction The direction to check for.
-	 * @param player The player that is doing the move.
-	 * @return True if the move is valid = within the board, not empty and not the current player, else false.
-	 */
-	public boolean isValidMove(Board inputBoard, int x, int y, Direction direction, int player) {
-		try {
-			int foundSpace = inputBoard.get(
-					x + direction.getWidth_offset(),
-					y + direction.getHeight_offset()
-			); //ToDo this is probably wrong.
-			return ((foundSpace != 0) && (foundSpace != player));
-		} catch (ArrayIndexOutOfBoundsException e) {
-			return false;
 		}
 	}
 
