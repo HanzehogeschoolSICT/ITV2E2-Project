@@ -123,6 +123,13 @@ abstract class AbstractGame implements Game{
     	this.updateView();
     	if (this.isHuman == false && this.myTurn == true){
     		this.gameAI.move();
+    	} else if (this.myTurn == true && this.isHuman == true){
+    		Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+            		gamescreen.playTurnSound();
+                }
+    		});
     	}
 	}
 
@@ -178,7 +185,6 @@ abstract class AbstractGame implements Game{
 	}
 	
 	public void setPlayerFirstMove(String playername){
-		System.out.println("First player: " + playername);
 		this.playerFirstMove = playername;
 	}
 	
