@@ -146,6 +146,14 @@ public class Othello extends AbstractGame{
 		}
 	}
 
+	/**
+	 * Checks if the given move with x and y is valid and in range of the board.
+	 * @param inputBoard The board to check the move on.
+	 * @param x The x value of the origin point to check from.
+	 * @param y The y value of the origin point to check from.
+	 * @param player The player that is doing the move.
+	 * @return True if the move is valid = within the board, not empty and not the current player, else false.
+	 */
 	public boolean isValidMove(Board inputBoard, int x, int y, int player) {
 		boolean result = false;
 
@@ -175,7 +183,10 @@ public class Othello extends AbstractGame{
 						break;
 					}
 				} else {
-					if (!(count > 0 && valuePos != 0 && valuePos != player)) {
+					if(valuePos == player) {
+						result = false;
+						break;
+					} else if (valuePos == 0) {
 						result = true;
 						break;
 					}
