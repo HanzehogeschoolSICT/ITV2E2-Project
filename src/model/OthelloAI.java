@@ -127,7 +127,7 @@ public class OthelloAI implements GameAI{
 			inputBoard[possMove[0]][possMove[1]] = player;
 			//HARJAN TURN STONES(inputBoard)
 			
-			if(depth == this.MINMAX_DEPTH){
+			if(depth == OthelloAI.MINMAX_DEPTH){
 				//RUTGER CALC SCORE(inputBoard)
 				int scoreSelf = 0;
 				int scoreOpp = 0;

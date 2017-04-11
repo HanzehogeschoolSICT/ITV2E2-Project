@@ -90,10 +90,10 @@ public class GameObserver implements Observer{
 	@Override
 	public void onGameMatch(String playerMove, String gameType, String Opponent){
 		if(this.game.getGameType().equals(gameType)){
+			this.game.setOpponent(Opponent);
 			this.game.setPlayerFirstMove(playerMove);
 			this.game.setGameStatus(STARTED);
 			this.game.resetBoard();
-			this.game.setOpponent(Opponent);
 		} else {
 			System.out.println("Game type not equal: " + gameType);
 		}

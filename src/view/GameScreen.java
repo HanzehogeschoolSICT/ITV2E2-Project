@@ -8,4 +8,5 @@ public interface GameScreen {
 	public Pane create();
 	public Image getPlayerImage();
 	public Image getOponentImage();
+	public void playTurnSound();
 }

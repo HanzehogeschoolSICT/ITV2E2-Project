@@ -17,7 +17,7 @@ public class Othello extends AbstractGame{
     @Override
     public void createEmptyBoard(){
     	this.board.createEmptyBoard();
-    	if (this.getPlayerFirstMove()){
+    	if (this.getPlayerFirstMove() == true){
     		this.board.set(2, 3, 3);
     		this.board.set(2, 4, 4);
     		this.board.set(1, 3, 4);

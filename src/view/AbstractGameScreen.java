@@ -1,5 +1,7 @@
 package view;
 
+import java.net.URISyntaxException;
+
 import controller.Game;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -10,6 +12,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.Board;
@@ -17,6 +21,19 @@ import model.Board;
 public abstract class AbstractGameScreen implements GameScreen {
 	protected Game game;
 	protected BorderPane pane;
+	
+	public void playTurnSound(){
+		String file = null;
+		try {
+			file = this.getClass().getResource("/view/sound/Bell-tone.mp3").toURI().toString();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Media hit = new Media(file);
+		MediaPlayer mediaPlayer = new MediaPlayer(hit);
+		mediaPlayer.play();
+	}
 	
 	public Pane createBoard(){
 		Board board = this.game.getBoard(); 
