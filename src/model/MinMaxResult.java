@@ -12,8 +12,21 @@ public class MinMaxResult {
 	}
 	
 	public void addResult(int x, int y, int minMax){
-		int[] details = {x,y,minMax};
+		int[] details = new int[]{x,y,minMax};
 		this.possibles.add(details);
+	}
+	
+	public int getResult(){
+		Integer result = null;
+		for(int x=0; x < this.possibles.size(); x++){
+			int[] details = this.possibles.get(x);
+			if(result != null){
+			result = result + details[2];
+			}else{
+				result = details[2];
+			}
+		}
+		return result;
 	}
 	
 	public int[] getMax(){
@@ -21,7 +34,7 @@ public class MinMaxResult {
 		int maxIndex = 0;
 		for(int x=0; x < this.possibles.size(); x++){
 			int[] details = this.possibles.get(x);
-			if(details[2] >= max){
+			if(details[2] > max){
 				max = details[2];
 				maxIndex = x;
 			}		
@@ -34,7 +47,7 @@ public class MinMaxResult {
 		int minIndex = 0;
 		for(int x=0; x < this.possibles.size(); x++){
 			int[] details = this.possibles.get(x);
-			if(details[2] <= min){
+			if(details[2] < min){
 				min = details[2];
 				minIndex = x;
 			}		
