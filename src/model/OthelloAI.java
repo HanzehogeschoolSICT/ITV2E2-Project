@@ -121,23 +121,42 @@ public class OthelloAI implements GameAI{
 	public Integer minMax(int[][] inputBoard, int player, int depth) {
 		
 		ArrayList<int[]> possMoves = this.getPossibleCoords(inputBoard, player);
+		MinMaxResult possibleOutcomes = new MinMaxResult();
 		for(int[] possMove : possMoves){
 			inputBoard[possMove[0]][possMove[1]] = player;
 			//HARJAN TURN STONES(inputBoard)
-			//RUTGER CALC SCORE(inputBoard)
-			//ADD TO MIN MAX RESULT
+			
+			if(depth == this.MINMAX_DEPTH){
+				//RUTGER CALC SCORE(inputBoard)
+				int scoreSelf = 0;
+				int scoreOpp = 0;
+				possibleOutcomes.addResult(possMove[1], possMove[0], (scoreSelf-scoreOpp));
+			}else{
+				possibleOutcomes.addResult(possMove[1], possMove[0], this.minMax(inputBoard, (player == 1 ? 2 : 1), depth + 1));
+			}
+			
 		}
-		
-		
-		
-		
-		
-		
-		return 0;
+		int[] minMaxRes;
+		if(player == 1){
+			minMaxRes = possibleOutcomes.getMax();
+		}else{
+			minMaxRes = possibleOutcomes.getMin();
+		}
+		if(depth == 1){
+			this.nextMove[0] = minMaxRes[1];
+			this.nextMove[1] = minMaxRes[0];
+		}
+		return minMaxRes[2];
 	}
 
 	@Override
 	public Integer checkWin(int[][] inputBoard) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer minMax(int[][] inputBoard, int player) {
 		// TODO Auto-generated method stub
 		return null;
 	}
