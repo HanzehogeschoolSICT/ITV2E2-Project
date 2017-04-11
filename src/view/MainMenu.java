@@ -86,12 +86,14 @@ public class MainMenu extends AbstractWindowScreen {
 		labelIpadres.setFont(Font.font(null, FontWeight.BOLD, 12));
 		boxInputs.getChildren().add(labelIpadres);
 		this.inputIPaddress = new TextField();
+		this.inputIPaddress.setText("145.33.225.170");
 		boxInputs.getChildren().add(this.inputIPaddress);
 		
 		Label labelPort = new Label("Server port number ");
 		labelPort.setFont(Font.font(null, FontWeight.BOLD, 12));
 		boxInputs.getChildren().add(labelPort);
 		this.inputPortnumber = new TextField();
+		this.inputPortnumber.setText("7789");
 		boxInputs.getChildren().add(this.inputPortnumber);
 		
 		Label labelPlayerName = new Label("Playername ");
