@@ -83,6 +83,7 @@ public class OthelloAI implements GameAI{
 		for(int[] possMove : possMoves){
 			if(possMove[0] == 0 || possMove[0] == maxY || possMove[1] == 0 || possMove[1] == maxX){
 				inputBoard[possMove[0]][possMove[1]] = 1;
+				//TURN STONES HARJAN
 				ArrayList<int[]> possOppMoves = this.getPossibleCoords(inputBoard, 2);
 				if(!this.checkCorners(inputBoard, possOppMoves) && !this.checkEdgeOverTake(possMove[0], possMove[1], inputBoard, 2)){
 					this.nextMove[0] = possMove[0];
