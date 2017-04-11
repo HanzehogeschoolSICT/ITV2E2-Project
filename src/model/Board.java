@@ -12,6 +12,12 @@ public class Board {
         this.createEmptyBoard();
     }
 
+    public Board(int[][] inputBoard) {
+        this.rows = inputBoard.length;
+        this.columns = inputBoard[0].length;
+        this.spaces = inputBoard;
+    }
+    
     public int get(int row, int column) {
         return this.spaces[row][column];
     }

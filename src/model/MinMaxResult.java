@@ -17,7 +17,7 @@ public class MinMaxResult {
 	}
 	
 	public int[] getMax(){
-		int max = -1;
+		int max = -99;
 		int maxIndex = 0;
 		for(int x=0; x < this.possibles.size(); x++){
 			int[] details = this.possibles.get(x);
@@ -30,7 +30,7 @@ public class MinMaxResult {
 	}
 	
 	public int[] getMin(){
-		int min = 1;
+		int min = 99;
 		int minIndex = 0;
 		for(int x=0; x < this.possibles.size(); x++){
 			int[] details = this.possibles.get(x);
