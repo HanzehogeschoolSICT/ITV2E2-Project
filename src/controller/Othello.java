@@ -45,103 +45,111 @@ public class Othello extends AbstractGame{
 		turnDiagonalDown(inputBoard, x, y, player);
 	}
 
-	private void turnDiagonalDown(Board inputboard, int x, int y, int player) {
-		ArrayList<Integer[]> bottomLeft = new ArrayList<>();
-		ArrayList<Integer[]> bottomRight = new ArrayList<>();
-		int pos = y * inputboard.getColumns() + x;
-
-		for (int i = (pos + 7); ((i < 64) && (i % 8 != 0)); i = i + 7) {
-			if (!isValidMove(inputboard, bottomLeft, x, y, player)) {
-				break;
+	private void turnDiagonalDown(Board inputBoard, int x, int y, int player) {
+		int pos = y * inputBoard.getColumns() + x;
+		if (isValidMove(inputBoard, Direction.LEFT_DOWN, x, y, player)) {
+			for (int i = (pos + 7); ((i < 64) && (i % 8 != 0)); i = i + 7) {
+				int x2 = i % inputBoard.getColumns();
+				int y2 = i / inputBoard.getColumns();
+				if(inputBoard.get(y2, x2) == player){
+					break;
+				}else{
+					inputBoard.set(player, y2, x2);
+				}
+					
 			}
 		}
 
-		for (int i = (pos + 9); ((i < 64) && ((i - 1) % 8 != 0)); i = i + 9) {
-			if (!isValidMove(inputboard, bottomRight, x, y, player)) {
-				break;
+		if (isValidMove(inputBoard, Direction.RIGHT_DOWN, x, y, player)) {
+			for (int i = (pos + 9); ((i < 64) && ((i - 1) % 8 != 0)); i = i + 9) {
+				int x2 = i % inputBoard.getColumns();
+				int y2 = i / inputBoard.getColumns();
+				if(inputBoard.get(y2, x2) == player){
+					break;
+				}else{
+					inputBoard.set(player, y2, x2);
+				}
 			}
 		}
 	}
 
 	private void turnDiagonalUp(Board inputBoard, int x, int y, int player) {
-		ArrayList<Integer[]> topLeft = new ArrayList<>();
-		ArrayList<Integer[]> topRight = new ArrayList<>();
 		int pos = y * inputBoard.getColumns() + x;
-
-		for (int i = (pos - 9); ((i > 0) && ((i + 1) % 8 != 0)); i = i - 9) {
-			if (!isValidMove(inputBoard, topLeft, x, y, player)) {
-				break;
+		if (isValidMove(inputBoard, Direction.LEFT_UP, x, y, player)) {
+			for (int i = (pos - 9); ((i > 0) && ((i + 1) % 8 != 0)); i = i - 9) {
+				int x2 = i % inputBoard.getColumns();
+				int y2 = i / inputBoard.getColumns();
+				if(inputBoard.get(y2, x2) == player){
+					break;
+				}else{
+					inputBoard.set(player, y2, x2);
+				}
 			}
 		}
-
-		for (int i = (pos - 7); ((i > 0) && (i % 8 != 0)); i = i - 7) {
-			if (!isValidMove(inputBoard, topRight, x, y, player)) {
-				break;
+		if (isValidMove(inputBoard, Direction.RIGHT_UP, x, y, player)) {
+			for (int i = (pos - 7); ((i > 0) && (i % 8 != 0)); i = i - 7) {
+				int x2 = i % inputBoard.getColumns();
+				int y2 = i / inputBoard.getColumns();
+				if(inputBoard.get(y2, x2) == player){
+					break;
+				}else{
+					inputBoard.set(player, y2, x2);
+				}
 			}
 		}
 	}
 
 	private void turnHorizontal(Board inputBoard, int x, int y, int player) {
-		ArrayList<Integer[]> horizontalLeft = new ArrayList<>();
-		ArrayList<Integer[]> horizontalRight = new ArrayList<>();
 		int pos = y * inputBoard.getColumns() + x;
-
-		for (int i = (pos + 1); ((i) % 8 != 0); i++) {
-			if (!isValidMove(inputBoard, horizontalRight, x, y, player)) {
-				break;
+		if (isValidMove(inputBoard, Direction.RIGHT, x, y, player)) {
+			for (int i = (pos + 1); ((i) % 8 != 0); i++) {
+				int x2 = i % inputBoard.getColumns();
+				int y2 = i / inputBoard.getColumns();
+				if(inputBoard.get(y2, x2) == player){
+					break;
+				}else{
+					inputBoard.set(player, y2, x2);
+				}
 			}
 		}
-
-		for (int i = (pos - 1); ((i + 1) % 8 != 0); i--) {
-			if (!isValidMove(inputBoard, horizontalLeft, x, y, player)) {
-				break;
+		
+		if (isValidMove(inputBoard, Direction.LEFT, x, y, player)) {
+			for (int i = (pos - 1); ((i + 1) % 8 != 0); i--) {
+				int x2 = i % inputBoard.getColumns();
+				int y2 = i / inputBoard.getColumns();
+				if(inputBoard.get(y2, x2) == player){
+					break;
+				}else{
+					inputBoard.set(player, y2, x2);
+				}
 			}
 		}
 	}
 
 	private void turnVertical(Board inputBoard, int x, int y, int player) {
-		ArrayList<Integer[]> verticalUp = new ArrayList<>();
-		ArrayList<Integer[]> verticalDown = new ArrayList<>();
 		int pos = y * inputBoard.getColumns() + x;
-
-		for (int i = (pos + 8); i < 63; i = i + 8) {
-			if (!isValidMove(inputBoard, verticalUp, x, y, player)) {
-				break;
+		if (isValidMove(inputBoard, Direction.DOWN, x, y, player)) {
+			for (int i = (pos + 8); i < 63; i = i + 8) {
+				int x2 = i % inputBoard.getColumns();
+				int y2 = i / inputBoard.getColumns();
+				if(inputBoard.get(y2, x2) == player){
+					break;
+				}else{
+					inputBoard.set(player, y2, x2);
+				}
 			}
 		}
-
-		for (int i = (pos - 8); i > 0; i = i - 8) {
-			if (!isValidMove(inputBoard, verticalDown, x, y, player)) {
-				break;
+		
+		if (isValidMove(inputBoard, Direction.UP, x, y, player)) {
+			for (int i = (pos - 8); i > 0; i = i - 8) {
+				int x2 = i % inputBoard.getColumns();
+				int y2 = i / inputBoard.getColumns();
+				if(inputBoard.get(y2, x2) == player){
+					break;
+				}else{
+					inputBoard.set(player, y2, x2);
+				}
 			}
-		}
-	}
-
-	/**
-	 * Checks if the given move with x and y is valid and in range of the board.
-	 * @param inputBoard The board to check the move on.
-	 * @param swabAbles The indexes to swap.
-	 * @param x The x value of the origin point to check from.
-	 * @param y The y value of the origin point to check from.
-	 * @param player The player that is doing the move.
-	 * @return True if the move is valid = within the board, not empty and not the current player, else false.
-	 */
-	private boolean isValidMove(Board inputBoard, ArrayList<Integer[]> swabAbles, int x, int y, int player) {
-		int valueAtPos = inputBoard.get(x, y);
-
-		if (valueAtPos == player) {
-			if (swabAbles.size() > 0) {
-				swapTiles(swabAbles, player, inputBoard);
-				swabAbles.clear();
-				return false;
-			} else {
-				return false;
-			}
-		} else if (valueAtPos != 0) {
-			swabAbles.add(new Integer[]{x, y});
-			return true;
-		} else {
-			return false;
 		}
 	}
 
@@ -167,17 +175,20 @@ public class Othello extends AbstractGame{
 	}
 
 	public boolean isValidMove(Board inputBoard, Direction direction, int x, int y, int player) {
-		int contX = x + direction.getWidth_offset();
-		int contY = y + direction.getHeight_offset();
-		int valuePos = inputBoard.get(contX, contY);
-		int count = 0;
 		boolean result = false;
-
 		try {
+			int contX = x + direction.getWidth_offset();
+			int contY = y + direction.getHeight_offset();
+			int valuePos = inputBoard.get(contY, contX);
+			int count = 0;
+
 			while (!result) {
 
-				if (count == 0) {
-					if (valuePos != 0 && valuePos != player) {
+				if (count > 0) {
+					if (valuePos == player) {
+						result = true;
+						break;
+					} else if (valuePos == 0) {
 						result = false;
 						break;
 					}
@@ -186,14 +197,14 @@ public class Othello extends AbstractGame{
 						result = false;
 						break;
 					} else if (valuePos == 0) {
-						result = true;
+						result = false;
 						break;
 					}
 				}
 
 				contX += direction.getWidth_offset();
 				contY += direction.getHeight_offset();
-				valuePos = inputBoard.get(contX, contY);
+				valuePos = inputBoard.get(contY, contX);
 				count++;
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
@@ -261,14 +272,10 @@ public class Othello extends AbstractGame{
 	public void serverMove(int y, int x, boolean yourTurn){
 		if(yourTurn){
 			this.board.set(1, y, x);
-			System.out.println("Set board");
 			this.turnStones(this.board, x, y, 1);
-			System.out.println("Turning stones");
 		} else {
 			this.board.set(2, y, x);
-			System.out.println("Set board");
 			this.turnStones(this.board, x, y, 2);
-			System.out.println("Turning stones");
 		}
 		this.setScore();
 		this.updateView();

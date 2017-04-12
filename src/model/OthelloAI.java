@@ -17,18 +17,18 @@ public class OthelloAI implements GameAI{
 	
 	@Override
 	public void move() {
+		this.nextMove = new int[2];
 		Board board = this.gameController.getBoard();
 		int[][] inputBoard = copyBoard(board.getSpaces());
 		ArrayList<int[]> possMoves = this.getPossibleCoords(inputBoard, 1);
 		if(!this.checkCorners(inputBoard, possMoves)){
 			if(!this.checkEdges(inputBoard, possMoves)){
-				
+				this.minMax(inputBoard, 1, 1);
 			}
 		}
 		
 		this.gameController.setMove(this.nextMove[0], this.nextMove[1]);
 	}
-
 
 	public int[][] copyBoard(int[][] inputBoard){
 		int[][] outputBoard = new int[inputBoard.length][];
@@ -46,7 +46,7 @@ public class OthelloAI implements GameAI{
 		for(int y = 0; y<inputBoard.length;y++){
 			for (int x = 0;x<inputBoard[y].length;x++){
 				if(inputBoard[y][x] == 0){
-					//IMPLEMENT HARJAN FUNCTIE(y,x,player)
+					
 					Board tempBoard = new Board(inputBoard);
 					if(this.gameController.isValidMove(tempBoard, x, y, player)){
 						possMoves.add(new int[]{y,x});
@@ -124,6 +124,7 @@ public class OthelloAI implements GameAI{
 
 	
 	public Integer minMax(int[][] inputBoard, int player, int depth) {
+		System.out.println(depth);
 		ArrayList<int[]> possMoves = this.getPossibleCoords(inputBoard, player);
 		MinMaxResult possibleOutcomes = new MinMaxResult();
 		for(int[] possMove : possMoves){
@@ -132,19 +133,22 @@ public class OthelloAI implements GameAI{
 			Board tempBoard2 = new Board(tempBoard);
 			this.gameController.turnStones(tempBoard2, possMove[1], possMove[0], player);
 			tempBoard = tempBoard2.getSpaces();
-			tempBoard2 = null;
+			
 			if(depth == OthelloAI.MINMAX_DEPTH){
-				//RUTGER CALC SCORE(inputBoard)
-				int scoreSelf = 0;
-				int scoreOpp = 0;
+				int scoreSelf = this.gameController.amountOfStones(1, tempBoard2);
+				int scoreOpp = this.gameController.amountOfStones(2, tempBoard2);
 				possibleOutcomes.addResult(possMove[1], possMove[0], (scoreSelf-scoreOpp));
 			}else if(this.checkWin(tempBoard) == 0){
 				possibleOutcomes.addResult(possMove[1], possMove[0], this.minMax(tempBoard, (player == 1 ? 2 : 1), depth + 1));
+			} else {
+				System.out.println("None of the above");
 			}
 			tempBoard = null;
+			tempBoard2 = null;
 			
 		}
 		int[] minMaxRes = (player == 1)? possibleOutcomes.getMax() : possibleOutcomes.getMin();
+		System.out.println(minMaxRes.toString());
 		if(depth == 1){
 			this.nextMove[0] = minMaxRes[1];
 			this.nextMove[1] = minMaxRes[0];
@@ -154,7 +158,8 @@ public class OthelloAI implements GameAI{
 
 	@Override
 	public Integer checkWin(int[][] inputBoard) {
-		if(this.checkAllEmpty(inputBoard) == false && this.getPossibleCoords(inputBoard, 1) == null && this.getPossibleCoords(inputBoard, 2) == null){
+		if(this.checkAllEmpty(inputBoard) == true || (this.getPossibleCoords(inputBoard, 1) == null && this.getPossibleCoords(inputBoard, 2) == null)){
+			System.out.println("Check win == 1");
 			return 1;
 		}
 		return 0;
