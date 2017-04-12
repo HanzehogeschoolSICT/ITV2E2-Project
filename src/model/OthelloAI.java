@@ -136,7 +136,18 @@ public class OthelloAI implements GameAI{
 				int scoreOpp = this.gameController.amountOfStones(2, tempBoard2);
 				possibleOutcomes.addResult(possMove[1], possMove[0], (scoreSelf-scoreOpp));
 			} else {
-				possibleOutcomes.addResult(possMove[1], possMove[0], this.minMax(tempBoard, (player == 1 ? 2 : 1), depth + 1));
+				
+				if(depth == 1){
+					ArrayList<int[]> possEdges = this.getPossibleCoords(tempBoard, (player == 1 ? 2 : 1));
+					if(!this.checkCorners(tempBoard, possEdges)){
+						int minmax = this.minMax(tempBoard, (player == 1 ? 2 : 1), depth + 1);
+						possibleOutcomes.addResult(possMove[1], possMove[0], minmax);
+					}
+				}else{
+					int minmax = this.minMax(tempBoard, (player == 1 ? 2 : 1), depth + 1);
+					possibleOutcomes.addResult(possMove[1], possMove[0], minmax);
+				}
+				
 			}
 			tempBoard = null;
 			tempBoard2 = null;
@@ -177,4 +188,5 @@ public class OthelloAI implements GameAI{
 	public void setAIDepth(int depth){
 		OthelloAI.MINMAX_DEPTH = depth;
 	}
+
 }
