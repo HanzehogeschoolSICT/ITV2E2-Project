@@ -29,15 +29,6 @@ public class MinMaxResult {
 		return result;
 	}
 	
-	public void printResult(){
-		
-		for(int x=0; x < this.possibles.size(); x++){
-			int[] details = this.possibles.get(x);
-			System.out.println("Minimax Coords: " + details[1] + ", " + details[0] + ". And score: " + details[2]);
-		}
-		
-	}
-	
 	public int[] getMax(){
 		int max = -99;
 		int maxIndex = 0;

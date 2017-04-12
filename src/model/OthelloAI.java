@@ -148,7 +148,6 @@ public class OthelloAI implements GameAI{
 		if(possibleOutcomes.getSize() != 0){
 			int[] minMaxRes = (player == 1)? possibleOutcomes.getMax() : possibleOutcomes.getMin();
 			if(depth == 1){
-				possibleOutcomes.printResult();
 				this.nextMove[0] = minMaxRes[1];
 				this.nextMove[1] = minMaxRes[0];
 			}
