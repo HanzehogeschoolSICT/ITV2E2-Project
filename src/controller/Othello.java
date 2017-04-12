@@ -49,25 +49,18 @@ public class Othello extends AbstractGame{
 		int pos = y * inputBoard.getColumns() + x;
 		if (isValidMove(inputBoard, Direction.LEFT_DOWN, x, y, player)) {
 			for (int i = (pos + 7); ((i < 64) && (i % 8 != 0)); i = i + 7) {
-				int x2 = i % inputBoard.getColumns();
-				int y2 = i / inputBoard.getColumns();
-				if(inputBoard.get(y2, x2) == player){
+				boolean check = this.swapStones(inputBoard, i, player);
+				if (check == false){
 					break;
-				}else{
-					inputBoard.set(player, y2, x2);
-				}
-					
+				}		
 			}
 		}
 
 		if (isValidMove(inputBoard, Direction.RIGHT_DOWN, x, y, player)) {
 			for (int i = (pos + 9); ((i < 64) && (i % 8 != 0)); i = i + 9) {
-				int x2 = i % inputBoard.getColumns();
-				int y2 = i / inputBoard.getColumns();
-				if(inputBoard.get(y2, x2) == player){
+				boolean check = this.swapStones(inputBoard, i, player);
+				if (check == false){
 					break;
-				}else{
-					inputBoard.set(player, y2, x2);
 				}
 			}
 		}
@@ -77,23 +70,17 @@ public class Othello extends AbstractGame{
 		int pos = y * inputBoard.getColumns() + x;
 		if (isValidMove(inputBoard, Direction.LEFT_UP, x, y, player)) {
 			for (int i = (pos - 9); ((i > 0) && (i % 8 != 0)); i = i - 9) {
-				int x2 = i % inputBoard.getColumns();
-				int y2 = i / inputBoard.getColumns();
-				if(inputBoard.get(y2, x2) == player){
+				boolean check = this.swapStones(inputBoard, i, player);
+				if (check == false){
 					break;
-				}else{
-					inputBoard.set(player, y2, x2);
 				}
 			}
 		}
 		if (isValidMove(inputBoard, Direction.RIGHT_UP, x, y, player)) {
 			for (int i = (pos - 7); ((i > 0) && (i % 8 != 0)); i = i - 7) {
-				int x2 = i % inputBoard.getColumns();
-				int y2 = i / inputBoard.getColumns();
-				if(inputBoard.get(y2, x2) == player){
+				boolean check = this.swapStones(inputBoard, i, player);
+				if (check == false){
 					break;
-				}else{
-					inputBoard.set(player, y2, x2);
 				}
 			}
 		}
@@ -103,24 +90,18 @@ public class Othello extends AbstractGame{
 		int pos = y * inputBoard.getColumns() + x;
 		if (isValidMove(inputBoard, Direction.RIGHT, x, y, player)) {
 			for (int i = (pos + 1); ((i) % 8 != 0); i++) {
-				int x2 = i % inputBoard.getColumns();
-				int y2 = i / inputBoard.getColumns();
-				if(inputBoard.get(y2, x2) == player){
+				boolean check = this.swapStones(inputBoard, i, player);
+				if (check == false){
 					break;
-				}else{
-					inputBoard.set(player, y2, x2);
 				}
 			}
 		}
 		
 		if (isValidMove(inputBoard, Direction.LEFT, x, y, player)) {
 			for (int i = (pos - 1); ((i) % 8 != 0); i--) {
-				int x2 = i % inputBoard.getColumns();
-				int y2 = i / inputBoard.getColumns();
-				if(inputBoard.get(y2, x2) == player){
+				boolean check = this.swapStones(inputBoard, i, player);
+				if (check == false){
 					break;
-				}else{
-					inputBoard.set(player, y2, x2);
 				}
 			}
 		}
@@ -130,29 +111,34 @@ public class Othello extends AbstractGame{
 		int pos = y * inputBoard.getColumns() + x;
 		if (isValidMove(inputBoard, Direction.DOWN, x, y, player)) {
 			for (int i = (pos + 8); i < 63; i = i + 8) {
-				int x2 = i % inputBoard.getColumns();
-				int y2 = i / inputBoard.getColumns();
-				if(inputBoard.get(y2, x2) == player){
+				boolean check = this.swapStones(inputBoard, i, player);
+				if (check == false){
 					break;
-				}else{
-					inputBoard.set(player, y2, x2);
 				}
 			}
 		}
 		
 		if (isValidMove(inputBoard, Direction.UP, x, y, player)) {
 			for (int i = (pos - 8); i > 0; i = i - 8) {
-				int x2 = i % inputBoard.getColumns();
-				int y2 = i / inputBoard.getColumns();
-				if(inputBoard.get(y2, x2) == player){
+				boolean check = this.swapStones(inputBoard, i, player);
+				if (check == false){
 					break;
-				}else{
-					inputBoard.set(player, y2, x2);
 				}
 			}
 		}
 	}
 
+	private boolean swapStones(Board inputBoard, int pos, int player){
+		int x2 = pos % inputBoard.getColumns();
+		int y2 = pos / inputBoard.getColumns();
+		if(inputBoard.get(y2, x2) == player){
+			return false;
+		}else{
+			inputBoard.set(player, y2, x2);
+			return true;
+		}
+	}
+	
 	/**
 	 * Checks if the given move with x and y is valid and in range of the board.
 	 * @param inputBoard The board to check the move on.

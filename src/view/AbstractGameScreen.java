@@ -6,6 +6,7 @@ import controller.Game;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -94,8 +95,27 @@ public abstract class AbstractGameScreen implements GameScreen {
 		return oView;
 	}
 	
-	protected abstract ImageView createPlayer();
-	protected abstract ImageView createOponent();
+	public abstract Image getPlayerImage();
+	public abstract Image getOponentImage();
+	
+	protected ImageView createPlayer(){
+		ImageView xView = new ImageView();
+		Image xImage = getPlayerImage();
+		xView.setImage(xImage);
+		xView.setPreserveRatio(true);
+		xView.setFitHeight(this.getSquareSize());
+		return xView;
+	}
+	
+	protected ImageView createOponent(){
+		ImageView oView = new ImageView();
+		Image oImage = getOponentImage();
+		oView.setImage(oImage);
+		oView.setPreserveRatio(true);
+		oView.setFitHeight(this.getSquareSize());
+		return oView;
+	}
+	
 	protected abstract int getSquareSize();
 	
 	private Rectangle createEmpty(int y, int x){
