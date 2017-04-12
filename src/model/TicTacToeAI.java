@@ -101,7 +101,6 @@ public class TicTacToeAI implements GameAI{
 		return true;
 	}
 
-	@Override
 	public Integer checkWin(int[][] inputBoard) {
 		int winDiagnal = this.checkWinDiagnal(inputBoard);
 		int winRows = this.checkWinRows(inputBoard);
@@ -167,30 +166,6 @@ public class TicTacToeAI implements GameAI{
 		}
 	}
 	
-	/*
-	private int getPosWin(int player){
-		int posWin;
-		if(player == 1){
-			posWin = -99;
-		}else{
-			posWin = 99;
-		}
-		return posWin;
-	}
-	
-	private int setPosWin(int checkWin, int posWin, int player, int x, int y){
-		if(checkWin > posWin && player == 1){
-			posWin = checkWin;
-			this.nextMove[0] = y;
-			this.nextMove[1] = x;
-		}else if(checkWin < posWin && player == 2){
-			posWin = checkWin;
-		}
-		return posWin;
-	}
-*/
-	
-	@Override
 	public Integer minMax(int[][] inputBoard, int player) {
 		MinMaxResult possibleOutcomes = new MinMaxResult();
 		for(int y = 0; y< inputBoard.length; y++){
@@ -199,7 +174,6 @@ public class TicTacToeAI implements GameAI{
 					int[][] tempBoard = copyBoard(inputBoard);
 					tempBoard[y][x] = player;
 					int checkWin = this.checkWin(tempBoard);
-					System.out.println("Checkwin: " + checkWin);
 					if(checkWin != 2){
 						possibleOutcomes.addResult(x, y, checkWin);
 					}else{
@@ -217,11 +191,13 @@ public class TicTacToeAI implements GameAI{
 		}else{
 			details = possibleOutcomes.getMin();
 		}
-		System.out.println("MiniMax, min or max: " + details[2]);
 		this.nextMove[0] = details[1];
 		this.nextMove[1] = details[0];
-		System.out.println("MiniMax result: " + possibleOutcomes.getResult());
 		return possibleOutcomes.getResult();
 	}
 
+	public void setAIDepth(int depth){
+		return;
+	}
+	
 }

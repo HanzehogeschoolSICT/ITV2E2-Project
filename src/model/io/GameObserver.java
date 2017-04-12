@@ -10,11 +10,9 @@ import model.io.Connection.Observer;
 import static controller.Game.GameStatus.*;
 
 public class GameObserver implements Observer{
-	//private Main main;
 	private Game game;
 
 	public GameObserver(Main main, Game game){
-		//this.main = main;
 		this.game = game;
 	}
 		
@@ -26,17 +24,14 @@ public class GameObserver implements Observer{
 		boolean yourTurn;
 		if(player.equals(this.game.getOpponent())){
 			yourTurn = false;
-		}else{
+		} else {
 			yourTurn = true;
 		}
-		this.game.serverMove(y, x, yourTurn);
-		System.out.println(details);
-		
+		this.game.serverMove(y, x, yourTurn);		
 	}
 
 	@Override
 	public void onYourTurn(String comment) {
-		System.out.println(comment);
 		this.game.setTurn(true);
 	}
 
@@ -65,8 +60,6 @@ public class GameObserver implements Observer{
 
 	@Override
 	public void onGameEnd(int statusCode, String comment) {
-		System.out.println(comment);
-		System.out.println(statusCode);
 		switch(statusCode){
 		case 1:
 			this.game.setGameStatus(WIN);

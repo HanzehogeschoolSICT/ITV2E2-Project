@@ -26,6 +26,7 @@ public class MainMenu extends AbstractWindowScreen {
 	private TextField inputIPaddress;
 	private TextField inputPortnumber;
 	private TextField inputPlayername;
+	private TextField inputAIDepth;
 	private ChoiceBox<String> selectGameType;
 	private ToggleGroup radioAI;
 	
@@ -59,6 +60,9 @@ public class MainMenu extends AbstractWindowScreen {
 		
 		Pane paneAI = createAIRadios();
 		pane2.getChildren().add(paneAI);
+		
+		Pane paneAIDepth = createAIDepth();
+		pane2.getChildren().add(paneAIDepth);
 		
 		Button startButton = createStartButton(); 
 		pane2.getChildren().add(startButton);
@@ -145,15 +149,29 @@ public class MainMenu extends AbstractWindowScreen {
 		return boxRadios;
 	}
 	
+	private Pane createAIDepth(){
+		VBox pane = new VBox();
+		
+		Label labelPlayerName = new Label("AI Depth ");
+		labelPlayerName.setFont(Font.font(null, FontWeight.BOLD, 12));
+		pane.getChildren().add(labelPlayerName);
+		this.inputAIDepth = new TextField();
+		inputAIDepth.setText("6");
+		pane.getChildren().add(this.inputAIDepth);
+		
+		return pane;
+	}
+	
 	public void createGame(){
 		String ipaddress = this.inputIPaddress.getText();
 		String portnumber = this.inputPortnumber.getText();
 		String playername = this.inputPlayername.getText();
 		String game = this.selectGameType.getValue();
 		String playertype = this.radioAI.getSelectedToggle().getUserData().toString();
+		String aidepth = this.inputAIDepth.getText();
 		
 		if (ipaddress.length() > 6 && portnumber.length() > 1 && playername.length() > 2  && game != null && playertype != null){
-			window.createGame(game, ipaddress, portnumber, playertype, playername);
+			window.createGame(game, ipaddress, portnumber, playertype, playername, aidepth);
 		} else {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Error");

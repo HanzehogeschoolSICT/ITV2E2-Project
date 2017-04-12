@@ -17,14 +17,11 @@ public interface Game {
 	public void logout();
 	public void setHuman(boolean human);
 	public boolean getHuman();
-	
 	public boolean getTurn();
 	public void setTurn(boolean turn);
-	
 	public String getGameType(); 
 	public boolean challengePlayer(String playername);
 	public void getChallenged(String opponentname, int challengenumber);
-	
 	public void serverMove(int y, int x, boolean yourTurn);
 	public void setPlayerList(ArrayList<String> players);
 	public ArrayList<String> getPlayerList();
@@ -44,4 +41,5 @@ public interface Game {
 	public int getScorePlayer();
 	public int getScoreOpponent();
 	public void setScore();
+	public void setAIDepth(int depth);
 }

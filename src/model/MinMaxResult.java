@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class MinMaxResult {
 	
-	//{x,y,minMaxResult}
 	private ArrayList<int[]> possibles;
 	
 	public MinMaxResult(){

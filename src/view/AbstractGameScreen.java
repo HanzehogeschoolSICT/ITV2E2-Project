@@ -20,10 +20,11 @@ import javafx.scene.shape.Rectangle;
 import model.Board;
 
 public abstract class AbstractGameScreen implements GameScreen {
+	protected Media turnSound;
 	protected Game game;
 	protected BorderPane pane;
 	
-	public void playTurnSound(){
+	public void setTurnSound(){
 		String file = null;
 		try {
 			file = this.getClass().getResource("/view/sound/Bell-tone.mp3").toURI().toString();
@@ -32,7 +33,11 @@ public abstract class AbstractGameScreen implements GameScreen {
 			e.printStackTrace();
 		}
 		Media hit = new Media(file);
-		MediaPlayer mediaPlayer = new MediaPlayer(hit);
+		this.turnSound = hit;
+	}
+	
+	public void playTurnSound(){
+		MediaPlayer mediaPlayer = new MediaPlayer(this.turnSound);
 		mediaPlayer.play();
 	}
 	

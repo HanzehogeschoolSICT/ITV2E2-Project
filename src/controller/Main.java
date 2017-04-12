@@ -47,20 +47,19 @@ public class Main extends Application {
      * @param playername The name of player
      * @return boolean True if game is created false is something went wrong
      */
-	public Game createGame(String game, String ipaddress, String portnumber, String playertype, String playername){
+	public Game createGame(String game, String ipaddress, String portnumber, String playertype, String playername, String aidepth){
 		boolean isHuman = playertype.equals("Player");
 		this.setGame(game);
-		
+		this.game.setAIDepth(Integer.parseInt(aidepth));
 		this.game.setHuman(isHuman);
 		this.connectionModel = new Connection(ipaddress, Integer.parseInt(portnumber));
 		this.gameObserver = new GameObserver(this, this.game);
 		this.connectionModel.setObserver(this.gameObserver);
-		
+
 		try {
 			this.connectionModel.establish(playername);
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("ERROR establishing game");
 			return null;
 		}
 
@@ -82,6 +81,4 @@ public class Main extends Application {
 	public Window getWindow(){
 		return this.window;
 	}
-	
-	
 }

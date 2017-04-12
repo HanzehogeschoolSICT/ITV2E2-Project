@@ -121,8 +121,6 @@ public class OthelloAI implements GameAI{
 		return false;
 	}
 
-
-	
 	public Integer minMax(int[][] inputBoard, int player, int depth) {
 		ArrayList<int[]> possMoves = this.getPossibleCoords(inputBoard, player);
 		MinMaxResult possibleOutcomes = new MinMaxResult();
@@ -133,11 +131,11 @@ public class OthelloAI implements GameAI{
 			this.gameController.turnStones(tempBoard2, possMove[1], possMove[0], player);
 			tempBoard = tempBoard2.getSpaces();
 			
-			if(depth == OthelloAI.MINMAX_DEPTH || this.checkWin(tempBoard) == 1){
+			if (depth == OthelloAI.MINMAX_DEPTH || this.checkWin(tempBoard) == 1){
 				int scoreSelf = this.gameController.amountOfStones(1, tempBoard2);
 				int scoreOpp = this.gameController.amountOfStones(2, tempBoard2);
 				possibleOutcomes.addResult(possMove[1], possMove[0], (scoreSelf-scoreOpp));
-			}else{
+			} else {
 				possibleOutcomes.addResult(possMove[1], possMove[0], this.minMax(tempBoard, (player == 1 ? 2 : 1), depth + 1));
 			}
 			tempBoard = null;
@@ -157,7 +155,6 @@ public class OthelloAI implements GameAI{
 		
 	}
 
-	@Override
 	public Integer checkWin(int[][] inputBoard) {
 		if(this.checkAllEmpty(inputBoard) == true || (this.getPossibleCoords(inputBoard, 1) == null && this.getPossibleCoords(inputBoard, 2) == null)){
 			return 1;
@@ -176,11 +173,8 @@ public class OthelloAI implements GameAI{
 		
 		return true;
 	}
-
-	@Override
-	public Integer minMax(int[][] inputBoard, int player) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public void setAIDepth(int depth){
+		OthelloAI.MINMAX_DEPTH = depth;
 	}
-
 }

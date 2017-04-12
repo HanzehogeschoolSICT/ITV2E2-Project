@@ -17,6 +17,9 @@ import javafx.scene.text.Font;
 
 public abstract class AbstractWindowScreen implements WindowScreen{
 
+	private Image logoImage = null;
+	private Image backgroundImage = null;
+
 	public Pane getHeader(){
 		HBox leftPane = new HBox();
 		leftPane.setPadding(new Insets(15, 0, 0, 0));
@@ -45,33 +48,38 @@ public abstract class AbstractWindowScreen implements WindowScreen{
 	
 	abstract public Pane getHeaderButtons();
 	
-	protected ImageView createLogo(){
-		ImageView logoView = new ImageView();
+	protected void setLogo(){
 		InputStream file = null;
 		try{
 			file = this.getClass().getResourceAsStream("/view/images/logo.png");
 		} catch (Exception e){
 			System.out.println("Cant find image: /view/images/logo.png");
 		}
-		Image logoImage = new Image(file);
-		logoView.setImage(logoImage);
+		this.logoImage = new Image(file);
+	}
+	
+	protected ImageView createLogo(){
+		if (this.logoImage == null){this.setLogo();}
+		ImageView logoView = new ImageView();
+		logoView.setImage(this.logoImage);
 		logoView.setPreserveRatio(true);
 		logoView.setFitHeight(50);
 		return logoView;
 	}
 	
-	protected Background getBackground(){
-		//Image: http://docs.oracle.com/javafx/2/get_started/background.jpg.html
+	private void setBackground(){
 		InputStream file = null;
 		try{
 			file = this.getClass().getResourceAsStream("/view/images/background.jpg");
 		} catch (Exception e){
 			System.out.println("Cant find image: /view/images/background.jpg");
 		}
-		Image logoImage = new Image(file);
-		
-		//http://stackoverflow.com/questions/9738146/javafx-how-to-set-scene-background-image
-		BackgroundImage myBI= new BackgroundImage(logoImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
+		this.backgroundImage = new Image(file);
+	}
+	
+	protected Background getBackground(){
+		if (this.backgroundImage == null){setBackground();}
+		BackgroundImage myBI= new BackgroundImage(this.backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
 		return new Background(myBI);
 	}
 	

@@ -33,7 +33,6 @@ public class Board {
     	return true;
     }
 
-    //<editor-fold desc="Getters and Setters">
     public int getRows() {
         return this.rows;
     }
@@ -45,10 +44,8 @@ public class Board {
     public int[][] getSpaces() {
         return this.spaces;
     }
-    //</editor-fold>
     
     public void createEmptyBoard(){
     	this.spaces = new int[rows][columns];
     }
-
 }

@@ -143,7 +143,7 @@ public class MainGame extends AbstractWindowScreen {
 		}
 		this.playerlist.setText(players);
 		this.playerlistCount = this.playerlistCount + 1;
-		if (this.playerlistCount > 4){
+		if (this.playerlistCount > 16){
 			Connection conn = this.window.getConnection();
 			conn.getPlayerList();
 			this.playerlistCount = 0;

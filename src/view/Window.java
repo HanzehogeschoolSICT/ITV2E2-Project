@@ -30,11 +30,6 @@ public class Window {
 	public void init(){
 		primaryStage.setTitle("ITV2E2");
 		primaryStage.getIcons().add(getIcon());
-		//primaryStage.setScene(mainScene);
-		//primaryStage.setResizable(false);
-		//primaryStage.setHeight(650);
-		//primaryStage.setWidth(1000);
-		
 		getMainMenu();
 		primaryStage.show();
 	}
@@ -50,8 +45,8 @@ public class Window {
 		return logoImage;
 	}
 
-	public void createGame(String gametype, String ipaddress, String portnumber, String playertype, String playername){
-		Game game = this.main.createGame(gametype, ipaddress, portnumber, playertype, playername);
+	public void createGame(String gametype, String ipaddress, String portnumber, String playertype, String playername, String aidepth){
+		Game game = this.main.createGame(gametype, ipaddress, portnumber, playertype, playername, aidepth);
 		if (game != null){
 			this.game = game;
 			getGameScreen();

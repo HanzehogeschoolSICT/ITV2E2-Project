@@ -16,7 +16,7 @@ public class OthelloScreen extends AbstractGameScreen{
 
 	@Override
 	public int getSquareSize(){
-		return 50;
+		return 55;
 	}
 	
 	@Override
@@ -38,7 +38,6 @@ public class OthelloScreen extends AbstractGameScreen{
 	@Override
 	public Image getOponentImage(){
 		return this.whiteImage;
-		
 	}
 	
 	private void setWhiteImage(){
