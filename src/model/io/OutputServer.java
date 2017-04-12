@@ -20,7 +20,8 @@ import java.net.Socket;
 
 public class OutputServer {
 
-    private InputStream inputStream;
+    @SuppressWarnings("unused")
+	private InputStream inputStream;
     private BufferedReader inputReader;
 
     private Connection connection;

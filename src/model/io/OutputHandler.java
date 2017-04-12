@@ -27,7 +27,7 @@ public class OutputHandler {
 
     private static final String OK = "OK";
     private static final String ERR = "ERR";
-    private static final String LOGIN_MESSAGE = "Strategic Game Server Fixed [Version 1.1.0](C) Copyright 2015 Hanzehogeschool Groningen";
+    //private static final String LOGIN_MESSAGE = "Strategic Game Server Fixed [Version 1.1.0](C) Copyright 2015 Hanzehogeschool Groningen";
 
     private static final String SVR_GAME = "SVR GAME";
     private static final String SVR_GAME_MOVE = "SVR GAME MOVE";
@@ -43,7 +43,7 @@ public class OutputHandler {
     private static final String SVR_PLAYERLIST = "SVR PLAYERLIST";
     private static final String SVR_GAMELIST = "SVR GAMELIST";
 
-    private static final Pattern QUOTE_PATTERN = Pattern.compile("\"(.*?)\""); //This QUOTE_PATTERN extracts all the values between qoutes.
+    private static final Pattern QUOTE_PATTERN = Pattern.compile("\"(.*?)\""); //This QUOTE_PATTERN extracts all the values between quotes.
     private Connection.Observer observer;
 
     public OutputHandler(@NotNull Connection.Observer observer) {

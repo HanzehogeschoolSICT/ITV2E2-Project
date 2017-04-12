@@ -9,8 +9,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 public class TicTacToeScreen extends AbstractGameScreen{
+	private Image oImage;
+	private Image xImage;
+	
 	public TicTacToeScreen(TicTacToe ticTacToe) {
 		this.game = ticTacToe;
+		this.setOImage();
+		this.setXImage();
 	}
 
 	@Override
@@ -31,14 +36,17 @@ public class TicTacToeScreen extends AbstractGameScreen{
 	
 	@Override
 	public Image getPlayerImage(){
+		return this.xImage;
+	}
+	
+	private void setXImage(){
 		InputStream file = null;
 		try{
 			file = this.getClass().getResourceAsStream("/view/images/x-red.png");
 		} catch (Exception e){
 			System.out.println("Cant find image: /view/images/x-red.png");
 		}
-		Image xImage = new Image(file);
-		return xImage;
+		this.xImage = new Image(file);
 	}
 	
 	@Override
@@ -53,14 +61,17 @@ public class TicTacToeScreen extends AbstractGameScreen{
 	
 	@Override
 	public Image getOponentImage(){
+		return this.oImage;
+	}
+	
+	private void setOImage(){
 		InputStream file = null;
 		try{
 			file = this.getClass().getResourceAsStream("/view/images/o.png");
 		} catch (Exception e){
 			System.out.println("Cant find image: /images/o.png");
 		}
-		Image oImage = new Image(file);
-		return oImage;
+		this.oImage = new Image(file);
 	}
 	
 	@Override

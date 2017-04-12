@@ -215,13 +215,6 @@ public class Othello extends AbstractGame{
 		return result;
 	}
 
-	private void swapTiles(ArrayList<Integer[]> swapTilesAt, int swapToPlayer, Board board) {
-		for (Integer[] array : swapTilesAt) {
-			int value = swapToPlayer == 1 ? 2 : 1;
-			board.set(value, array[0], array[1]);
-		}
-	}
-
 	/**
 	 * Check the board for the amount of stones on the board owned by the given player.
 	 * @param stoneToCheck The stone to check for, either 0, 1 or 2
