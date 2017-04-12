@@ -333,7 +333,7 @@ public class MainGame extends AbstractWindowScreen {
 		Game game = this.window.getGame();
 		if (game.getGameStart() == true){
 			this.inputOponent.setText(game.getOpponent());
-			this.inputScore.setText("0");
+			this.inputScore.setText(((Integer) game.getScorePlayer()).toString());
 			if (game.getTurn() == true){
 				this.inputTurn.setText("Yours");
 			} else {

@@ -1,13 +1,12 @@
 package controller;
 
 import model.Board;
+import model.OthelloAI;
 import view.OthelloScreen;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-//import model.OthelloAI;
 
 public class Othello extends AbstractGame{
 
@@ -16,7 +15,7 @@ public class Othello extends AbstractGame{
 		this.gamescreen = new OthelloScreen(this);
 		this.gameType = "Reversi";
 		this.board = new Board(8,8);
-		this.gameAI = null;
+		this.gameAI = new OthelloAI(this);
     }
     
     @Override
@@ -254,9 +253,28 @@ public class Othello extends AbstractGame{
 		return amountOfStones(0, inputBoard);
 	}
 
-
-
-
+	public void setScore(){
+		this.scorePlayer = this.amountOfStones(1, this.board);
+		this.scoreOpponent = this.amountOfStones(2, this.board);
+	}
+	
+	public void serverMove(int y, int x, boolean yourTurn){
+		if(yourTurn){
+			this.board.set(1, y, x);
+			System.out.println("Set board");
+			this.turnStones(this.board, x, y, 1);
+			System.out.println("Turning stones");
+		} else {
+			this.board.set(2, y, x);
+			System.out.println("Set board");
+			this.turnStones(this.board, x, y, 2);
+			System.out.println("Turning stones");
+		}
+		this.setScore();
+		this.updateView();
+		return;
+	}
+	
 	public enum Direction implements Iterable<Direction> {
 		LEFT(0, -1, 0),
 		RIGHT(1, 1, 0),
@@ -305,5 +323,7 @@ public class Othello extends AbstractGame{
 		}
 
 	}
+	
+	
 
 }

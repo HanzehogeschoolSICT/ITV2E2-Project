@@ -40,4 +40,8 @@ public interface Game {
 		NOT_STARTED, STARTED,
 		WIN, LOSE, DRAW
 	}
+	
+	public int getScorePlayer();
+	public int getScoreOpponent();
+	public void setScore();
 }

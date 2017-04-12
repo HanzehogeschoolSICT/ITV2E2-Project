@@ -12,4 +12,10 @@ public class TicTacToe extends AbstractGame{
 		this.gameType = "Tic-tac-toe";
 		this.gameAI = new TicTacToeAI(this);
 	}
+
+	@Override
+	public void setScore() {
+		this.scoreOpponent = 0;
+		this.scorePlayer = 0;
+	}
 }

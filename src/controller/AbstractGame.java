@@ -22,6 +22,8 @@ abstract class AbstractGame implements Game{
 	protected String opponent;
 	private String playerFirstMove;
 	protected GameStatus status;
+	protected int scorePlayer;
+	protected int scoreOpponent;
 	
 	public GameScreen getGameScreen(){
 		return this.gamescreen;
@@ -49,7 +51,7 @@ abstract class AbstractGame implements Game{
 				Connection conn = this.main.getConnection();
 				Integer move = (y * this.board.getColumns()) + x;
 				conn.move(move);
-				this.setTurn(false);			
+				this.setTurn(false);	
 			}
 		}
 		return;
@@ -61,6 +63,7 @@ abstract class AbstractGame implements Game{
 		}else{
 			this.board.set(2, y, x);
 		}
+		this.setScore();
 		this.updateView();
 		return;
 	}
@@ -195,4 +198,14 @@ abstract class AbstractGame implements Game{
 			return true;
 		}
 	}
+	
+	public int getScorePlayer(){
+		return this.scorePlayer;
+	}
+	
+	public int getScoreOpponent(){
+		return this.scoreOpponent;
+	}
+	
+	abstract public void setScore();
 }
