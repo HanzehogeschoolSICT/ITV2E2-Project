@@ -50,6 +50,7 @@ abstract class AbstractGame implements Game{
 			if(this.board.isValid(y, x)){
 				Connection conn = this.main.getConnection();
 				Integer move = (y * this.board.getColumns()) + x;
+				System.out.println("Send move: " + y + ", " + x + " SUM: " + move);
 				conn.move(move);
 				this.setTurn(false);	
 			}

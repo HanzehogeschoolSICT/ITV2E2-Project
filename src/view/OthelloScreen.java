@@ -9,8 +9,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 public class OthelloScreen extends AbstractGameScreen{
+	private Image whiteImage;
+	private Image blackImage;
+	
 	public OthelloScreen(Othello othello) {
 		this.game = othello;
+		this.setBlackImage();
+		this.setWhiteImage();
 	}
 
 	@Override
@@ -31,14 +36,18 @@ public class OthelloScreen extends AbstractGameScreen{
 	
 	@Override
 	public Image getPlayerImage(){
+		return this.blackImage;
+	}
+	
+	private void setBlackImage(){
 		InputStream file = null;
 		try{
 			file = this.getClass().getResourceAsStream("/view/images/black.png");
 		} catch (Exception e){
 			System.out.println("Cant find image: /view/images/black.png");
 		}
-		Image xImage = new Image(file);
-		return xImage;
+		this.blackImage = new Image(file);
+		
 	}
 	
 	@Override
@@ -53,14 +62,18 @@ public class OthelloScreen extends AbstractGameScreen{
 	
 	@Override
 	public Image getOponentImage(){
+		return this.whiteImage;
+		
+	}
+	
+	private void setWhiteImage(){
 		InputStream file = null;
 		try{
 			file = this.getClass().getResourceAsStream("/view/images/white.png");
 		} catch (Exception e){
 			System.out.println("Cant find image: /view/images/white.png");
 		}
-		Image oImage = new Image(file);
-		return oImage;
+		this.whiteImage = new Image(file);
 	}
 	
 	@Override

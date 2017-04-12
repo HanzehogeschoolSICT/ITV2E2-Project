@@ -61,7 +61,7 @@ public class Othello extends AbstractGame{
 		}
 
 		if (isValidMove(inputBoard, Direction.RIGHT_DOWN, x, y, player)) {
-			for (int i = (pos + 9); ((i < 64) && ((i - 1) % 8 != 0)); i = i + 9) {
+			for (int i = (pos + 9); ((i < 64) && (i % 8 != 0)); i = i + 9) {
 				int x2 = i % inputBoard.getColumns();
 				int y2 = i / inputBoard.getColumns();
 				if(inputBoard.get(y2, x2) == player){
@@ -76,7 +76,7 @@ public class Othello extends AbstractGame{
 	private void turnDiagonalUp(Board inputBoard, int x, int y, int player) {
 		int pos = y * inputBoard.getColumns() + x;
 		if (isValidMove(inputBoard, Direction.LEFT_UP, x, y, player)) {
-			for (int i = (pos - 9); ((i > 0) && ((i + 1) % 8 != 0)); i = i - 9) {
+			for (int i = (pos - 9); ((i > 0) && (i % 8 != 0)); i = i - 9) {
 				int x2 = i % inputBoard.getColumns();
 				int y2 = i / inputBoard.getColumns();
 				if(inputBoard.get(y2, x2) == player){
@@ -114,7 +114,7 @@ public class Othello extends AbstractGame{
 		}
 		
 		if (isValidMove(inputBoard, Direction.LEFT, x, y, player)) {
-			for (int i = (pos - 1); ((i + 1) % 8 != 0); i--) {
+			for (int i = (pos - 1); ((i) % 8 != 0); i--) {
 				int x2 = i % inputBoard.getColumns();
 				int y2 = i / inputBoard.getColumns();
 				if(inputBoard.get(y2, x2) == player){
@@ -166,6 +166,7 @@ public class Othello extends AbstractGame{
 
 		for (Direction direction : Direction.directions) {
 			if (isValidMove(inputBoard, direction, x, y, player)) {
+				
 				result = true;
 				break;
 			}
