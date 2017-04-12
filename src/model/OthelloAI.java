@@ -9,7 +9,7 @@ import controller.Othello.Direction;
 public class OthelloAI implements GameAI{
 	private int[] nextMove;
 	private Othello gameController;
-	private static int MINMAX_DEPTH = 6;
+	private static int MINMAX_DEPTH = 10;
 	
 	public OthelloAI(Game gameController){
 		this.gameController = (Othello) gameController;
@@ -125,7 +125,6 @@ public class OthelloAI implements GameAI{
 
 	
 	public Integer minMax(int[][] inputBoard, int player, int depth) {
-		System.out.println(depth);
 		ArrayList<int[]> possMoves = this.getPossibleCoords(inputBoard, player);
 		MinMaxResult possibleOutcomes = new MinMaxResult();
 		for(int[] possMove : possMoves){
