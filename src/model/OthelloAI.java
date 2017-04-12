@@ -9,7 +9,7 @@ import controller.Othello.Direction;
 public class OthelloAI implements GameAI{
 	private int[] nextMove;
 	private Othello gameController;
-	private static int MINMAX_DEPTH = 8;
+	private static int MINMAX_DEPTH = 6;
 	
 	public OthelloAI(Game gameController){
 		this.gameController = (Othello) gameController;
