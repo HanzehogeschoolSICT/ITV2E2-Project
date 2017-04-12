@@ -9,7 +9,7 @@ import controller.Othello.Direction;
 public class OthelloAI implements GameAI{
 	private int[] nextMove;
 	private Othello gameController;
-	private static int MINMAX_DEPTH = 6;
+	private static int MINMAX_DEPTH = 8;
 	
 	public OthelloAI(Game gameController){
 		this.gameController = (Othello) gameController;
@@ -125,7 +125,6 @@ public class OthelloAI implements GameAI{
 
 	
 	public Integer minMax(int[][] inputBoard, int player, int depth) {
-		System.out.println(depth);
 		ArrayList<int[]> possMoves = this.getPossibleCoords(inputBoard, player);
 		MinMaxResult possibleOutcomes = new MinMaxResult();
 		for(int[] possMove : possMoves){
@@ -163,7 +162,6 @@ public class OthelloAI implements GameAI{
 	@Override
 	public Integer checkWin(int[][] inputBoard) {
 		if(this.checkAllEmpty(inputBoard) == true || (this.getPossibleCoords(inputBoard, 1) == null && this.getPossibleCoords(inputBoard, 2) == null)){
-			System.out.println("Check win == 1");
 			return 1;
 		}
 		return 0;
