@@ -211,5 +211,10 @@ abstract class AbstractGame implements Game{
 		return this.scoreOpponent;
 	}
 	
+	public boolean isValid(int x, int y){
+		return true;
+	}
+	
+	
 	abstract public void setScore();
 }

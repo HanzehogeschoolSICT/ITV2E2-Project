@@ -160,6 +160,14 @@ public class Othello extends AbstractGame{
 
 		return result;
 	}
+	
+	@Override
+	public boolean isValid(int x, int y){
+		if(this.isValidMove(this.board, x, y, 1)){
+			return true;
+		}
+		return false;
+	}
 
 	public boolean isValidMove(Board inputBoard, Direction direction, int x, int y, int player) {
 		boolean result = false;

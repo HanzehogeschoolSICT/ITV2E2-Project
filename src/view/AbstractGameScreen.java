@@ -6,6 +6,8 @@ import controller.Game;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -158,7 +160,15 @@ public abstract class AbstractGameScreen implements GameScreen {
 				System.out.println("Pressed button" + userdata);
 				if (game.getGameStart() == true){
 					if (game.getHuman() == true && game.getTurn() == true){
-						game.setMove(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
+						if(game.isValid(Integer.parseInt(coords[1]), Integer.parseInt(coords[0]))){
+							game.setMove(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
+						}else{
+							Alert alert = new Alert(AlertType.WARNING);
+							alert.setTitle("Invalid move");
+							alert.setHeaderText("This move is not valid!");
+							alert.showAndWait();
+						}
+						
 					}
 				} else {
 					System.out.println("Game hasnt started");

@@ -42,4 +42,5 @@ public interface Game {
 	public int getScoreOpponent();
 	public void setScore();
 	public void setAIDepth(int depth);
+	public boolean isValid(int x, int y);
 }
