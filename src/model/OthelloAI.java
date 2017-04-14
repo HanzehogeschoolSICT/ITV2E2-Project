@@ -1,15 +1,18 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import controller.Game;
 import controller.Othello;
 import controller.Othello.Direction;
 
 public class OthelloAI implements GameAI{
-	private int[] nextMove;
-	private Othello gameController;
-	private static int MINMAX_DEPTH = 8;
+	protected int[] nextMove;
+	protected Othello gameController;
+	protected static int MINMAX_DEPTH = 8;
 	public OthelloAI(Game gameController){
 		this.gameController = (Othello) gameController;
 	}
@@ -40,7 +43,7 @@ public class OthelloAI implements GameAI{
 		return outputBoard;
 	}
 	
-	private ArrayList<int[]> getPossibleCoords(int[][] inputBoard, int player){
+	protected ArrayList<int[]> getPossibleCoords(int[][] inputBoard, int player){
 		ArrayList<int[]> possMoves = new ArrayList<int[]>();
 		for(int y = 0; y<inputBoard.length;y++){
 			for (int x = 0;x<inputBoard[y].length;x++){
@@ -57,7 +60,7 @@ public class OthelloAI implements GameAI{
 		return possMoves;
 	}
 	
-	private boolean checkCorners(int[][] inputBoard, ArrayList<int[]> possMoves){
+	protected boolean checkCorners(int[][] inputBoard, ArrayList<int[]> possMoves){
 		int maxY = inputBoard.length - 1;
 		int maxX = inputBoard[maxY].length - 1;
 		
@@ -121,37 +124,34 @@ public class OthelloAI implements GameAI{
 		return false;
 	}
 
-	public Integer minMax(int[][] inputBoard, int player, int depth) {
+	
+	public Integer minMax(int[][] inputBoard, int player, int depth){
 		ArrayList<int[]> possMoves = this.getPossibleCoords(inputBoard, player);
 		MinMaxResult possibleOutcomes = new MinMaxResult();
+		ArrayList<MinMaxThread> minMaxThreads = new ArrayList<MinMaxThread>();
+		ExecutorService executor = Executors.newFixedThreadPool(possMoves.size());
 		for(int[] possMove : possMoves){
 			int[][] tempBoard = this.copyBoard(inputBoard);
 			tempBoard[possMove[0]][possMove[1]] = player;
 			Board tempBoard2 = new Board(tempBoard);
 			this.gameController.turnStones(tempBoard2, possMove[1], possMove[0], player);
 			tempBoard = tempBoard2.getSpaces();
+			MinMaxThread _minMaxThread = new MinMaxThread(tempBoard, (player == 1 ? 2 : 1), depth + 1, this);
+			minMaxThreads.add(_minMaxThread);
+			_minMaxThread.addCoords(possMove[0], possMove[1]);
+			executor.execute(_minMaxThread);
 			
-			if (depth == OthelloAI.MINMAX_DEPTH || this.checkWin(tempBoard) == 1){
-				int scoreSelf = this.gameController.amountOfStones(1, tempBoard2);
-				int scoreOpp = this.gameController.amountOfStones(2, tempBoard2);
-				possibleOutcomes.addResult(possMove[1], possMove[0], (scoreSelf-scoreOpp));
-			} else {
-				
-				if(depth == 1){
-					ArrayList<int[]> possEdges = this.getPossibleCoords(tempBoard, (player == 1 ? 2 : 1));
-					if(!this.checkCorners(tempBoard, possEdges)){
-						int minmax = this.minMax(tempBoard, (player == 1 ? 2 : 1), depth + 1);
-						possibleOutcomes.addResult(possMove[1], possMove[0], minmax);
-					}
-				}else{
-					int minmax = this.minMax(tempBoard, (player == 1 ? 2 : 1), depth + 1);
-					possibleOutcomes.addResult(possMove[1], possMove[0], minmax);
-				}
-				
-			}
-			tempBoard = null;
-			tempBoard2 = null;
 			
+		}
+		
+		executor.shutdown();
+        try {
+        	executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+    	} catch (InterruptedException e) {
+    	  System.out.println(e);
+    	}
+		for(MinMaxThread minmaxthread : minMaxThreads){
+			possibleOutcomes.addResult(minmaxthread.getx(), minmaxthread.gety(), minmaxthread.getResult());
 		}
 		if(possibleOutcomes.getSize() != 0){
 			int[] minMaxRes = (player == 1)? possibleOutcomes.getMax() : possibleOutcomes.getMin();
@@ -163,8 +163,12 @@ public class OthelloAI implements GameAI{
 		}else{
 			return 0;
 		}
-		
 	}
+	
+	
+	
+	
+	
 
 	public Integer checkWin(int[][] inputBoard) {
 		if(this.checkAllEmpty(inputBoard) == true || (this.getPossibleCoords(inputBoard, 1) == null && this.getPossibleCoords(inputBoard, 2) == null)){
