@@ -167,8 +167,6 @@ public class OthelloAI implements GameAI{
 	
 	
 	
-	
-	
 
 	public Integer checkWin(int[][] inputBoard) {
 		if(this.checkAllEmpty(inputBoard) == true || (this.getPossibleCoords(inputBoard, 1) == null && this.getPossibleCoords(inputBoard, 2) == null)){
