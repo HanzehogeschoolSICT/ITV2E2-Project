@@ -125,7 +125,7 @@ public class OthelloAI implements GameAI{
 	}
 
 	
-	public Integer minMax(int[][] inputBoard, int player, int depth){
+	private Integer minMax(int[][] inputBoard, int player, int depth){
 		ArrayList<int[]> possMoves = this.getPossibleCoords(inputBoard, player);
 		MinMaxResult possibleOutcomes = new MinMaxResult();
 		ArrayList<MinMaxThread> minMaxThreads = new ArrayList<MinMaxThread>();
@@ -168,14 +168,14 @@ public class OthelloAI implements GameAI{
 	
 	
 
-	public Integer checkWin(int[][] inputBoard) {
+	protected Integer checkWin(int[][] inputBoard) {
 		if(this.checkAllEmpty(inputBoard) == true || (this.getPossibleCoords(inputBoard, 1) == null && this.getPossibleCoords(inputBoard, 2) == null)){
 			return 1;
 		}
 		return 0;
 	}
 	
-	public boolean checkAllEmpty(int[][] inputBoard){
+	private boolean checkAllEmpty(int[][] inputBoard){
 		for(int y=0; y < inputBoard.length; y++){
 			for(int x=0; x < inputBoard[0].length; x++){
 				if(inputBoard[y][x] == 0){

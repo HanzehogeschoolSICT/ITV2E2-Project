@@ -40,7 +40,7 @@ public class MinMaxThread implements Runnable{
 		return this.result;
 	}
 	
-	public Integer minMax(int[][] inputBoard, int player, int depth) {
+	private Integer minMax(int[][] inputBoard, int player, int depth) {
 		ArrayList<int[]> possMoves = this.othelloai.getPossibleCoords(inputBoard, player);
 		MinMaxResult possibleOutcomes = new MinMaxResult();
 		for(int[] possMove : possMoves){
