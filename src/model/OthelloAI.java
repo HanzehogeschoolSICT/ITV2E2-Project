@@ -151,7 +151,19 @@ public class OthelloAI implements GameAI{
     	  System.out.println(e);
     	}
 		for(MinMaxThread minmaxthread : minMaxThreads){
-			possibleOutcomes.addResult(minmaxthread.getx(), minmaxthread.gety(), minmaxthread.getResult());
+			 if(depth == 1 && minMaxThreads.size() > 1){
+					
+					System.out.println("Depth > 1 if");
+					ArrayList<int[]> possEdges = this.getPossibleCoords(minmaxthread.getBoard(), 2);
+					if(!this.checkCorners(minmaxthread.getBoard(), possEdges)){
+						System.out.println("Checked corners false");
+						possibleOutcomes.addResult(minmaxthread.getx(), minmaxthread.gety(), minmaxthread.getResult());
+					}
+				
+			}else{
+				possibleOutcomes.addResult(minmaxthread.getx(), minmaxthread.gety(), minmaxthread.getResult());
+			}
+			
 		}
 		if(possibleOutcomes.getSize() != 0){
 			int[] minMaxRes = (player == 1)? possibleOutcomes.getMax() : possibleOutcomes.getMin();

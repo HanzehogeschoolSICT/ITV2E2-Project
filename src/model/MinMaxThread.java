@@ -18,6 +18,10 @@ public class MinMaxThread implements Runnable{
 		this.othelloai = othelloai;
 	}
 	
+	public int[][] getBoard(){
+		return this.board;
+	}
+	
 	public void addCoords(int y, int x){
 		this.y = y;
 		this.x = x;
@@ -54,15 +58,9 @@ public class MinMaxThread implements Runnable{
 				int scoreSelf = this.othelloai.gameController.amountOfStones(1, tempBoard2);
 				int scoreOpp = this.othelloai.gameController.amountOfStones(2, tempBoard2);
 				possibleOutcomes.addResult(possMove[1], possMove[0], (scoreSelf-scoreOpp));
-			} else if(depth == 1 && possMoves.size() > 1){
+			} else if(depth == 2 && possMoves.size() > 1){
 			
-					System.out.println("Depth > 1 if");
-					ArrayList<int[]> possEdges = this.othelloai.getPossibleCoords(tempBoard, 2);
-					if(!this.othelloai.checkCorners(tempBoard, possEdges)){
-						System.out.println("Checked corners false");
-						int minmax = this.minMax(tempBoard, (player == 1 ? 2 : 1), depth + 1);
-						possibleOutcomes.addResult(possMove[1], possMove[0], minmax);
-					}
+					this.board = tempBoard;
 				
 			}else{
 				

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MinMaxResult {
 	
@@ -36,7 +37,12 @@ public class MinMaxResult {
 			if(details[2] > max){
 				max = details[2];
 				maxIndex = x;
-			}		
+			}else if(details[2] == max){
+				if(ThreadLocalRandom.current().nextInt(0, 1 + 1) == 1){
+					max = details[2];
+					maxIndex = x;
+				}
+			}
 		}
 		return this.possibles.get(maxIndex);
 	}
@@ -52,7 +58,12 @@ public class MinMaxResult {
 			if(details[2] < min){
 				min = details[2];
 				minIndex = x;
-			}		
+			}else if(details[2] == min){
+				if(ThreadLocalRandom.current().nextInt(0, 1 + 1) == 1){
+					min = details[2];
+					minIndex = x;
+				}
+			}	
 		}
 		return this.possibles.get(minIndex);
 	}

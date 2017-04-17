@@ -90,7 +90,8 @@ public class MainMenu extends AbstractWindowScreen {
 		labelIpadres.setFont(Font.font(null, FontWeight.BOLD, 12));
 		boxInputs.getChildren().add(labelIpadres);
 		this.inputIPaddress = new TextField();
-		this.inputIPaddress.setText("145.33.225.170");
+		//this.inputIPaddress.setText("145.33.225.170");
+		this.inputIPaddress.setText("127.0.0.1");
 		boxInputs.getChildren().add(this.inputIPaddress);
 		
 		Label labelPort = new Label("Server port number ");

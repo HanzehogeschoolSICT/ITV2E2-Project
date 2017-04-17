@@ -155,7 +155,13 @@ abstract class AbstractGame implements Game{
 	}
 	
 	public void stopChallenge(){
-		this.main.getWindow().stopChallenge();
+		Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            	main.getWindow().stopChallenge();
+            }
+        });
+		
 		return;
 	}
 	
