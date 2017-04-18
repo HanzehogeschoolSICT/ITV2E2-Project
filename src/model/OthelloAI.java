@@ -110,7 +110,7 @@ public class OthelloAI implements GameAI{
 		return false;
 	}
 	
-	private boolean checkEdgeOverTake(int y, int x, int[][] inputBoard, int player) {
+	protected boolean checkEdgeOverTake(int y, int x, int[][] inputBoard, int player) {
 		Board inputBoard2 = new Board(inputBoard);
 		if(x == 0 || x == inputBoard[0].length){
 			if(this.gameController.isValidMove(inputBoard2, Direction.UP, x, y, player) || this.gameController.isValidMove(inputBoard2, Direction.DOWN, x, y, player)){
@@ -153,10 +153,9 @@ public class OthelloAI implements GameAI{
 		for(MinMaxThread minmaxthread : minMaxThreads){
 			 if(depth == 1 && minMaxThreads.size() > 1){
 					
-					System.out.println("Depth > 1 if");
 					ArrayList<int[]> possEdges = this.getPossibleCoords(minmaxthread.getBoard(), 2);
 					if(!this.checkCorners(minmaxthread.getBoard(), possEdges)){
-						System.out.println("Checked corners false");
+						
 						possibleOutcomes.addResult(minmaxthread.getx(), minmaxthread.gety(), minmaxthread.getResult());
 					}
 				
